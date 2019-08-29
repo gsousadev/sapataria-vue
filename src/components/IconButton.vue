@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     getClassNames: function() {
-      return `sp-link`;
+      return 'sp-link bg-primary';
     }
   }
 };
@@ -28,7 +28,6 @@ export default {
 <style lang="scss" scoped>
 .sp-link {
   padding: 50px;
-  background: #1a70e0;
   color: #fff;
   display: block;
   margin-bottom: 15px;
