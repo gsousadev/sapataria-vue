@@ -1,6 +1,5 @@
 <template>
-      <div class="row">
-          <IconButton url="/home" bg="red" color="white" iconClass="shopping-cart" buttonText="Inicio"/>
+      <div class="row py-3">
           <IconButton url="/novo-pedido" bg="red" color="white" iconClass="list" buttonText="Novo Pedido"/>
           <IconButton url="/pedidos" bg="red" color="white" iconClass="table" buttonText="Pedidos"/>
       </div>
