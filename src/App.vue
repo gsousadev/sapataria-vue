@@ -1,36 +1,13 @@
 <template>
   <div id="app">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-         Osvaldo Sapataria
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <router-link to="/" class="nav-link">Inicio</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link to="/novo-pedido" class="nav-link">Novo Pedido</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link to="/pedidos" class="nav-link">Pedidos</router-link>
-            </li>
-          </ul>
+    <div class="container my-3">
+      <div class="row justify-content-center">
+        <div class="col-8 col-sm-6 col-md-3">
+          <router-link to="/">
+            <img class="img-fluid" src="./assets/images/brand_text_transparent_1000x1000.png"/>
+          </router-link>
         </div>
-      </nav>
-
+      </div>
       <router-view />
     </div>
   </div>

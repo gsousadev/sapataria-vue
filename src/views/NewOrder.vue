@@ -1,18 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <div class="row">
-        <div class="col-12">
-          <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a href="#">Inicio</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">Novo Pedido</li>
-          </ol>
-        </nav>
-        </div>
-      </div>
+    <Breadcrumb currentPageName="Novo Pedido"></Breadcrumb>
       <div class="row justify-content-center">
         <div class="col-12 col-sm-6">
           <b-form @submit="onSubmit" @reset="onReset" v-if="show">
@@ -59,7 +48,13 @@
 </template>
 
 <script>
+import Breadcrumb from '../components/Breadcramb';
+
 export default {
+
+  components:{
+    'Breadcrumb':Breadcrumb
+  },
   data() {
     return {
       form: {
