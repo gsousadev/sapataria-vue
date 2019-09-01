@@ -1,46 +1,49 @@
 <template>
   <div class="row">
     <div class="col-12">
-    <Breadcrumb currentPageName="Novo Pedido"></Breadcrumb>
+      <Breadcrumb currentPageName="Novo Pedido"></Breadcrumb>
       <div class="row justify-content-center">
-        <div class="col-12 col-sm-6">
-          <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-            <b-form-group
-              id="input-group-1"
-              label="Email address:"
-              label-for="input-1"
-              description="We'll never share your email with anyone else."
-            >
-              <b-form-input
-                id="input-1"
-                v-model="form.email"
-                type="email"
-                required
-                placeholder="Enter email"
-              ></b-form-input>
-            </b-form-group>
-
-            <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-              <b-form-input id="input-2" v-model="form.name" required placeholder="Enter name"></b-form-input>
-            </b-form-group>
-
-            <b-form-group id="input-group-3" label="Food:" label-for="input-3">
-              <b-form-select id="input-3" v-model="form.food" :options="foods" required></b-form-select>
-            </b-form-group>
-
-            <b-form-group id="input-group-4">
-              <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
-                <b-form-checkbox value="me">Check me out</b-form-checkbox>
-                <b-form-checkbox value="that">Check that out</b-form-checkbox>
-              </b-form-checkbox-group>
-            </b-form-group>
-
-            <b-button type="submit" variant="primary">Submit</b-button>
-            <b-button type="reset" variant="danger">Reset</b-button>
-          </b-form>
-          <b-card class="mt-3" header="Form Data Result">
-            <pre class="m-0">{{ form }}</pre>
-          </b-card>
+        <div class="col-12">
+          <form>
+            <h4 class="bg-primary p-3 text-white">Dados do cliente</h4>
+       
+            <div class="row">
+              <div class="col-12 col-sm-6" v-for="(input,index) in form.customer" :key="index">
+                <div class="form-group">
+                  <label :for="input.name">{{input.label}}</label>
+                  <input
+                    :type="input.type"
+                    class="form-control"
+                    :id="input.name"
+                    :name="input.name"
+                  />
+                </div>
+              </div>
+            </div>
+             <h4 class="bg-primary p-3 text-white">Dados do pedido</h4>
+            <div class="row">
+              <div class="col-12 col-sm-6" v-for="(input,index) in form.order" :key="index">
+                <div class="form-group" v-if="input.type == 'text'">
+                  <label :for="input.name">{{input.label}}</label>
+                  <input
+                    :type="input.type"
+                    class="form-control"
+                    :id="input.name"
+                    :name="input.name"
+                  />
+                </div>
+                <div class="form-group" v-else-if="input.type == 'select'">
+                  <label :for="input.name">{{input.label}}</label>
+                  <select :name="input.name" class="form-control">
+                    <option v-for="(option,index) in input.options" :key="index" :value="index">
+                        {{option}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
         </div>
       </div>
     </div>
@@ -48,49 +51,99 @@
 </template>
 
 <script>
-import Breadcrumb from '../components/Breadcramb';
+import Breadcrumb from "../components/Breadcramb";
 
 export default {
-
-  components:{
-    'Breadcrumb':Breadcrumb
+  components: {
+    Breadcrumb: Breadcrumb
   },
   data() {
     return {
       form: {
-        email: "",
-        name: "",
-        food: null,
-        checked: []
-      },
-      foods: [
-        { text: "Select One", value: null },
-        "Carrots",
-        "Beans",
-        "Tomatoes",
-        "Corn"
-      ],
-      show: true
+        customer: [
+          {
+            type: "text",
+            label: "Nome",
+            name: "nome",
+            value: ""
+          },
+          {
+            type: "text",
+            label: "CPF",
+            name: "cpf",
+            value: ""
+          },
+          {
+            type: "text",
+            label: "CEP",
+            name: "cep",
+            value: ""
+          },
+          {
+            type: "text",
+            label: "Rua",
+            name: "rua",
+            value: ""
+          },
+          {
+            type: "text",
+            label: "Número",
+            name: "numero",
+            value: ""
+          },
+          {
+            type: "text",
+            label: "Cidade",
+            name: "cidade",
+            value: ""
+          }
+        ],
+        order: [
+          {
+            type: "select",
+            label: "Selecione o tipo do calçado",
+            name: "tipo_produto",
+            value: "",
+            options: {
+              bota: "Bota",
+              sandalia: "Sandália",
+              social: "Sapato Social",
+              tenis: "Tênis"
+            }
+          },
+          {
+            type: "select",
+            label: "Gênero do produto",
+            name: "genero_produto",
+            value: "",
+            options: {
+              m: "Masculino",
+              w: "Feminino",
+              u: "Unissex"
+            }
+          },
+          {
+            type: "text",
+            label: "Cor",
+            name: "cor_produto",
+            value: ""
+          },
+          {
+            type: "text",
+            label: "Tamanho",
+            name: "tamanho_produto",
+            value: ""
+          },
+          {
+            type: "text",
+            label: "Valor",
+            name: "valor_produto",
+            value: ""
+          }
+        ]
+      }
     };
   },
-  methods: {
-    onSubmit(evt) {
-      evt.preventDefault();
-      alert(JSON.stringify(this.form));
-    },
-    onReset(evt) {
-      evt.preventDefault();
-      // Reset our form values
-      this.form.email = "";
-      this.form.name = "";
-      this.form.food = null;
-      this.form.checked = [];
-      // Trick to reset/clear native browser form validation state
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
-      });
-    }
-  }
+  methods: {}
 };
 </script>
