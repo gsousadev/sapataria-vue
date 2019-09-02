@@ -4,12 +4,11 @@
 </section>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+<script>
 import HomeMenu from '@/components/HomeMenu.vue'; 
 
-
-@Component({
+export default {
+  name:'Home',
   data(){
     return{
     }
@@ -17,6 +16,5 @@ import HomeMenu from '@/components/HomeMenu.vue';
   components: {
     HomeMenu,
   },
-})
-export default class Home extends Vue {}
+}
 </script>

@@ -5,10 +5,9 @@
       <div class="row justify-content-center">
         <div class="col-12">
           <form>
-            <h4 class="bg-primary p-3 text-white">Dados do cliente</h4>
-       
+            <h4 class="bg-dark p-3 text-white">Dados do cliente</h4>
             <div class="row">
-              <div class="col-12 col-sm-6" v-for="(input,index) in form.customer" :key="index">
+              <div class="col-12 col-sm-6" v-for="(input,index) in form.customer" :key="index" v-on:keyup="refreshInputs($event)">
                 <div class="form-group">
                   <label :for="input.name">{{input.label}}</label>
                   <input
@@ -20,7 +19,7 @@
                 </div>
               </div>
             </div>
-             <h4 class="bg-primary p-3 text-white">Dados do pedido</h4>
+             <h4 class="bg-dark p-3 text-white">Dados do pedido</h4>
             <div class="row">
               <div class="col-12 col-sm-6" v-for="(input,index) in form.order" :key="index">
                 <div class="form-group" v-if="input.type == 'text'">
@@ -42,7 +41,13 @@
                 </div>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="form-group">
+              <div class="row justify-content-center">
+                <div class="col-4">
+                  <a class="btn btn-primary d-block text-white" v-on:click="submitForm()">Cadastrar Pedido</a>
+                </div>
+              </div>
+            </div>
           </form>
         </div>
       </div>
@@ -144,6 +149,18 @@ export default {
       }
     };
   },
-  methods: {}
+  methods: {
+    submitForm:function(){
+      this.form.customer.forEach(element => {
+        if(element.value == ''){
+          document.getElementById(element.name).classList.add('is-invalid');
+        }
+      });
+    },
+    refreshInputs:function(event){
+      
+      
+    }
+  }
 };
 </script>
