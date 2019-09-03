@@ -13,7 +13,7 @@
                 :key="index"
                 v-on:keyup="refreshInputs(index)"
               >
-                <div class="form-group" v-if="index != 'cep'">
+                <div class="form-group" v-if="index != 'zip_code'">
                   <label :for="input.index">{{input.label}}</label>
                   <input
                     :type="input.type"
@@ -100,52 +100,52 @@ export default {
       form: {
         valid: true,
         customer: {
-          nome: {
+          name: {
             type: "text",
             label: "Nome",
-            name: "nome",
-            value: ""
+            name: "name",
+            value: "Guilherme"
           },
           cpf: {
             type: "text",
             label: "CPF",
             name: "cpf",
-            value: "",
+            value: "05069074490",
             regex: RegExp(
               "^(([0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2})|([0-9]{11}))$"
             )
           },
-          cep: {
+          zip_code: {
             type: "text",
             label: "CEP",
-            name: "cep",
-            value: "",
+            name: "zip_code",
+            value: "05131090",
             regex: RegExp("([0-9]{5,5}[-]?[0-9]{3})$")
           },
-          rua: {
+          street: {
             type: "text",
             label: "Rua",
-            name: "rua",
-            value: ""
+            name: "street",
+            value: "rua 1"
           },
-          numero: {
+          number: {
             type: "number",
             label: "Número",
-            name: "numero",
-            value: ""
+            name: "number",
+            value: "1"
           },
-          cidade: {
+          city: {
             type: "text",
             label: "Cidade",
-            name: "cidade",
-            value: ""
+            name: "city",
+            value: "cidade"
           }
         },
         order: {
-          tipo_produto: {
+          type: {
             type: "select",
             label: "Selecione o tipo do calçado",
-            name: "tipo_produto",
+            name: "type",
             value: "bota",
             options: {
               bota: "Bota",
@@ -154,10 +154,10 @@ export default {
               tenis: "Tênis"
             }
           },
-          genero_produto: {
+          genrer: {
             type: "select",
             label: "Gênero do produto",
-            name: "genero_produto",
+            name: "genrer",
             value: "m",
             options: {
               m: "Masculino",
@@ -165,10 +165,10 @@ export default {
               u: "Unissex"
             }
           },
-          cor_produto: {
+          color: {
             type: "select",
             label: "Cor",
-            name: "cor_produto",
+            name: "color",
             value: "preto",
             options: {
               amarelo: "Amarelo",
@@ -199,10 +199,10 @@ export default {
               vinho: "Vinho"
             }
           },
-          tamanho_produto: {
+          size: {
             type: "select",
             label: "Tamanho",
-            name: "tamanho_produto",
+            name: "size",
             value: "p",
             options: {
               p: "Pequeno",
@@ -310,11 +310,11 @@ export default {
               100: "100"
             }
           },
-          valor_produto: {
+          total: {
             type: "text",
             label: "Valor",
-            name: "valor_produto",
-            value: "",
+            name:'total',
+            value: "123",
             regex: RegExp("^[0-9]{1,10}$")
           }
         }
@@ -323,20 +323,18 @@ export default {
   },
   methods: {
     submitForm: function() {
-      let inputs = { ...this.form.customer, ...this.form.order };
+      let inputs = {...this.form.customer, ...this.form.order}
       this.form.valid = true;
       var formToSend = [];
       for (let element in inputs) {
         this.validFields(inputs[element]);
         formToSend[inputs[element].name] = inputs[element].value;
       }
+      formToSend = JSON.stringify({formToSend});
       if (this.form.valid) {
-        axios({
-          url: "http://localhost:8000/",
-          method: "post",
-          contentType: 'application/json',
-          data: formToSend
-        }).then(function(response){
+        axios.post( "http://localhost:9090/",
+          formToSend
+        ).then(function(response){
             console.log(response);
         }).catch(function (error) {
             console.log(error);
@@ -399,6 +397,13 @@ export default {
       htmlElement.classList.remove("is-invalid");
       htmlElement.classList.add("is-valid");
     }
-  }
+  },
+  // created(){
+  //   this.refreshInputs();
+  //     let inputs = { ...this.form.customer, ...this.form.order }
+  //     for (let element in inputs) {
+  //       this.validFields(inputs[element]);
+  //     }
+  // },
 };
 </script>
