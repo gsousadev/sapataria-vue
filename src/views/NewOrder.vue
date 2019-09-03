@@ -6,7 +6,7 @@
         <div class="col-12">
           <form>
             <h4 class="bg-primary p-2 text-white">Dados do cliente</h4>
-            <div class="row">
+            <div class="row my-3">
               <div
                 class="col-12 col-sm-6"
                 v-for="(input,index) in form.customer"
@@ -39,7 +39,7 @@
               </div>
             </div>
             <h4 class="bg-primary p-2 text-white">Dados do pedido</h4>
-            <div class="row">
+            <div class="row my-3">
               <div class="col-12 col-sm-6" v-for="(input,index) in form.order" :key="index">
                 <div class="form-group" v-if="input.type == 'text'">
                   <label :for="input.name">{{input.label}}</label>
@@ -98,7 +98,7 @@ export default {
   data() {
     return {
       form: {
-        valid:true,
+        valid: true,
         customer: {
           nome: {
             type: "text",
@@ -129,7 +129,7 @@ export default {
             value: ""
           },
           numero: {
-            type: "text",
+            type: "number",
             label: "Número",
             name: "numero",
             value: ""
@@ -166,22 +166,156 @@ export default {
             }
           },
           cor_produto: {
-            type: "text",
+            type: "select",
             label: "Cor",
             name: "cor_produto",
-            value: ""
+            value: "preto",
+            options: {
+              amarelo: "Amarelo",
+              azul: "Azul",
+              bege: "Bege",
+              branco: "Branco",
+              bronze: "Bronze",
+              caramelo: "Caramelo",
+              castanho: "Castanho",
+              chocolate: "Chocolate",
+              cinza: "Cinza",
+              cobre: "Cobre",
+              dourado: "Dourado",
+              esmeralda: "Esmeralda",
+              ferrugem: "Ferrugem",
+              laranja: "Laranja",
+              lilas: "Lilás",
+              marrom: "Marrom",
+              mostarda: "Mostarda",
+              prata: "Prata",
+              preto: "Preto",
+              rosa: "Rosa",
+              roxo: "Roxo",
+              salmao: "Salmão",
+              tijolo: "Tijolo",
+              verde: "Verde",
+              vermelho: "Vermelho",
+              vinho: "Vinho"
+            }
           },
           tamanho_produto: {
-            type: "text",
+            type: "select",
             label: "Tamanho",
             name: "tamanho_produto",
-            value: ""
+            value: "p",
+            options: {
+              p: "Pequeno",
+              m: "Médio",
+              g: "Grande",
+              1: "1",
+              2: "2",
+              3: "3",
+              4: "4",
+              5: "5",
+              6: "6",
+              7: "7",
+              8: "8",
+              9: "9",
+              10: "10",
+              11: "11",
+              12: "12",
+              13: "13",
+              14: "14",
+              15: "15",
+              16: "16",
+              17: "17",
+              18: "18",
+              19: "19",
+              20: "20",
+              21: "21",
+              22: "22",
+              23: "23",
+              24: "24",
+              25: "25",
+              26: "26",
+              27: "27",
+              28: "28",
+              29: "29",
+              30: "30",
+              31: "31",
+              32: "32",
+              33: "33",
+              34: "34",
+              35: "35",
+              36: "36",
+              37: "37",
+              38: "38",
+              39: "39",
+              40: "40",
+              41: "41",
+              42: "42",
+              43: "43",
+              44: "44",
+              45: "45",
+              46: "46",
+              47: "47",
+              48: "48",
+              49: "49",
+              50: "50",
+              51: "51",
+              52: "52",
+              53: "53",
+              54: "54",
+              55: "55",
+              56: "56",
+              57: "57",
+              58: "58",
+              59: "59",
+              60: "60",
+              61: "61",
+              62: "62",
+              63: "63",
+              64: "64",
+              65: "65",
+              66: "66",
+              67: "67",
+              68: "68",
+              69: "69",
+              70: "70",
+              71: "71",
+              72: "72",
+              73: "73",
+              74: "74",
+              75: "75",
+              76: "76",
+              77: "77",
+              78: "78",
+              79: "79",
+              80: "80",
+              81: "81",
+              82: "82",
+              83: "83",
+              84: "84",
+              85: "85",
+              86: "86",
+              87: "87",
+              88: "88",
+              89: "89",
+              90: "90",
+              91: "91",
+              92: "92",
+              93: "93",
+              94: "94",
+              95: "95",
+              96: "96",
+              97: "97",
+              98: "98",
+              99: "99",
+              100: "100"
+            }
           },
           valor_produto: {
             type: "text",
             label: "Valor",
             name: "valor_produto",
-            value: ""
+            value: "",
+            regex: RegExp("^[0-9]{1,10}$")
           }
         }
       }
@@ -189,15 +323,26 @@ export default {
   },
   methods: {
     submitForm: function() {
-      let inputs = {...this.form.customer,...this.form.order};
+      let inputs = { ...this.form.customer, ...this.form.order };
       this.form.valid = true;
-      for(let element in inputs) {
+      var formToSend = [];
+      for (let element in inputs) {
         this.validFields(inputs[element]);
+        formToSend[inputs[element].name] = inputs[element].value;
       }
-      if(this.form.valid){
-        console.log('Pronto para enviar');
-      }else{
-        console.log('Não enviar');
+      if (this.form.valid) {
+        axios({
+          url: "http://localhost:8000/",
+          method: "post",
+          contentType: 'application/json',
+          data: formToSend
+        }).then(function(response){
+            console.log(response);
+        }).catch(function (error) {
+            console.log(error);
+        });
+      } else {
+        console.log("Não enviar");
       }
     },
     refreshInputs: function(elementIndex) {
@@ -210,7 +355,7 @@ export default {
     },
     getCepInfo: function() {
       let _self = this;
-      let unmaksCep = this.form.customer.cep.value.replace('-','');
+      let unmaksCep = this.form.customer.cep.value.replace("-", "");
       if (unmaksCep.length == 8) {
         let url = `https://viacep.com.br/ws/${unmaksCep}/json/`;
         axios
@@ -233,7 +378,7 @@ export default {
           if (element.regex.test(element.value)) {
             this.setValidInputs(element);
           } else {
-            this.setInvalidInputs(element); 
+            this.setInvalidInputs(element);
             this.form.valid = false;
           }
         } else {
