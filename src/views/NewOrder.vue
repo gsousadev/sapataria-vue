@@ -98,6 +98,7 @@ export default {
   data() {
     return {
       form: {
+        valid:true,
         customer: {
           nome: {
             type: "text",
@@ -119,7 +120,7 @@ export default {
             label: "CEP",
             name: "cep",
             value: "",
-            regex: RegExp("^(([0-9]{5}-?[d]{3}))$")
+            regex: RegExp("([0-9]{5,5}[-]?[0-9]{3})$")
           },
           rua: {
             type: "text",
@@ -189,10 +190,14 @@ export default {
   methods: {
     submitForm: function() {
       let inputs = {...this.form.customer,...this.form.order};
+      this.form.valid = true;
       for(let element in inputs) {
-        if(this.validFields(inputs[element])){
-          console.log("Pronto para enviar customer");
-        };
+        this.validFields(inputs[element]);
+      }
+      if(this.form.valid){
+        console.log('Pronto para enviar');
+      }else{
+        console.log('Não enviar');
       }
     },
     refreshInputs: function(elementIndex) {
@@ -204,8 +209,8 @@ export default {
       }
     },
     getCepInfo: function() {
-      let unmaksCep = this.form.customer.cep.value.replace(/\.|\-/g, "");
       let _self = this;
+      let unmaksCep = this.form.customer.cep.value.replace('-','');
       if (unmaksCep.length == 8) {
         let url = `https://viacep.com.br/ws/${unmaksCep}/json/`;
         axios
@@ -218,32 +223,25 @@ export default {
             _self.setValidInputs(_self.form.customer.cidade);
           })
           .catch(function(error) {
-            // handle error
             console.log(error);
-          })
-          .finally(function() {
-            // always executed
           });
       }
     },
     validFields: function(element) {
-      let htmlElement = document.getElementById(element.name);
       if (element.value != "") {
         if (element.regex) {
           if (element.regex.test(element.value)) {
             this.setValidInputs(element);
-            return true;
           } else {
-            this.setInvalidInputs(element);
-            return false;
+            this.setInvalidInputs(element); 
+            this.form.valid = false;
           }
         } else {
           this.setValidInputs(element);
-          return true;
         }
       } else {
         this.setInvalidInputs(element);
-        return false;
+        this.form.valid = false;
       }
     },
     setInvalidInputs: function(element) {
