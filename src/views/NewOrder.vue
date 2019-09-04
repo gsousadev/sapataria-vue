@@ -90,6 +90,7 @@
 <script>
 import Breadcrumb from "../components/Breadcramb";
 import axios from "axios";
+import InputHelper from '../../helpers/inputHelper';
 
 export default {
   components: {
@@ -391,29 +392,19 @@ export default {
       if (element.value != "") {
         if (element.regex) {
           if (element.regex.test(element.value)) {
-            this.setValidInputs(element);
+            InputHelper.setValidInputs(element.name);
           } else {
-            this.setInvalidInputs(element);
+            InputHelper.setInvalidInputs(element.name);
             this.form.valid = false;
           }
         } else {
-          this.setValidInputs(element);
+          InputHelper.setValidInputs(element.name);
         }
       } else {
-        this.setInvalidInputs(element);
+        InputHelper.setInvalidInputs(element.name);
         this.form.valid = false;
       }
     },
-    setInvalidInputs: function(element) {
-      let htmlElement = document.getElementById(element.name);
-      htmlElement.classList.add("is-invalid");
-      htmlElement.classList.remove("is-valid");
-    },
-    setValidInputs: function(element) {
-      let htmlElement = document.getElementById(element.name);
-      htmlElement.classList.remove("is-invalid");
-      htmlElement.classList.add("is-valid");
-    }
   }
   // created(){
   //   this.refreshInputs();

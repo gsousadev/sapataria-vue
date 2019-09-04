@@ -5,7 +5,6 @@ import router from './router'
 import store from './store'
 import '../theme/global.scss';
 
-
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
