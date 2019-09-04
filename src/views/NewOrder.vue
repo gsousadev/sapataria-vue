@@ -40,7 +40,7 @@
             </div>
             <h4 class="bg-primary p-2 text-white">Dados do pedido</h4>
             <div class="row my-3">
-              <div class="col-12 col-sm-6" v-for="(input,index) in form.order" :key="index">
+              <div class="col-12 col-sm-6" v-for="(input,index) in form.service" :key="index">
                 <div class="form-group" v-if="input.type == 'text'">
                   <label :for="input.name">{{input.label}}</label>
                   <input
@@ -141,7 +141,7 @@ export default {
             value: "cidade"
           }
         },
-        order: {
+        service: {
           type: {
             type: "select",
             label: "Selecione o tipo do calçado",
@@ -313,7 +313,7 @@ export default {
           total: {
             type: "text",
             label: "Valor",
-            name:'total',
+            name: "total",
             value: "123",
             regex: RegExp("^[0-9]{1,10}$")
           }
@@ -323,22 +323,39 @@ export default {
   },
   methods: {
     submitForm: function() {
-      let inputs = {...this.form.customer, ...this.form.order}
+      let inputs = { ...this.form.customer, ...this.form.service };
       this.form.valid = true;
-      var formToSend = [];
+
       for (let element in inputs) {
         this.validFields(inputs[element]);
-        formToSend[inputs[element].name] = inputs[element].value;
       }
-      formToSend = JSON.stringify({formToSend});
+
       if (this.form.valid) {
-        axios.post( "http://localhost:9090/",
-          formToSend
-        ).then(function(response){
-            console.log(response);
-        }).catch(function (error) {
-            console.log(error);
-        });
+        let formToSend = {
+          customerForm: {
+            name: inputs.name.value,
+            cpf: inputs.cpf.value,
+            zip_code: inputs.zip_code.value,
+            street: inputs.street.value,
+            number: inputs.number.value,
+            city: inputs.city.value
+          },
+          serviceForm: {
+            type: inputs.type.value,
+            color: inputs.color.value,
+            genrer: inputs.genrer.value,
+            size: inputs.size.value,
+            total: inputs.total.value
+          }
+        }
+        axios
+          .post("http://localhost:9090/", JSON.stringify(formToSend))
+          .then(function(response) {
+            console.log("salvo com sucesso");
+          })
+          .catch(function() {
+            console.log("erro ao salvar");
+          });
       } else {
         console.log("Não enviar");
       }
@@ -347,8 +364,8 @@ export default {
       if (this.form.customer[elementIndex]) {
         this.validFields(this.form.customer[elementIndex]);
       }
-      if (this.form.order[elementIndex]) {
-        this.validFields(this.form.order[elementIndex]);
+      if (this.form.service[elementIndex]) {
+        this.validFields(this.form.service[elementIndex]);
       }
     },
     getCepInfo: function() {
@@ -397,10 +414,10 @@ export default {
       htmlElement.classList.remove("is-invalid");
       htmlElement.classList.add("is-valid");
     }
-  },
+  }
   // created(){
   //   this.refreshInputs();
-  //     let inputs = { ...this.form.customer, ...this.form.order }
+  //     let inputs = { ...this.form.customer, ...this.form.service }
   //     for (let element in inputs) {
   //       this.validFields(inputs[element]);
   //     }
