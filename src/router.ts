@@ -14,15 +14,20 @@ export default new Router({
       component: Home
     },
     {
-      path: '/novo-pedido',
-      name: 'newOrder',
-      component: () => import('./views/NewOrder.vue')
+      path: '/pedidos/cadastro',
+      component: () => import('./views/order/NewOrder.vue')
     },
     {
-      path: '/pedidos',
-      name: 'ListOrders',
-      component: () => import('./views/ListOrders.vue')
+      path: '/pedidos/edicao',
+      component: () => import('./views/order/ListOrders.vue')
+    },
+    {
+      path: '/clientes/cadastro',
+      component: () => import('./views/customer/NewCustomer.vue')
+    },
+    {
+      path: '/clientes/edicao',
+      component: () => import('./views/customer/ListCustomers.vue')
     }
-
   ]
-})
+});

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Breadcrumb from '../components/Breadcramb';
+import Breadcrumb from '@/components/Breadcramb';
 
 export default {
   data() {

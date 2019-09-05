@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default class InputHelper {
     public static checkInput(val: string, regexType: string): boolean {
         let cepRegex = RegExp("([0-9]{5,5}[-]?[0-9]{3})$"),
@@ -31,5 +33,4 @@ export default class InputHelper {
         }
         return false;
     }
-
 }

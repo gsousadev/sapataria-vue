@@ -1,46 +1,72 @@
 <template>
-      <div class="row py-3 justify-content-center">
-          <div class="col-12">
-            <form>
-                <div class="form-group row justify-content-center">
-                  <input type="text" name="cpf" id="cpfInput" v-model='searchText' v-on:keyup="checkUser()" class="form-control col-4 mr-3" placeholder="Digite o CPF do cliente" aria-describedby="helpId">
-                 <button type="button" class="btn btn-primary col-2" v-on:click="checkUser()">Consultar Usuário</button>
-                </div>
-            </form>
-          </div>
-      </div>
+  <form class="row py-3 justify-content-center" v-on:submit.prevent="checkUser()">
+    <div class="col-12 col-md-5 mb-3">
+      <input
+        type="text"
+        name="cpf"
+        id="cpfInput"
+        v-model="searchText"
+        v-on:keyup="checkCpf()"
+        class="form-control w-100"
+        placeholder="Digite o CPF do cliente"
+        aria-describedby="helpId"
+      />
+    </div>
+    <div class="col-12 col-md-3">
+      <button type="submit" class="btn btn-primary w-100">Consultar Cliente</button>
+    </div>
+  </form>
 </template>
 
 <script>
-import { Component, Vue } from 'vue-property-decorator';
-import IconButton from '@/components/IconButton';
-import InputHelper from '../../helpers/inputHelper';
+import IconButton from "@/components/IconButton";
+import InputHelper from "@/helpers/inputHelper";
+import axios from "axios";
 
-export default{
+export default {
   components: {
-    IconButton,
+    IconButton
   },
-  data(){
+  data() {
     return {
-        searchText:""
-    }
+      searchText: "",
+      statusCpf: false
+    };
   },
-  methods:{
-      checkUser:function(){
-          if(InputHelper.checkInput(this.searchText,'cpf')){
-              
-          axios.post("", {cpf:searchText})
-          .then(function(response) {
-            console.log(response);
-          })
-          .catch(function() {
-            console.log("erro ao procurar");
-          });
-
-          }else{
-              InputHelper.setInvalidInputs('cpfInput');
-          }
+  methods: {
+    checkCpf: function() {
+      if (InputHelper.checkInput(this.searchText, "cpf")) {
+        InputHelper.setValidInputs("cpfInput");
+      } else {
+        InputHelper.setInvalidInputs("cpfInput");
       }
+    },
+    checkUser: function() {
+      const _self = this;
+      if (InputHelper.checkInput(this.searchText, "cpf")) {
+        axios
+          .get("http://localhost:9090/customer/check-cpf", {
+            params: {
+              cpf: this.searchText
+            }
+          })
+          .then(function(response) {
+            if (response.data.registredCustomer != false) {
+              _self.$store.dispatch("setCustomerId", {
+                customerId: response.data.registredCustomer
+              });
+              _self.$router.push({ path: "/pedidos/cadastro" });
+            } else {
+              _self.$router.push({ path: "/clientes/cadastro" });
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else {
+        InputHelper.setInvalidInputs("cpfInput");
+      }
+    }
   }
-}
+};
 </script>

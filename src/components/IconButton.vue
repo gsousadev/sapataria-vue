@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12 col-sm-6 col-md-4">
+  <div class="col-12 col-md-6">
     <router-link :class="getClassNames()" :to="url">
       <h3 class="title">{{ buttonText }}</h3>
     </router-link>
