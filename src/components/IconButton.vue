@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     getClassNames: function() {
-      return 'sp-link bg-primary';
+      return 'sp-link bg-primary rounded';
     }
   }
 };

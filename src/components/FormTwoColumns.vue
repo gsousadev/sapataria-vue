@@ -1,6 +1,6 @@
 <template>
    <form v-on:submit.prevent="submitForm()">
-            <h4 class="bg-primary p-2 text-white">{{headerTitle}}</h4>
+            <h4 class="bg-primary p-2 text-white rounded">{{headerTitle}}</h4>
             <div class="row my-3">
               <div class="col-12 col-sm-6" v-for="(input,index) in inputs" :key="index">
                 <div class="form-group" v-if="input.type == 'text' && index == 'zip_code'">
@@ -75,23 +75,25 @@ export default {
     submitForm: function() {
       this.valid = true;
 
-      let params = {};
+      let bodyFormData = new FormData();
 
       for (let element in this.inputs) {
         this.validFields(this.inputs[element]);
         let elementName = this.inputs[element].name,
             elementValue = this.inputs[element].value;
-            params[elementName] = elementValue;
+            bodyFormData.set(elementName,elementValue);
       }
-      console.log(JSON.stringify({params:params}))
       if (this.valid) {
         axios
-          .post(this.requestUrl, JSON.stringify({params:params}))
+          .post(this.requestUrl, bodyFormData)
           .then(function(response) {
-            console.log("salvo com sucesso");
+
+            console.log(response);
           })
-          .catch(function() {
-            console.log("erro ao salvar");
+          .catch(function(error) {
+
+            alert(error);
+            console.log(error);
           });
       } else {
         console.log("Não enviar");
