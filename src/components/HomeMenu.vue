@@ -1,7 +1,7 @@
 <template>
       <div class="row py-3 justify-content-center">
-          <IconButton url="/clientes/cadastro" iconClass="list" buttonText="Cadastrar Cliente"/>
-          <IconButton url="/pedidos/cadastro" iconClass="table" buttonText="Cadastrar Pedido"/>
+          <IconButton url="/clientes/lista" iconClass="list" buttonText="Lista de Clientes"/>
+          <IconButton url="/pedidos/lista" iconClass="table" buttonText="Lista de Pedidos"/>
       </div>
 </template>
 

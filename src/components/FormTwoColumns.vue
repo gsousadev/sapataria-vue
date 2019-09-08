@@ -57,6 +57,7 @@
 <script>
 import axios from "axios";
 import InputHelper from "@/helpers/inputHelper";
+import router from '../router';
 
 export default {
     name: "FormTwoColumns",
@@ -74,7 +75,7 @@ export default {
     methods: {
     submitForm: function() {
       this.valid = true;
-
+      const _self = this;
       let bodyFormData = new FormData();
 
       for (let element in this.inputs) {
@@ -87,12 +88,11 @@ export default {
         axios
           .post(this.requestUrl, bodyFormData)
           .then(function(response) {
-
-            console.log(response);
+            alert(response.data.message);
+            console.log(response.data.codeMessage)
+            _self.$router.push({path:'/'});
           })
           .catch(function(error) {
-
-            alert(error);
             console.log(error);
           });
       } else {

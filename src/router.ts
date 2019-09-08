@@ -18,15 +18,15 @@ export default new Router({
       component: () => import('./views/order/NewOrder.vue')
     },
     {
-      path: '/pedidos/edicao',
+      path: '/pedidos/lista',
       component: () => import('./views/order/ListOrders.vue')
     },
     {
       path: '/clientes/cadastro',
-      component: () => import('./views/customer/NewCustomer.vue')
+      component: () => import('./views/customer/NewCustomer.vue'),
     },
     {
-      path: '/clientes/edicao',
+      path: '/clientes/lista',
       component: () => import('./views/customer/ListCustomers.vue')
     }
   ]

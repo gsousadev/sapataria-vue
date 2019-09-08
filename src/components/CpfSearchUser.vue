@@ -42,22 +42,23 @@ export default {
       }
     },
     checkUser: function() {
-      const _self = this;
+      let store = this.$store;
+      let router = this.$router;
+      let searchText = this.searchText;
       if (InputHelper.checkInput(this.searchText, "cpf")) {
         axios
           .get("http://localhost:9090/customer/check-cpf", {
             params: {
-              cpf: this.searchText
+              cpf: searchText
             }
           })
           .then(function(response) {
-            if (response.data.registredCustomer != false) {
-              _self.$store.dispatch("setCustomerId", {
-                customerId: response.data.registredCustomer
-              });
-              _self.$router.push({ path: "/pedidos/cadastro" });
+            alert(response.data.message);
+            if (response.data.codeMessage.data != false) {
+              let customerId = response.data.codeMessage.data
+              router.push({ path: "/pedidos/cadastro", query:{id:customerId}});
             } else {
-              _self.$router.push({ path: "/clientes/cadastro" });
+              router.push({ path: "/clientes/cadastro", query:{cpf:searchText}});
             }
           })
           .catch(function(error) {
