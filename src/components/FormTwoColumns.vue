@@ -57,7 +57,6 @@
 <script>
 import axios from "axios";
 import InputHelper from "@/helpers/inputHelper";
-import router from '../router';
 
 export default {
     name: "FormTwoColumns",
@@ -65,7 +64,8 @@ export default {
         requestUrl:String,
         headerTitle:String,
         inputs:Object,
-        textSubmitButton:String
+        textSubmitButton:String,
+        redirectUrl:String
     },
     data(){
       return{
@@ -73,7 +73,8 @@ export default {
       }
     },
     methods: {
-    submitForm: function() {
+
+   submitForm: function() {
       this.valid = true;
       const _self = this;
       let bodyFormData = new FormData();
@@ -90,7 +91,7 @@ export default {
           .then(function(response) {
             alert(response.data.message);
             console.log(response.data.codeMessage)
-            _self.$router.push({path:'/'});
+            _self.$router.push({path:this.redirectUrl, query:{data:response.data.codeMessage.data}});
           })
           .catch(function(error) {
             console.log(error);
@@ -99,7 +100,6 @@ export default {
         console.log("Não enviar");
       }
     },
-
     refreshInputs: function(elementIndex) {
       if (this.inputs[elementIndex]) {
         this.validFields(this.inputs[elementIndex]);
