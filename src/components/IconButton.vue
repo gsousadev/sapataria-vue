@@ -8,9 +8,6 @@
 
 <script>
 export default {
-  mounted() {
-    console.log(`Link component '${this.buttonText}' mounted.`);
-  },
   props: {
     url: String,
     buttonText: String,

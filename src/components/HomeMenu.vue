@@ -7,8 +7,7 @@
 
 <script>
 import { Component, Vue } from 'vue-property-decorator';
-import IconButton from '@/components/IconButton.vue'; // @ is an alias to /src
-
+import IconButton from '@/components/IconButton.vue'; 
 @Component({
   components: {
     IconButton,

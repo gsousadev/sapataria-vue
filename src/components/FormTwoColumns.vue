@@ -1,57 +1,55 @@
 <template>
-   <form v-on:submit.prevent="submitForm()">
-            <h4 class="bg-primary p-2 text-white rounded">{{headerTitle}}</h4>
-            <div class="row my-3">
-              <div class="col-12 col-sm-6" v-for="(input,index) in inputs" :key="index">
-                <div class="form-group" v-if="input.type == 'text' && index == 'zip_code'">
-                  <label :for="input.name">{{input.label}}</label>
-                  <input
-                    :type="input.type"
-                    class="form-control"
-                    :id="input.name"
-                    :name="input.name"
-                    v-model="input.value"
-                    v-on:keyup="getCepInfo()"
-                  />
-                </div>
-                <div class="form-group" v-else-if="(input.type == 'text' || input.type == 'number' ) && index != 'zip_code'">
-                  <label :for="input.index">{{input.label}}</label>
-                  <input
-                    :type="input.type"
-                    class="form-control"
-                    :id="input.name"
-                    :name="input.name"
-                    v-model="input.value"
-                    :value="input.value"
-                    v-on:keyup="refreshInputs(index)"
-                  />
-                </div>
-                <div class="form-group" v-else-if="input.type == 'select'">
-                  <label :for="input.name">{{input.label}}</label>
-                  <select
-                    :name="input.name"
-                    :id="input.name"
-                    v-model="input.value"
-                    class="form-control"
-                    v-on:keyup="refreshInputs(index)"
-                  >
-                    <option
-                      v-for="(option,index) in input.options"
-                      :key="index"
-                      :value="index"
-                    >{{option}}</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            
-              <div class="row justify-content-center">
-                <div class="col-12 col--4">
-                  <button type="submit" class="btn btn-primary d-block text-white">{{textSubmitButton}}</button>
-                </div>
-              </div>
-       
-          </form>
+  <form v-on:submit.prevent="submitForm()">
+    <h4 class="bg-primary p-2 text-white rounded">{{headerTitle}}</h4>
+    <div class="row my-3">
+      <div class="col-12 col-sm-6" v-for="(input,index) in inputs" :key="index">
+        <div class="form-group" v-if="input.type == 'text' && index == 'zip_code'">
+          <label :for="input.name">{{input.label}}</label>
+          <input
+            :type="input.type"
+            class="form-control"
+            :id="input.name"
+            :name="input.name"
+            v-model="input.value"
+            v-on:keyup="getCepInfo()"
+          />
+        </div>
+        <div
+          class="form-group"
+          v-else-if="(input.type == 'text' || input.type == 'number' ) && index != 'zip_code'"
+        >
+          <label :for="input.index">{{input.label}}</label>
+          <input
+            :type="input.type"
+            class="form-control"
+            :id="input.name"
+            :name="input.name"
+            v-model="input.value"
+            :value="input.value"
+            v-on:keyup="refreshInputs(index)"
+          />
+        </div>
+        <div class="form-group" v-else-if="input.type == 'select'">
+          <label :for="input.name">{{input.label}}</label>
+          <select
+            :name="input.name"
+            :id="input.name"
+            v-model="input.value"
+            class="form-control"
+            v-on:keyup="refreshInputs(index)"
+          >
+            <option v-for="(option,index) in input.options" :key="index" :value="index">{{option}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-12 col--4">
+        <button type="submit" class="btn btn-primary d-block text-white">{{textSubmitButton}}</button>
+      </div>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -59,22 +57,36 @@ import axios from "axios";
 import InputHelper from "@/helpers/inputHelper";
 
 export default {
-    name: "FormTwoColumns",
-    props: {
-        requestUrl:String,
-        headerTitle:String,
-        inputs:Object,
-        textSubmitButton:String,
-        redirectUrl:String
+  name: "FormTwoColumns",
+  props: {
+    requestUrl: {
+      type: String,
+      required: true
     },
-    data(){
-      return{
-        valid:false
-      }
+    headerTitle: {
+      type: String,
+      required: true
     },
-    methods: {
-
-   submitForm: function() {
+    inputs: {
+      type: Object,
+      required: true
+    },
+    textSubmitButton: {
+      type: String,
+      required: true
+    },
+    redirectUrl: {
+      type: String,
+      required: false
+    }
+  },
+  data() {
+    return {
+      valid: false
+    };
+  },
+  methods: {
+    submitForm: function() {
       this.valid = true;
       const _self = this;
       let bodyFormData = new FormData();
@@ -82,16 +94,23 @@ export default {
       for (let element in this.inputs) {
         this.validFields(this.inputs[element]);
         let elementName = this.inputs[element].name,
-            elementValue = this.inputs[element].value;
-            bodyFormData.set(elementName,elementValue);
+          elementValue = this.inputs[element].value;
+        bodyFormData.set(elementName, elementValue);
       }
       if (this.valid) {
         axios
-          .post(this.requestUrl, bodyFormData)
+          .post(process.env.VUE_APP_API_URL + this.requestUrl, bodyFormData)
           .then(function(response) {
             alert(response.data.message);
-            console.log(response.data.codeMessage)
-            _self.$router.push({path:this.redirectUrl, query:{data:response.data.codeMessage.data}});
+            console.log(response.data.codeMessage);
+            if (_self.redirectUrl != "/") {
+              _self.$router.push({
+                path: _self.redirectUrl,
+                query: { data: response.data.codeMessage.data }
+              });
+            } else {
+               _self.$router.push({path: _self.redirectUrl});
+            }
           })
           .catch(function(error) {
             console.log(error);
@@ -140,11 +159,10 @@ export default {
         InputHelper.setInvalidInputs(element.name);
         this.valid = false;
       }
-    },
+    }
   }
-}
+};
 </script>
 
 <style>
-
 </style>

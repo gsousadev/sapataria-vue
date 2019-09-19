@@ -47,7 +47,7 @@ export default {
       let searchText = this.searchText;
       if (InputHelper.checkInput(this.searchText, "cpf")) {
         axios
-          .get("http://localhost:9090/customer/check-cpf", {
+          .get(`${process.env.VUE_APP_API_URL}/customer/check-cpf`, {
             params: {
               cpf: searchText
             }
@@ -56,7 +56,7 @@ export default {
             alert(response.data.message);
             if (response.data.codeMessage.data != false) {
               let customerId = response.data.codeMessage.data
-              router.push({ path: "/pedidos/cadastro", query:{id:customerId}});
+              router.push({ path: "/pedidos/cadastro", query:{data:customerId}});
             } else {
               router.push({ path: "/clientes/cadastro", query:{cpf:searchText}});
             }

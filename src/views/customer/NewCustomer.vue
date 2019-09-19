@@ -5,11 +5,11 @@
       <div class="row justify-content-center">
         <div class="col-12">
           <FormTwoColumns
-            requestUrl="http://localhost:9090/customer/create"
+            requestUrl="/customer/create"
             headerTitle="Cadastro de Cliente"
             :inputs="this.fields"
             textSubmitButton="Cadastrar Cliente"
-            redirectUrl="pedidos/cadastro"
+            redirectUrl="/pedidos/cadastro"
           />
         </div>
       </div>

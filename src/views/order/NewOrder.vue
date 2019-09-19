@@ -5,10 +5,11 @@
       <div class="row justify-content-center">
         <div class="col-12">
           <FormTwoColumns
-            requestUrl="http://localhost:9090/order/create"
+            :requestUrl="requestUrl"
             headerTitle="Cadastro de Pedido"
-            :inputs="this.fields"
+            :inputs="fields"
             textSubmitButton="Cadastrar Pedido"
+            redirectUrl="/"
           />
         </div>
       </div>
@@ -22,15 +23,18 @@ import FormTwoColumns from "@/components/FormTwoColumns";
 import axios from "axios";
 import InputHelper from "@/helpers/inputHelper";
 
-
 export default {
   components: {
     Breadcrumb: Breadcrumb,
     FormTwoColumns: FormTwoColumns
   },
+  computed:{
+    requestUrl(){
+      return `/order/create/${this.$route.query.data}`
+    }
+  },
   data() {
     return {
-      customerId: this.$route.query.id,
       fields: {
         type: {
           type: "select",
