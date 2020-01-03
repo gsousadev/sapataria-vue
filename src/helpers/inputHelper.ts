@@ -3,7 +3,7 @@ import axios from 'axios';
 export default class InputHelper {
     public static checkInput(val: string, regexType: string): boolean {
         let cepRegex = RegExp("([0-9]{5,5}[-]?[0-9]{3})$"),
-            cpfRegex = RegExp("^(([0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2})|([0-9]{11}))$"),
+            cpfRegex = RegExp("^([0-9]{11})$"),
             regexTest: RegExp = RegExp("");
 
         switch (regexType) {

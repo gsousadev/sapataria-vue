@@ -100,16 +100,17 @@ export default {
       if (this.valid) {
         axios
           .post(process.env.VUE_APP_API_URL + this.requestUrl, bodyFormData)
-          .then(function(response) {
-            alert(response.data.message);
-            console.log(response.data.codeMessage);
-            if (_self.redirectUrl != "/") {
-              _self.$router.push({
-                path: _self.redirectUrl,
-                query: { data: response.data.codeMessage.data }
+          .then((response) => {
+            const responseBody = response.data;
+            console.log(responseBody);
+            alert(responseBody.message);
+            if (this.redirectUrl != "/") {
+              this.$router.push({
+                path: this.redirectUrl,
+                query: { data: responseBody.data }
               });
             } else {
-               _self.$router.push({path: _self.redirectUrl});
+               this.$router.push({path: this.redirectUrl});
             }
           })
           .catch(function(error) {

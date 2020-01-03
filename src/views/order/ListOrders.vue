@@ -12,21 +12,25 @@
 </template>
 
 <script>
-import Breadcrumb from '@/components/Breadcramb';
+import Breadcrumb from "@/components/Breadcramb";
+import axios from "axios";
 
 export default {
+  mounted() {
+    axios.get(process.env.VUE_APP_API_URL + this.requestUrl).then(response => {
+      console.log(response.data.data);
+      this.items = response.data.data;
+    });
+  },
+
   data() {
     return {
-      items: [
-        { age: 40, first_name: "Dickerson", last_name: "Macdonald" },
-        { age: 21, first_name: "Larsen", last_name: "Shaw" },
-        { age: 89, first_name: "Geneva", last_name: "Wilson" },
-        { age: 38, first_name: "Jami", last_name: "Carney" }
-      ]
+      items: [],
+      requestUrl: "/order/index"
     };
   },
-  components:{
-    "Breadcrumb":Breadcrumb
+  components: {
+    Breadcrumb: Breadcrumb
   }
 };
 </script>
