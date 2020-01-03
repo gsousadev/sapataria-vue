@@ -34,7 +34,6 @@ export default {
     this.fields.cpf.value = this.$route.query.cpf;
   },
 
-
   data() {
     return {
       fields: {

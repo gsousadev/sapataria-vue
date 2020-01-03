@@ -47,8 +47,8 @@
                 if (InputHelper.checkInput(this.searchText, "cpf")) {
                     axios.get(`${process.env.VUE_APP_API_URL}/customer/check-cpf/${searchText}`)
                         .then(function (response) {
-                            let customerId = response.data.id;
-                            router.push({path: "/pedidos/cadastro", query: {data: customerId}});
+                            const customer = response.data.data;
+                            router.push({path: "/pedidos/cadastro/", query: {id: customer.id}});
                         })
                         .catch(function () {
                             router.push({path: "/clientes/cadastro", query: {cpf: searchText}});
@@ -60,3 +60,4 @@
         }
     };
 </script>
+
