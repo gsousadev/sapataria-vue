@@ -1,4 +1,17 @@
 @import './variables.scss';
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import './material.scss';
 
-a,button{cursor:pointer;}
+
+
+a,
+button {
+    cursor: pointer;
+    border: 0;
+    background: inherit;
+    vertical-align: middle;
+    text-decoration: inherit;
+    &:focus{
+        outline: inherit;
+    }
+}

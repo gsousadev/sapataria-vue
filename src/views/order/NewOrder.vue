@@ -99,7 +99,7 @@ export default {
         type: {
           type: "select",
           label: "Selecione o tipo do calçado",
-          name: "type",
+          name: "tipo",
           value: "bota",
           options: {
             bota: "Bota",
@@ -111,7 +111,7 @@ export default {
         genre: {
           type: "select",
           label: "Gênero do produto",
-          name: "genre",
+          name: "genero",
           value: "m",
           options: {
             m: "Masculino",
@@ -122,7 +122,7 @@ export default {
         color: {
           type: "select",
           label: "Cor",
-          name: "color",
+          name: "cor",
           value: "preto",
           options: {
             amarelo: "Amarelo",
@@ -156,7 +156,7 @@ export default {
         size: {
           type: "select",
           label: "Tamanho",
-          name: "size",
+          name: "tamanho",
           value: "p",
           options: {
             p: "Pequeno",
@@ -267,8 +267,8 @@ export default {
         total: {
           type: "text",
           label: "Valor",
-          name: "total",
-          value: "123",
+          name: "valor",
+          value: "",
           regex: RegExp("^[0-9]{1,10}$")
         }
       },

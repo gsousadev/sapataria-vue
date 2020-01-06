@@ -7,6 +7,10 @@
           <form v-on:submit.prevent="submitForm()">
             <h4 class="bg-primary p-2 text-white rounded">{{headerTitle}}</h4>
             <div class="row my-3">
+
+
+
+
               <div class="col-12 col-sm-6" v-for="(input,index) in inputs" :key="index">
                 <div class="form-group" v-if="input.type == 'text' && index == 'zip_code'">
                   <label :for="input.name">{{input.label}}</label>
@@ -17,6 +21,7 @@
                     :name="input.name"
                     v-model="input.value"
                     v-on:keyup="getCepInfo()"
+                    :v-mask="input.mask" 
                   />
                 </div>
                 <div
@@ -32,6 +37,7 @@
                     v-model="input.value"
                     :value="input.value"
                     v-on:keyup="refreshInputs(index)"
+                    :v-mask="input.mask" 
                   />
                 </div>
                 <div class="form-group" v-else-if="input.type == 'select'">
@@ -90,7 +96,7 @@ export default {
         name: {
           type: "text",
           label: "Nome",
-          name: "name",
+          name: "nome",
           value: ""
         },
         cpf: {
@@ -98,31 +104,44 @@ export default {
           label: "CPF",
           name: "cpf",
           value: "",
-          regex: RegExp("^([0-9]{11})$")
+          regex: RegExp("^([0-9]{11})$"),
+          mask: "###.###.###-##"
         },
         zip_code: {
           type: "text",
           label: "CEP",
-          name: "zip_code",
+          name: "cep",
           value: "",
           regex: RegExp("([0-9]{5,5}[-]?[0-9]{3})$")
         },
         street: {
           type: "text",
           label: "Rua",
-          name: "street",
+          name: "rua",
           value: ""
         },
         number: {
           type: "number",
           label: "Número",
-          name: "number",
+          name: "numero_residencia",
           value: ""
         },
         city: {
           type: "text",
           label: "Cidade",
-          name: "city",
+          name: "cidade",
+          value: ""
+        },
+        phone_1: {
+          type: "text",
+          label: "Telefone 1",
+          name: "telefone_1",
+          value: ""
+        },
+        phone_2: {
+          type: "text",
+          label: "Telefone 2",
+          name: "telefone_2",
           value: ""
         }
       },
