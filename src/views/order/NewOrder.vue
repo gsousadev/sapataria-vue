@@ -1,67 +1,221 @@
 <template>
   <div class="row justify-content-center">
-    <div class="col-sm-12 col-lg-6">
+    <div class="col-12 col-lg-10">
       <Breadcrumb :currentPageName="headerTitle"></Breadcrumb>
       <div class="row justify-content-center">
         <div class="col-12">
-          <form v-on:submit.prevent="submitForm()">
-            <h4 class="bg-primary p-2 text-white rounded">{{headerTitle}}</h4>
-            <div class="row my-3">
-              <div class="col-12 col-sm-6" v-for="(input,index) in inputs" :key="index">
-                <div class="form-group" v-if="input.type == 'text' && index == 'zip_code'">
-                  <label :for="input.name">{{input.label}}</label>
-                  <input
-                    :type="input.type"
-                    class="form-control"
-                    :id="input.name"
-                    :name="input.name"
-                    v-model="input.value"
-                    v-on:keyup="getCepInfo()"
-                  />
+          <h4 class="bg-primary p-2 text-white rounded">{{headerTitle}}</h4>
+
+          <div class="bg-white p-3 mt-3 rounded">
+            <h4>Adicionar item</h4>
+            <hr />
+            <div class="box-order-items">
+              <div class="order-item" data-index="1">
+                <div class="row mt-3">
+                  <div class="col-12 col-sm-3">
+                    <div class="form-group">
+                      <label :for="orderItemsInputs.type.name">{{orderItemsInputs.type.label}}</label>
+                      <select
+                        :name="orderItemsInputs.type.name"
+                        :id="orderItemsInputs.type.name"
+                        v-model="orderItemsInputs.type.value"
+                        class="form-control"
+                      >
+                        <option
+                          v-for="(option,index) in orderItemsInputs.type.options"
+                          :key="index"
+                          :value="index"
+                        >{{option}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-sm-3">
+                    <div class="form-group">
+                      <label :for="orderItemsInputs.color.name">{{orderItemsInputs.color.label}}</label>
+                      <select
+                        :name="orderItemsInputs.color.name"
+                        :id="orderItemsInputs.color.name"
+                        v-model="orderItemsInputs.color.value"
+                        class="form-control"
+                      >
+                        <option
+                          v-for="(option,index) in orderItemsInputs.color.options"
+                          :key="index"
+                          :value="index"
+                        >{{option}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-sm-2">
+                    <div class="form-group">
+                      <label :for="orderItemsInputs.genre.name">{{orderItemsInputs.genre.label}}</label>
+                      <select
+                        :name="orderItemsInputs.genre.name"
+                        :id="orderItemsInputs.genre.name"
+                        v-model="orderItemsInputs.genre.value"
+                        class="form-control"
+                      >
+                        <option
+                          v-for="(option,index) in orderItemsInputs.genre.options"
+                          :key="index"
+                          :value="index"
+                        >{{option}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-sm-2">
+                    <div class="form-group">
+                      <label :for="orderItemsInputs.size.name">{{orderItemsInputs.size.label}}</label>
+                      <select
+                        :name="orderItemsInputs.size.name"
+                        :id="orderItemsInputs.size.name"
+                        v-model="orderItemsInputs.size.value"
+                        class="form-control"
+                      >
+                        <option
+                          v-for="(option,index) in orderItemsInputs.size.options"
+                          :key="index"
+                          :value="index"
+                        >{{option}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-2">
+                    <div class="form-group">
+                      <label :for="orderItemsInputs.total.name">{{orderItemsInputs.total.label}}</label>
+                      <input
+                        :type="orderItemsInputs.total.type"
+                        class="form-control"
+                        :id="orderItemsInputs.total.name"
+                        :name="orderItemsInputs.total.name"
+                        v-model="orderItemsInputs.total.value"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div
-                  class="form-group"
-                  v-else-if="(input.type == 'text' || input.type == 'number' ) && index != 'zip_code'"
-                >
-                  <label :for="input.index">{{input.label}}</label>
-                  <input
-                    :type="input.type"
-                    class="form-control"
-                    :id="input.name"
-                    :name="input.name"
-                    v-model="input.value"
-                    :value="input.value"
-                    v-on:keyup="refreshInputs(index)"
-                  />
+                <div class="row mt-3">
+                  <div class="col-12">
+                    <div class="d-flex justify-content-end">
+                      <button
+                        @click="addItem()"
+                        type="button"
+                        class="btn btn-primary btn-add"
+                      >Adicionar</button>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group" v-else-if="input.type == 'select'">
-                  <label :for="input.name">{{input.label}}</label>
-                  <select
-                    :name="input.name"
-                    :id="input.name"
-                    v-model="input.value"
-                    class="form-control"
-                    v-on:keyup="refreshInputs(index)"
-                  >
-                    <option
-                      v-for="(option,index) in input.options"
-                      :key="index"
-                      :value="index"
-                    >{{option}}</option>
-                  </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white p-3 mt-3 rounded">
+            <h4>Itens</h4>
+            <hr />
+            <div class="order-items-box" v-if="orderItems.length == 0">
+              <p class="text-center">Nenhum item adicionado</p>
+            </div>
+            <div class="order-items-box table-responsive" v-else>
+              <table class="table table-borderless text-center">
+                <tr>
+                  <th>#</th>
+                  <th>Tipo</th>
+                  <th>Cor</th>
+                  <th>Gênero</th>
+                  <th>Tamanho</th>
+                  <th>Valor</th>
+                  <th>Excluir</th>
+                </tr>
+
+                <tr v-for="(item,index) in orderItems" :key="index">
+                  <td>{{ index+1}}</td>
+                  <td>{{orderItemsInputs.type.options[item.tipo]}}</td>
+                  <td>{{orderItemsInputs.genre.options[item.genero]}}</td>
+                  <td>{{orderItemsInputs.color.options[item.cor]}}</td>
+                  <td>{{orderItemsInputs.size.options[item.tamanho]}}</td>
+                  <td>{{OutputHelper.money(item.valor)}}</td>
+                  <td>
+                    <button @click="removeItem(index)">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="bg-white p-3 mt-3 rounded">
+            <h4>Informações Gerais</h4>
+            <hr />
+            <div class="row mt-3 align-items-center">
+              <div class="col-12 col-sm-6">
+                <div class="row align-items-end">
+                  <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                      <label :for="orderInputs.cpf.name">{{orderInputs.cpf.label}}</label>
+                      <input
+                        :type="orderInputs.cpf.type"
+                        class="form-control"
+                        :id="orderInputs.cpf.name"
+                        :name="orderInputs.cpf.name"
+                        v-model="orderInputs.cpf.value"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-3">
+                    <div class="form-group">
+                      <label :for="orderInputs.discount.name">{{orderInputs.discount.label}}</label>
+                      <input
+                        :type="orderInputs.discount.type"
+                        class="form-control"
+                        :id="orderInputs.discount.name"
+                        :name="orderInputs.discount.name"
+                        v-model="orderInputs.discount.value"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-3">
+                    <div class="form-group">
+                      <button @click="discountCalculate()" class="btn btn-primary">Aplicar</button>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label :for="orderInputs.deliveryDate.name">{{orderInputs.deliveryDate.label}}</label>
+                      <input
+                        :type="orderInputs.deliveryDate.type"
+                        class="form-control"
+                        :id="orderInputs.deliveryDate.name"
+                        :name="orderInputs.deliveryDate.name"
+                        v-model="orderInputs.deliveryDate.value"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-6">
+                <div class="text-center">
+                  <span
+                    class="total-value-label display-3"
+                  >{{OutputHelper.money(orderInputs.total.value)}}</span>
                 </div>
               </div>
             </div>
 
-            <div class="row justify-content-center">
-              <div class="col-12 col--4">
-                <button
-                  type="submit"
-                  class="btn btn-primary d-block text-white"
-                >{{textSubmitButton}}</button>
+            <div class="row mt-5">
+              <div class="col-12">
+                <div class="d-flex justify-content-end">
+                  <button
+                    @click="submitForm()"
+                    class="btn btn-primary d-block text-white"
+                  >Finalizar Pedido</button>
+                </div>
               </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
@@ -72,6 +226,7 @@
 import Breadcrumb from "@/components/Breadcramb";
 import FormTwoColumns from "@/components/FormTwoColumns";
 import InputHelper from "@/helpers/inputHelper";
+import OutputHelper from "@/helpers/outputHelper";
 import axios from "axios";
 
 export default {
@@ -81,24 +236,45 @@ export default {
   },
 
   created() {
-    this.inputs.customer_cpf.value = this.$route.query.cpf;
+    this.orderInputs.cpf.value = this.$route.query.cpf;
   },
 
   data() {
     return {
+      OutputHelper,
       headerTitle: "Cadastro de Pedido",
-      textSubmitButton: "Cadastrar",
-      inputs: {
-        customer_cpf: {
+      orderInputs: {
+        cpf: {
           type: "text",
           label: "CPF",
           name: "cpf",
           value: "",
           regex: RegExp("^([0-9]{11})$")
         },
+        discount: {
+          type: "text",
+          label: "Desconto",
+          name: "desconto",
+          value: 0,
+          regex: RegExp("[+-]?([0-9]*[.])?[0-9]+")
+        },
+        deliveryDate: {
+          type: "date",
+          label: "Data de Entrega",
+          name: "data_entrega"
+        },
+        total: {
+          type: "text",
+          label: "Total",
+          name: "valor_pedido",
+          value: 0,
+          regex: RegExp("[+-]?([0-9]*[.])?[0-9]+")
+        }
+      },
+      orderItemsInputs: {
         type: {
           type: "select",
-          label: "Selecione o tipo do calçado",
+          label: "Tipo",
           name: "tipo",
           value: "bota",
           options: {
@@ -110,7 +286,7 @@ export default {
         },
         genre: {
           type: "select",
-          label: "Gênero do produto",
+          label: "Gênero",
           name: "genero",
           value: "m",
           options: {
@@ -267,65 +443,78 @@ export default {
         total: {
           type: "text",
           label: "Valor",
-          name: "valor",
-          value: "",
-          regex: RegExp("^[0-9]{1,10}$")
+          name: "valor_item",
+          value: 0,
+          regex: RegExp("[+-]?([0-9]*[.])?[0-9]+")
         }
       },
-      requestUrl: "/order",
+      orderItems: [],
+      requestUrl: "/order/",
       redirectUrl: "/pedidos/lista"
     };
   },
   methods: {
+    getDataToSend() {
+      return {
+        cpf: this.orderInputs.cpf.value,
+        data_entrega: this.orderInputs.deliveryDate.value,
+        desconto: InputHelper.money(this.orderInputs.discount.value),
+        valor: this.orderInputs.total.value,
+        itens: this.orderItems
+      };
+    },
     submitForm: function() {
-      this.valid = true;
-      let bodyFormData = {};
+      const url = process.env.VUE_APP_API_URL + this.requestUrl;
+      const data = this.getDataToSend();
+      axios
+        .post(url, data)
+        .then(response => {
+          const responseBody = response.data;
+          console.log(responseBody);
+          alert(responseBody.message);
+          this.$router.push({ path: this.redirectUrl });
+        })
+        .catch(function(error) {
+          console.log(error.message);
+        });
+    },
+    addItem() {
+      this.orderItems.push({
+        tipo: this.orderItemsInputs.type.value,
+        genero: this.orderItemsInputs.genre.value,
+        cor: this.orderItemsInputs.color.value,
+        tamanho: this.orderItemsInputs.size.value,
+        valor: InputHelper.money(this.orderItemsInputs.total.value)
+      });
+      this.refreshTotal();
+    },
+    removeItem(index) {
+      this.orderItems.splice(index, 1);
+      this.refreshTotal();
+    },
 
-      for (let element in this.inputs) {
-        this.validFields(this.inputs[element]);
-        let elementName = this.inputs[element].name,
-          elementValue = this.inputs[element].value;
-        bodyFormData.set(elementName, elementValue);
-      }
-      if (this.valid) {
-        axios.post(process.env.VUE_APP_API_URL + this.requestUrl, bodyFormData)
-          .then(response => {
-            const responseBody = response.data;
-            console.log(responseBody);
-            alert(responseBody.message);
-            this.$router.push({ path: this.redirectUrl });
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
-      } else {
-        console.log("Não enviar");
+    discountCalculate() {
+      this.refreshTotal();
+      if (
+        InputHelper.money(this.orderInputs.discount.value) >
+          this.orderInputs.total.value ||
+        isNaN(InputHelper.money(this.orderInputs.discount.value))
+      )
+        this.orderInputs.total.value = 0;
+      else {
+        this.orderInputs.total.value -= InputHelper.money(
+          this.orderInputs.discount.value
+        );
       }
     },
-    refreshInputs: function(elementIndex) {
-      if (this.inputs[elementIndex]) {
-        this.validFields(this.inputs[elementIndex]);
-      }
+
+    refreshTotal() {
+      this.orderInputs.total.value = 0;
+      this.orderItems.forEach((item, index) => {
+        this.orderInputs.total.value += InputHelper.money(item.valor);
+      });
     },
-    getCepInfo: function() {
-      let _self = this;
-      let unmaksCep = this.inputs.zip_code.value.replace("-", "");
-      if (unmaksCep.length == 8) {
-        let url = `https://viacep.com.br/ws/${unmaksCep}/json/`;
-        axios
-          .get(url)
-          .then(function(response) {
-            _self.inputs.street.value = response.data.logradouro;
-            _self.inputs.city.value = response.data.localidade;
-            InputHelper.setValidInputs(_self.inputs.zip_code.name);
-            InputHelper.setValidInputs(_self.inputs.street.name);
-            InputHelper.setValidInputs(_self.inputs.city.name);
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
-      }
-    },
+
     validFields: function(element) {
       if (element.value != "") {
         if (element.regex) {

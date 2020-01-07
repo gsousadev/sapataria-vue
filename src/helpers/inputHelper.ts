@@ -33,4 +33,8 @@ export default class InputHelper {
         }
         return false;
     }
+
+    public static money(maskedValue:any) {
+        return parseFloat(maskedValue.toString().replace(',', '.'));
+    }
 }

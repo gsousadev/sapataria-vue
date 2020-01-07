@@ -1,11 +1,11 @@
 <template>
-  <div class="row">
-    <div class="col-12">
+  <div class="row justify-content-center">
+   <div class="col-12 col-lg-10">
       <Breadcrumb currentPageName="Lista de Pedidos"></Breadcrumb>
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
-            <table class="table table-striped text-center table-sm">
+            <table class="table table-striped text-center table-sm bg-white rounded">
               <thead>
               <tr>
                 <th scope="col">Nome</th>

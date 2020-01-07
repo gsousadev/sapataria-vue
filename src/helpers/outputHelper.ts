@@ -13,4 +13,8 @@ export default class OutputHelper {
             return clearPhone.replace(/(\d{2})(\d{4})(\d{4})/g, "(\$1\) \$2\-\$3");
         }
     }
+
+    public static money(clearMoney:string): string {
+        return "R$ "+ parseFloat(clearMoney).toFixed(2).replace('.',',');
+    }
 }

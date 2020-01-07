@@ -1,7 +1,11 @@
 <template>
   <section class="home">
-    <CpfSearchUser />
-    <HomeMenu />
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-8">
+        <CpfSearchUser />
+        <HomeMenu />
+      </div>
+    </div>
   </section>
 </template>
 

@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12">
       <nav aria-label="breadcrumb bg-transparent rounded">
-        <ol class="breadcrumb bg-gray rounded">
+        <ol class="breadcrumb rounded bg-white">
           <li class="breadcrumb-item">
             <router-link to="/">Inicio</router-link>
           </li>
