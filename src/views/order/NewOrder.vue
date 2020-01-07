@@ -279,7 +279,7 @@ export default {
   methods: {
     submitForm: function() {
       this.valid = true;
-      let bodyFormData = new FormData();
+      let bodyFormData = {};
 
       for (let element in this.inputs) {
         this.validFields(this.inputs[element]);

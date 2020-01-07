@@ -4,7 +4,43 @@
       <Breadcrumb currentPageName="Lista de Pedidos"></Breadcrumb>
       <div class="row">
         <div class="col-12">
-          <b-table striped hover :items="items"></b-table>
+          <div class="table-responsive">
+            <table class="table table-striped text-center table-sm">
+              <thead>
+              <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">CPF</th>
+                <th scope="col">Quantidade de itens</th>
+                <th scope="col">Valor Total</th>
+                <th scope="col">Data de entrega</th>
+                <th scope="col">Visualizar | Excluir</th>
+              </tr>
+              </thead>
+              <tbody v-if="this.items.length != 0">
+              <tr v-for="(item,index) in items" :key="index">
+                <td>{{item.customer.nome}}</td>
+                <td>{{item.customer.cpf}}</td>
+                <td>{{item.items.length}}</td>
+                <td>R$ {{item.valor}}</td>
+                <td>{{item.data_entrega}}</td>
+                <td>
+                  <button @click="showItem(item.id)">
+                    <i class="material-icons">description</i>
+                  </button>
+                  |
+                  <button @click="deleteItem(item.id)">
+                    <i class="material-icons">delete</i>
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+              <tbody v-else>
+              <tr>
+                <td colspan="6">Nenhum dado localizado</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -12,26 +48,29 @@
 </template>
 
 <script>
-import Breadcrumb from "@/components/Breadcramb";
-import axios from "axios";
-import OutputHelper from "@/helpers/outputHelper";
+  import Breadcrumb from "@/components/Breadcramb";
+  import axios from "axios";
+  import OutputHelper from "@/helpers/outputHelper";
 
-export default {
-  mounted() {
-    axios.get(process.env.VUE_APP_API_URL + this.requestUrl).then(response => {
-      console.log(response.data.data);
-      this.items = response.data.data;
-    });
-  },
+  export default {
+    mounted() {
+      axios.get(process.env.VUE_APP_API_URL + this.requestUrl)
+           .then(response => {
+             console.log(response.data.data);
+             this.items = response.data.data;
+           }).catch(error => {
+              console.log(error.message)
+           });
+    },
 
-  data() {
-    return {
-      items: [],
-      requestUrl: "/order/index"
-    };
-  },
-  components: {
-    Breadcrumb: Breadcrumb
-  }
-};
+    data() {
+      return {
+        items: [],
+        requestUrl: "/order/index"
+      };
+    },
+    components: {
+      Breadcrumb: Breadcrumb
+    }
+  };
 </script>

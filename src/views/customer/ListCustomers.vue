@@ -4,8 +4,9 @@
       <Breadcrumb currentPageName="Lista de Clientes"></Breadcrumb>
       <div class="row">
         <div class="col-12">
-          <table class="table table-striped text-center">
-            <thead>
+          <div class="table-responsive">
+            <table class="table table-striped text-center table-sm">
+              <thead>
               <tr>
                 <th scope="col">Nome</th>
                 <th scope="col">CPF</th>
@@ -14,8 +15,8 @@
                 <th scope="col">Telefone 2</th>
                 <th scope="col">Atualizar | Excluir</th>
               </tr>
-            </thead>
-            <tbody v-if="this.items.length != 0">
+              </thead>
+              <tbody v-if="this.items.length != 0">
               <tr v-for="(item,index) in items" :key="index">
                 <td>{{item.nome}}</td>
                 <td>{{OutputHelper.cpf(item.cpf)}}</td>
@@ -32,13 +33,14 @@
                   </button>
                 </td>
               </tr>
-            </tbody>
-            <tbody v-else>
+              </tbody>
+              <tbody v-else>
               <tr>
                 <td colspan="6">Nenhum dado localizado</td>
               </tr>
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

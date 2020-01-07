@@ -7,10 +7,6 @@
           <form v-on:submit.prevent="submitForm()">
             <h4 class="bg-primary p-2 text-white rounded">{{headerTitle}}</h4>
             <div class="row my-3">
-
-
-
-
               <div class="col-12 col-sm-6" v-for="(input,index) in inputs" :key="index">
                 <div class="form-group" v-if="input.type == 'text' && index == 'zip_code'">
                   <label :for="input.name">{{input.label}}</label>
@@ -21,7 +17,6 @@
                     :name="input.name"
                     v-model="input.value"
                     v-on:keyup="getCepInfo()"
-                    :v-mask="input.mask" 
                   />
                 </div>
                 <div
@@ -37,7 +32,6 @@
                     v-model="input.value"
                     :value="input.value"
                     v-on:keyup="refreshInputs(index)"
-                    :v-mask="input.mask" 
                   />
                 </div>
                 <div class="form-group" v-else-if="input.type == 'select'">
@@ -105,7 +99,6 @@ export default {
           name: "cpf",
           value: "",
           regex: RegExp("^([0-9]{11})$"),
-          mask: "###.###.###-##"
         },
         zip_code: {
           type: "text",
