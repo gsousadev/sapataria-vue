@@ -53,13 +53,13 @@ export default {
             const responseBody = response.data;
             const customer = responseBody.data;
             router.push({
-              path: "/pedidos/cadastro/",
+              path: "/pedidos/cadastrar/",
               query: { cpf: customer.cpf }
             });
           })
           .catch(function() {
             router.push({
-              path: "/clientes/cadastro",
+              path: "/clientes/cadastrar",
               query: { cpf: searchText }
             });
           });

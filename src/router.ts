@@ -14,20 +14,28 @@ export default new Router({
       component: Home
     },
     {
-      path: '/pedidos/cadastro',
-      component: () => import('./views/order/NewOrder.vue')
+      path: '/pedidos/cadastrar',
+      component: () => import('./views/order/FormOrder.vue')
     },
     {
-      path: '/pedidos/lista',
+      path: '/pedidos/listar',
       component: () => import('./views/order/ListOrders.vue')
     },
     {
-      path: '/clientes/cadastro',
-      component: () => import('./views/customer/NewCustomer.vue'),
+      path: '/pedidos/visualizar/:id',
+      component: () => import('./views/order/ViewOrder.vue')
     },
     {
-      path: '/clientes/lista',
+      path: '/clientes/cadastrar',
+      component: () => import('./views/customer/FormCustomer.vue')
+    },
+    {
+      path: '/clientes/listar',
       component: () => import('./views/customer/ListCustomers.vue')
+    },
+    {
+      path: '/clientes/editar/:id',
+      component: () => import('./views/customer/FormCustomer.vue')
     }
   ]
 });

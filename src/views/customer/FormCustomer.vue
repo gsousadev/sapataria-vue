@@ -139,7 +139,7 @@ export default {
         }
       },
       requestUrl: '/customer',
-      redirectUrl: '/pedidos/cadastro'
+      redirectUrl: '/pedidos/cadastrar'
     };
   },
   methods: {
