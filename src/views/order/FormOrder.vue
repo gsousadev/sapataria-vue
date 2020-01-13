@@ -459,7 +459,7 @@
         methods: {
             getDataToSend() {
                 return {
-                    'cpf': this.orderInputs.cpf.value,
+                    'cpf': InputHelper.cleanVal(this.orderInputs.cpf.value),
                     'data_entrega': this.orderInputs.deliveryDate.value,
                     'desconto': InputHelper.money(this.orderInputs.discount.value),
                     'valor': this.orderInputs.total.value,

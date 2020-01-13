@@ -4,106 +4,116 @@
             <Breadcrumb :currentPageName="headerTitle"></Breadcrumb>
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <form v-on:submit.prevent="submitForm()">
+                    <form @submit.prevent="submitForm()">
                         <h4 class="bg-primary p-2 text-white rounded">{{headerTitle}}</h4>
                         <div class="row my-3">
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
-                                    <label :for="inputs.name.name">{{inputs.name.label}}</label>
+                                    <label :for="customerInfo.nome.name">{{customerInfo.nome.label}}</label>
                                     <input
-                                            :type="inputs.name.type"
+                                            :type="customerInfo.nome.type"
                                             class="form-control"
-                                            :id="inputs.name.name"
-                                            :name="inputs.name.name"
-                                            v-model="customerInfo.nome"
+                                            :id="customerInfo.nome.name"
+                                            :name="customerInfo.nome.name"
+                                            v-model="customerInfo.nome.value"
+                                            :required="customerInfo.nome.required"
                                     />
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
-                                    <label :for="inputs.cpf.name">{{inputs.cpf.label}}</label>
+                                    <label :for="customerInfo.cpf.name">{{customerInfo.cpf.label}}</label>
                                     <input
-                                            :type="inputs.cpf.type"
+                                            :type="customerInfo.cpf.type"
                                             class="form-control"
-                                            :id="inputs.cpf.name"
-                                            :name="inputs.cpf.name"
-                                            v-model="customerInfo.cpf"
-                                            :disabled="inputs.cpf.disabled"
+                                            :id="customerInfo.cpf.name"
+                                            :name="customerInfo.cpf.name"
+                                            v-model="customerInfo.cpf.value"
+                                            :disabled="customerInfo.cpf.disabled"
+                                            :required="customerInfo.cpf.required"
                                             v-mask="'###.###.###-##'"
                                     />
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
-                                    <label :for="inputs.zip_code.name">{{inputs.zip_code.label}}</label>
+                                    <label :for="customerInfo.cep.name">{{customerInfo.cep.label}}</label>
                                     <input
-                                            :type="inputs.zip_code.type"
+                                            :type="customerInfo.cep.type"
                                             class="form-control"
-                                            :id="inputs.zip_code.name"
-                                            :name="inputs.zip_code.name"
-                                            v-model="customerInfo.cep"
+                                            :id="customerInfo.cep.name"
+                                            :name="customerInfo.cep.name"
+                                            v-model="customerInfo.cep.value"
                                             @keyup="getCepInfo()"
+                                            :required="customerInfo.cep.required"
                                             v-mask="'#####-###'"
                                     />
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
-                                    <label :for="inputs.street.name">{{inputs.street.label}}</label>
+                                    <label :for="customerInfo.rua.name">{{customerInfo.rua.label}}</label>
                                     <input
-                                            :type="inputs.street.type"
+                                            :type="customerInfo.rua.type"
                                             class="form-control"
-                                            :id="inputs.street.name"
-                                            :name="inputs.street.name"
-                                            v-model="customerInfo.rua"
+                                            :id="customerInfo.rua.name"
+                                            :name="customerInfo.rua.name"
+                                            v-model="customerInfo.rua.value"
+                                            :required="customerInfo.rua.required"
                                     />
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
-                                    <label :for="inputs.number.name">{{inputs.number.label}}</label>
+                                    <label :for="customerInfo.numero_residencia.name">{{customerInfo.numero_residencia.label}}</label>
                                     <input
-                                            :type="inputs.number.type"
+                                            :type="customerInfo.numero_residencia.type"
                                             class="form-control"
-                                            :id="inputs.number.name"
-                                            :name="inputs.number.name"
-                                            v-model="customerInfo.numero_residencia"
+                                            :id="customerInfo.numero_residencia.name"
+                                            :name="customerInfo.numero_residencia.name"
+                                            v-model="customerInfo.numero_residencia.value"
+                                            :required="customerInfo.numero_residencia.required"
                                     />
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
-                                    <label :for="inputs.city.name">{{inputs.city.label}}</label>
+                                    <label :for="customerInfo.cidade.name">{{customerInfo.cidade.label}}</label>
                                     <input
-                                            :type="inputs.city.type"
+                                            :type="customerInfo.cidade.type"
                                             class="form-control"
-                                            :id="inputs.city.name"
-                                            :name="inputs.city.name"
-                                            v-model="customerInfo.cidade"
+                                            :id="customerInfo.cidade.name"
+                                            :name="customerInfo.cidade.name"
+                                            v-model="customerInfo.cidade.value"
+                                            :required="customerInfo.cidade.required"
                                     />
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
-                                    <label :for="inputs.phone_1.name">{{inputs.phone_1.label}}</label>
+                                    <label :for="customerInfo.telefone_1.name">{{customerInfo.telefone_1.label}}</label>
                                     <input
-                                            :type="inputs.phone_1.type"
+                                            :type="customerInfo.telefone_1.type"
                                             class="form-control"
-                                            :id="inputs.phone_1.name"
-                                            :name="inputs.phone_1.name"
-                                            v-model="customerInfo.telefone_1"
+                                            :id="customerInfo.telefone_1.name"
+                                            :name="customerInfo.telefone_1.name"
+                                            v-model="customerInfo.telefone_1.value"
+                                            :required="customerInfo.telefone_1.required"
+                                            v-mask="['(##)#####-####', '(##)####-####']"
                                     />
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
-                                    <label :for="inputs.phone_2.name">{{inputs.phone_2.label}}</label>
+                                    <label :for="customerInfo.telefone_2.name">{{customerInfo.telefone_2.label}}</label>
                                     <input
-                                            :type="inputs.phone_2.type"
+                                            :type="customerInfo.telefone_2.type"
                                             class="form-control"
-                                            :id="inputs.phone_2.name"
-                                            :name="inputs.phone_2.name"
-                                            v-model="customerInfo.telefone_2"
+                                            :id="customerInfo.telefone_2.name"
+                                            :name="customerInfo.telefone_2.name"
+                                            v-model="customerInfo.telefone_2.value"
+                                            :required="customerInfo.telefone_2.required"
+                                            v-mask="['(##)#####-####', '(##)####-####']"
                                     />
                                 </div>
                             </div>
@@ -111,8 +121,7 @@
 
                         <div class="row justify-content-center">
                             <div class="col-12 col--4">
-                                <button
-                                        type="submit"
+                                <button type="submit"
                                         class="btn btn-primary d-block text-white"
                                 >{{textSubmitButton}}
                                 </button>
@@ -126,8 +135,8 @@
 </template>
 
 <script>
-    import Breadcrumb  from "@/components/Breadcramb";
-    import axios       from "axios";
+    import Breadcrumb from "@/components/Breadcramb";
+    import axios from "axios";
     import InputHelper from "@/helpers/inputHelper";
 
     export default {
@@ -136,7 +145,7 @@
         },
 
         created() {
-            this.customerInfo.cpf = InputHelper.cleanVal(this.$route.query.cpf);
+            this.customerInfo.cpf.value = InputHelper.cleanVal(this.$route.query.cpf);
             if (this.$route.params.id) {
                 this.getCustomerInfo();
             }
@@ -148,90 +157,104 @@
                 headerTitle: 'Cadastro de Cliente',
                 textSubmitButton: 'Cadastrar',
                 customerInfo: {
-                    cpf: '',
-                    cidade: '',
-                    nome: '',
-                    cep: '',
-                    rua: '',
-                    numero_residencia: '',
-                    telefone_1: '',
-                    telefone_2: ''
-
-                },
-                inputs: {
-                    name: {
+                    nome: {
                         type: "text",
                         label: "Nome",
                         name: "nome",
+                        value: "",
+                        mask: false,
+                        required: true
                     },
                     cpf: {
                         type: "text",
                         label: "CPF",
                         name: "cpf",
-                        regex: RegExp("([0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2})$"),
                         disabled: false,
+                        value: "",
+                        mask: true,
+                        required: true
                     },
-                    zip_code: {
+                    cep: {
                         type: "text",
                         label: "CEP",
                         name: "cep",
                         value: "",
-                        regex: RegExp("([0-9]{5,5}[-]?[0-9]{3})$")
+                        mask: true,
+                        required: true
                     },
-                    street: {
+                    rua: {
                         type: "text",
                         label: "Rua",
                         name: "rua",
+                        value: "",
+                        mask: false,
+                        required: true
                     },
-                    number: {
+                    numero_residencia: {
                         type: "number",
                         label: "Número",
                         name: "numero_residencia",
+                        value: "",
+                        mask: false,
+                        required: true
                     },
-                    city: {
+                    cidade: {
                         type: "text",
                         label: "Cidade",
                         name: "cidade",
+                        value: "",
+                        mask: false,
+                        required: true
                     },
-                    phone_1: {
+                    telefone_1: {
                         type: "text",
                         label: "Telefone 1",
                         name: "telefone_1",
+                        value: "",
+                        mask: true,
+                        required: true
                     },
-                    phone_2: {
+                    telefone_2: {
                         type: "text",
                         label: "Telefone 2",
                         name: "telefone_2",
+                        value: "",
+                        mask: true,
+                        required: false
                     }
                 },
                 requestUrl: '/customer',
-                redirectUrl: '/pedidos/cadastrar'
+                redirectUrl: '/pedidos/cadastrar',
+                dataToSend: {}
             };
         },
         methods: {
 
             disabledFieldsToEdit() {
-                this.inputs.cpf.disabled = true;
+                this.customerInfo.cpf.disabled = true;
             },
 
-            getDataToSend(){
-                for(let key in this.customerInfo){
-                    this.customerInfo[key] = InputHelper.cleanVal(this.customerInfo[key]);
+            generateDataToSend() {
+                for (let key in this.customerInfo) {
+                    if (this.customerInfo[key].mask) {
+                        this.dataToSend[key] = InputHelper.cleanVal(this.customerInfo[key].value);
+                    } else {
+                        this.dataToSend[key] = this.customerInfo[key].value;
+                    }
                 }
             },
 
             submitForm() {
-                this.getDataToSend();
+                this.generateDataToSend();
                 if (this.customerId) {
-                    axios
-                        .put(`${process.env.VUE_APP_API_URL}${this.requestUrl}${this.customerId}`, this.customerInfo)
+                    axios.put(`${process.env.VUE_APP_API_URL}${this.requestUrl}${this.customerId}`, this.dataToSend)
                         .then(response => {
                             const responseBody = response.data;
                             console.log(responseBody);
                             alert(responseBody.message);
                             this.$router.push({
                                 path: this.redirectUrl,
-                                query: {cpf: this.inputs.cpf.value}
+                                query: {cpf: this.customerInfo.cpf.value}
                             });
                         })
                         .catch(function (error) {
@@ -239,14 +262,14 @@
                         });
                 } else {
                     axios
-                        .post(process.env.VUE_APP_API_URL + this.requestUrl, this.customerInfo)
+                        .post(process.env.VUE_APP_API_URL + this.requestUrl, this.dataToSend)
                         .then(response => {
                             const responseBody = response.data;
                             console.log(responseBody);
                             alert(responseBody.message);
                             this.$router.push({
                                 path: this.redirectUrl,
-                                query: {cpf: this.inputs.cpf.value}
+                                query: {cpf: this.customerInfo.cpf.value}
                             });
                         })
                         .catch(function (error) {
@@ -256,31 +279,31 @@
             },
 
             getCepInfo() {
-                let unmaksCep = this.customerInfo.cep.replace("-", "");
-                if (unmaksCep.length == 8) {
+                const unmaksCep = InputHelper.cleanVal(this.customerInfo.cep.value);
+                if (unmaksCep.length === 8) {
                     let url = `https://viacep.com.br/ws/${unmaksCep}/json/`;
                     axios.get(url)
-                         .then((response) => {
-                             this.customerInfo.rua = response.data.logradouro;
-                             this.customerInfo.cidade   = response.data.localidade;
-                             InputHelper.setValidInputs(this.inputs.zip_code.name);
-                             InputHelper.setValidInputs(this.inputs.street.name);
-                             InputHelper.setValidInputs(this.inputs.city.name);
-                         })
-                         .catch(function (error) {
-                             console.log(error);
-                         });
+                        .then((response) => {
+                            this.customerInfo.rua.value    = response.data.logradouro;
+                            this.customerInfo.cidade.value = response.data.localidade;
+                            InputHelper.setValidInputs(this.customerInfo.cep.name);
+                            InputHelper.setValidInputs(this.customerInfo.rua.name);
+                            InputHelper.setValidInputs(this.customerInfo.cidade.name);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
                 }
             },
 
             getCustomerInfo() {
                 axios.get(`${process.env.VUE_APP_API_URL}/customer/${this.customerId}`)
-                     .then(response => {
-                         this.customerInfo = response.data.data;
-                         this.disabledFieldsToEdit();
-                         this.setEditTitles();
-                         this.setEditRoute();
-                     }).catch(error => {
+                    .then(response => {
+                        this.fillFields(response.data.data);
+                        this.disabledFieldsToEdit();
+                        this.setEditTitles();
+                        this.setEditRoute();
+                    }).catch(error => {
                     console.log(error.message)
                 });
             },
@@ -293,7 +316,18 @@
             setEditRoute() {
                 this.requestUrl  = '/customer/';
                 this.redirectUrl = '/clientes/listar';
+            },
+
+            fillFields(customerData) {
+                this.customerInfo.nome.value              = customerData.nome;
+                this.customerInfo.cpf.value               = customerData.cpf;
+                this.customerInfo.cep.value               = customerData.cep;
+                this.customerInfo.rua.value               = customerData.rua;
+                this.customerInfo.numero_residencia.value = customerData.numero_residencia;
+                this.customerInfo.cidade.value            = customerData.cidade;
+                this.customerInfo.telefone_1.value        = customerData.telefone_1;
+                this.customerInfo.telefone_2.value        = customerData.telefone_2;
             }
         }
-    };
+    }
 </script>

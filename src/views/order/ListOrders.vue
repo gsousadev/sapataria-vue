@@ -57,7 +57,7 @@
     import OutputHelper from "@/helpers/outputHelper";
 
     export default {
-        mounted() {
+        mounted(){
             this.indexOrders();
         },
 
@@ -72,7 +72,6 @@
             indexOrders() {
                 axios.get(`${process.env.VUE_APP_API_URL}/order/index`)
                     .then(response => {
-                        console.log(response.data.data);
                         this.items = response.data.data;
                     }).catch(error => {
                     console.log(error.message)
@@ -88,8 +87,8 @@
                         console.log(error.message)
                     });
             },
-            showItem(itemId){
-                this.$router.push({path:`/pedidos/visualizar/${itemId}`});
+            showItem(itemId) {
+                this.$router.push({path: `/pedidos/visualizar/${itemId}`});
             }
         },
 

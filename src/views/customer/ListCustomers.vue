@@ -53,14 +53,13 @@
     import OutputHelper from "@/helpers/outputHelper";
 
     export default {
-        created() {
-          this.indexCustomers();
+        mounted(){
+            this.indexCustomers();
         },
-
         data() {
             return {
-                items: [],
-                OutputHelper: OutputHelper
+                OutputHelper,
+                items: []
             };
         },
         components: {
@@ -71,7 +70,6 @@
             indexCustomers() {
                 axios.get(`${process.env.VUE_APP_API_URL}/customer/index`)
                     .then(response => {
-                        console.log(response.data.data);
                         this.items = response.data.data;
                     }).catch(error => {
                     console.log(error.message)
@@ -88,8 +86,8 @@
                         console.log(error.message)
                     });
             },
-            editItem(itemId){
-                this.$router.push({path:`/clientes/editar/${itemId}`});
+            editItem(itemId) {
+                this.$router.push({path: `/clientes/editar/${itemId}`});
             }
 
         }
