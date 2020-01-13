@@ -229,7 +229,6 @@
 
 <script>
     import Breadcrumb from "@/components/Breadcramb";
-    import FormTwoColumns from "@/components/FormTwoColumns";
     import InputHelper from "@/helpers/inputHelper";
     import OutputHelper from "@/helpers/outputHelper";
     import axios from "axios";
@@ -295,7 +294,7 @@
                         value: "m",
                         options: {
                             m: "Masculino",
-                            w: "Feminino",
+                            f: "Feminino",
                             u: "Unissex"
                         }
                     },
@@ -474,7 +473,6 @@
                     .post(url, data)
                     .then(response => {
                         const responseBody = response.data;
-                        console.log(responseBody);
                         alert(responseBody.message);
                         this.$router.push({path: this.redirectUrl});
                     })

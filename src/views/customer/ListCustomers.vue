@@ -53,7 +53,7 @@
     import OutputHelper from "@/helpers/outputHelper";
 
     export default {
-        mounted() {
+        created() {
           this.indexCustomers();
         },
 
@@ -82,14 +82,14 @@
                 axios.delete(`${process.env.VUE_APP_API_URL}/customer/${itemId}`)
                     .then(response => {
                         alert(response.data.message);
-                        this.items = this.items.splice(localIndex+1, 1);
+                        this.items.splice(localIndex, 1);
                     })
                     .catch(error => {
                         console.log(error.message)
                     });
             },
-            editItem: itemId => {
-                console.log('edit');
+            editItem(itemId){
+                this.$router.push({path:`/clientes/editar/${itemId}`});
             }
 
         }

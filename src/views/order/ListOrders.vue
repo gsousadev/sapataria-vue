@@ -14,17 +14,19 @@
                                 <th scope="col">Valor Total</th>
                                 <th scope="col">Desconto</th>
                                 <th scope="col">Data de entrega</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Visualizar | Excluir</th>
                             </tr>
                             </thead>
                             <tbody v-if="this.items.length != 0">
                             <tr v-for="(item,index) in items" :key="index">
                                 <td>{{item.customer.nome}}</td>
-                                <td>{{item.customer.cpf}}</td>
+                                <td>{{OutputHelper.cpf(item.customer.cpf)}}</td>
                                 <td>{{item.items.length}}</td>
                                 <td>{{OutputHelper.money(item.valor)}}</td>
                                 <td>{{OutputHelper.money(item.desconto)}}</td>
                                 <td>{{item.data_entrega}}</td>
+                                <td v-html="OutputHelper.status(item.status)" class="text-capitalize"></td>
                                 <td>
                                     <button @click="showItem(item.id)">
                                         <i class="material-icons">description</i>
@@ -38,7 +40,7 @@
                             </tbody>
                             <tbody v-else>
                             <tr>
-                                <td colspan="7">Nenhum dado localizado</td>
+                                <td colspan="8">Nenhum dado localizado</td>
                             </tr>
                             </tbody>
                         </table>
@@ -80,7 +82,7 @@
                 axios.delete(`${process.env.VUE_APP_API_URL}/order/${itemId}`)
                     .then(response => {
                         alert(response.data.message);
-                        this.items = this.items.splice(localIndex+1, 1);
+                        this.items.splice(localIndex, 1);
                     })
                     .catch(error => {
                         console.log(error.message)
