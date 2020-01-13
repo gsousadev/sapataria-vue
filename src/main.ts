@@ -1,11 +1,12 @@
 import Vue from 'vue'
-import BootstrapVue from "bootstrap-vue"
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import '../theme/global.scss';
+import VueTheMask from 'vue-the-mask';
 
-Vue.use(BootstrapVue)
+Vue.use(VueTheMask)
+
 
 Vue.config.productionTip = false;
 

@@ -29,6 +29,7 @@
                                             :name="inputs.cpf.name"
                                             v-model="customerInfo.cpf"
                                             :disabled="inputs.cpf.disabled"
+                                            v-mask="'###.###.###-##'"
                                     />
                                 </div>
                             </div>
@@ -42,6 +43,7 @@
                                             :name="inputs.zip_code.name"
                                             v-model="customerInfo.cep"
                                             @keyup="getCepInfo()"
+                                            v-mask="'#####-###'"
                                     />
                                 </div>
                             </div>
@@ -134,7 +136,7 @@
         },
 
         created() {
-            this.inputs.cpf.value = this.$route.query.cpf;
+            this.customerInfo.cpf = InputHelper.cleanVal(this.$route.query.cpf);
             if (this.$route.params.id) {
                 this.getCustomerInfo();
             }
@@ -166,7 +168,7 @@
                         type: "text",
                         label: "CPF",
                         name: "cpf",
-                        regex: RegExp("^([0-9]{11})$"),
+                        regex: RegExp("([0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2})$"),
                         disabled: false,
                     },
                     zip_code: {
@@ -212,11 +214,17 @@
                 this.inputs.cpf.disabled = true;
             },
 
+            getDataToSend(){
+                for(let key in this.customerInfo){
+                    this.customerInfo[key] = InputHelper.cleanVal(this.customerInfo[key]);
+                }
+            },
+
             submitForm() {
-                const data = this.customerInfo;
+                this.getDataToSend();
                 if (this.customerId) {
                     axios
-                        .put(`${process.env.VUE_APP_API_URL}${this.requestUrl}${this.customerId}`, data)
+                        .put(`${process.env.VUE_APP_API_URL}${this.requestUrl}${this.customerId}`, this.customerInfo)
                         .then(response => {
                             const responseBody = response.data;
                             console.log(responseBody);
@@ -231,7 +239,7 @@
                         });
                 } else {
                     axios
-                        .post(process.env.VUE_APP_API_URL + this.requestUrl, data)
+                        .post(process.env.VUE_APP_API_URL + this.requestUrl, this.customerInfo)
                         .then(response => {
                             const responseBody = response.data;
                             console.log(responseBody);

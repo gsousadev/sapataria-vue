@@ -6,10 +6,11 @@
         name="cpf"
         id="cpfInput"
         v-model="searchText"
-        v-on:keyup="checkCpf()"
+        @keyup="checkCpf()"
         class="form-control w-100"
         placeholder="Digite o CPF do cliente"
         aria-describedby="helpId"
+        v-mask="'###.###.###-##'"
       />
     </div>
     <div class="col-12 col-md-3">
@@ -29,6 +30,7 @@ export default {
   },
   data() {
     return {
+      InputHelper,
       searchText: "",
       statusCpf: false
     };
@@ -47,7 +49,7 @@ export default {
       if (InputHelper.checkInput(this.searchText, "cpf")) {
         axios
           .get(
-            `${process.env.VUE_APP_API_URL}/customer/check-cpf/${searchText}`
+            `${process.env.VUE_APP_API_URL}/customer/check-cpf/${InputHelper.cleanVal(searchText)}`
           )
           .then(function(response) {
             const responseBody = response.data;
