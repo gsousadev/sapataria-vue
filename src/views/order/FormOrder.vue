@@ -100,16 +100,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mt-3">
-                                    <div class="col-12">
-                                        <div class="d-flex justify-content-end">
-                                            <button
-                                                    @click="addItem()"
-                                                    type="button"
-                                                    class="btn btn-primary btn-add"
-                                            >Adicionar
-                                            </button>
-                                        </div>
+                                <div class="row mt-3 justify-content-end">
+                                    <div class="col-12 col-md-3">
+                                        <button
+                                                @click="addItem()"
+                                                type="button"
+                                                class="btn btn-primary btn-add w-100"
+                                        >Adicionar
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -155,7 +153,7 @@
                         <h4>Informações Gerais</h4>
                         <hr/>
                         <div class="row mt-3 align-items-center">
-                            <div class="col-12 col-sm-6">
+                            <div class="col-12 col-md-6">
                                 <div class="row align-items-end">
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
@@ -166,6 +164,7 @@
                                                     :id="orderInputs.cpf.name"
                                                     :name="orderInputs.cpf.name"
                                                     v-model="orderInputs.cpf.value"
+                                                    v-mask="'###.###.###-##'"
                                             />
                                         </div>
                                     </div>
@@ -183,7 +182,7 @@
                                     </div>
                                     <div class="col-12 col-sm-3">
                                         <div class="form-group">
-                                            <button @click="discountCalculate()" class="btn btn-primary">Aplicar
+                                            <button @click="discountCalculate()" class="btn btn-primary w-100">Aplicar
                                             </button>
                                         </div>
                                     </div>
@@ -202,22 +201,20 @@
                                 </div>
                             </div>
 
-                            <div class="col-12 col-sm-6">
+                            <div class="col-12 col-md-6">
                                 <div class="text-center">
                                     <span class="total-value-label display-3">{{OutputHelper.money(orderInputs.total.value)}}</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row mt-5">
-                            <div class="col-12">
-                                <div class="d-flex justify-content-end">
+                        <div class="row mt-5 justify-content-end">
+                            <div class="col-12 col-md-3">
                                     <button
                                             @click="submitForm()"
-                                            class="btn btn-primary d-block text-white"
+                                            class="btn btn-primary d-block text-white w-100"
                                     >Finalizar Pedido
                                     </button>
-                                </div>
                             </div>
                         </div>
                     </div>

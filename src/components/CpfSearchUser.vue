@@ -1,6 +1,6 @@
 <template>
   <form class="row py-3 justify-content-center" v-on:submit.prevent="checkUser()">
-    <div class="col-12 col-md-5 mb-3">
+    <div class="col-12 col-lg-5 mb-3">
       <input
         type="text"
         name="cpf"
@@ -13,7 +13,7 @@
         v-mask="'###.###.###-##'"
       />
     </div>
-    <div class="col-12 col-md-3">
+    <div class="col-12 col-lg-3">
       <button type="submit" class="btn btn-primary w-100">Consultar Cliente</button>
     </div>
   </form>
