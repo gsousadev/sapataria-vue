@@ -66,70 +66,16 @@
             <h3>Items do Pedido</h3>
             <hr />
             <div class="row justify-content-center">
-              <div
-                class="col-12 col-sm-4 py-3"
-                v-for="(item,index) in orderInfo.items"
-                :key="index"
-              >
-                <div class="border shadow p-2 rounded">
-                  <table class="table table-borderless">
-                    <tr>
-                      <td>
-                        <strong>Código do item:</strong>
-                      </td>
-                      <td>
-                        <span class="text-capitalize">{{item.id}}</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <strong>Tipo:</strong>
-                      </td>
-                      <td>
-                        <span class="text-capitalize">{{item.tipo}}</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <strong>Cor:</strong>
-                      </td>
-                      <td>
-                        <span class="text-capitalize">{{item.cor}}</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <strong>Gênero:</strong>
-                      </td>
-                      <td>
-                        <span class="text-capitalize">{{OutputHelper.productGenre(item.genero)}}</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <strong>Tamanho:</strong>
-                      </td>
-                      <td>
-                        <span class="text-capitalize">{{OutputHelper.productSize(item.size)}}</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <strong>Valor:</strong>
-                      </td>
-                      <td>
-                        <span class="text-capitalize">{{OutputHelper.money(item.valor)}}</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <strong>Descrição do pedido:</strong>
-                      </td>
-                      <td>
-                        <span class="font-italic">{{item.descricao}}</span>
-                      </td>
-                    </tr>
-                  </table>
+              <div class="col-12 py-3" v-for="(item,index) in orderInfo.items" :key="index">
+                <div
+                  v-if="index != Object.keys(orderInfo.items).length - 1"
+                  class="border-bottom p-2 rounded"
+                >
+                  <ServiceTable :item="item" ></ServiceTable>
+                </div>
+
+                <div v-else class="p-2 rounded">
+                  <ServiceTable :item="item" ></ServiceTable>
                 </div>
               </div>
             </div>
@@ -179,10 +125,12 @@
 import Breadcrumb from "@/components/Breadcramb";
 import OutputHelper from "@/helpers/outputHelper";
 import axios from "axios";
+import ServiceTable from "@/components/order/ServiceTable";
 
 export default {
   components: {
-    Breadcrumb: Breadcrumb
+    Breadcrumb: Breadcrumb,
+    ServiceTable: ServiceTable
   },
 
   created() {
