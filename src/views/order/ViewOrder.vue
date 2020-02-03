@@ -66,40 +66,70 @@
             <h3>Items do Pedido</h3>
             <hr />
             <div class="row justify-content-center">
-              <div class="col-12 col-sm-6" v-for="(item,index) in orderInfo.items" :key="index">
+              <div
+                class="col-12 col-sm-4 py-3"
+                v-for="(item,index) in orderInfo.items"
+                :key="index"
+              >
                 <div class="border shadow p-2 rounded">
-                  <ul class="list-unstyled">
-                    <li>
-                      <strong>Código do item:</strong>
-                      <span class="text-capitalize">{{item.id}}</span>
-                    </li>
-                    <li>
-                      <strong>Tipo:</strong>
-                      <span class="text-capitalize">{{item.tipo}}</span>
-                    </li>
-                    <li>
-                      <strong>Cor:</strong>
-                      <span class="text-capitalize">{{item.cor}}</span>
-                    </li>
-                    <li>
-                      <strong>Gênero:</strong>
-                      <span class="text-capitalize">{{OutputHelper.productGenre(item.genero)}}</span>
-                    </li>
-                    <li>
-                      <strong>Tamanho:</strong>
-                      <span class="text-capitalize">{{OutputHelper.productSize(item.size)}}</span>
-                    </li>
-                    <li>
-                      <strong>Valor:</strong>
-                      <span class="text-capitalize">{{OutputHelper.money(item.valor)}}</span>
-                    </li>
-                  </ul>
-
-                  <p class="mt-2">
-                    <strong>Descrição do pedido:</strong>
-                    {{item.descricao}}
-                  </p>
-                  
+                  <table class="table table-borderless">
+                    <tr>
+                      <td>
+                        <strong>Código do item:</strong>
+                      </td>
+                      <td>
+                        <span class="text-capitalize">{{item.id}}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Tipo:</strong>
+                      </td>
+                      <td>
+                        <span class="text-capitalize">{{item.tipo}}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Cor:</strong>
+                      </td>
+                      <td>
+                        <span class="text-capitalize">{{item.cor}}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Gênero:</strong>
+                      </td>
+                      <td>
+                        <span class="text-capitalize">{{OutputHelper.productGenre(item.genero)}}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Tamanho:</strong>
+                      </td>
+                      <td>
+                        <span class="text-capitalize">{{OutputHelper.productSize(item.size)}}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Valor:</strong>
+                      </td>
+                      <td>
+                        <span class="text-capitalize">{{OutputHelper.money(item.valor)}}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Descrição do pedido:</strong>
+                      </td>
+                      <td>
+                        <span class="font-italic">{{item.descricao}}</span>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
               </div>
             </div>

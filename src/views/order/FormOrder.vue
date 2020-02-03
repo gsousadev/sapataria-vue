@@ -486,6 +486,7 @@ export default {
         .post(url, data)
         .then(response => {
           const responseBody = response.data;
+          console.log(responseBody.data);
           alert(responseBody.message);
           this.$router.push({ path: this.redirectUrl });
         })
