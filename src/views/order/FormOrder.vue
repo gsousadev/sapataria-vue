@@ -4,7 +4,7 @@
       <Breadcrumb :currentPageName="headerTitle"></Breadcrumb>
       <div class="row justify-content-center">
         <div class="col-12">
-          <h4 class="bg-primary p-2 text-white rounded">{{headerTitle}}</h4>
+          <h4 class="bg-primary p-2 text-white rounded">{{ headerTitle }}</h4>
 
           <div class="bg-white p-3 mt-3 rounded">
             <h4>Adicionar item</h4>
@@ -14,7 +14,9 @@
                 <div class="row mt-3">
                   <div class="col-12 col-sm-3">
                     <div class="form-group">
-                      <label :for="orderItemsInputs.type.name">{{orderItemsInputs.type.label}}</label>
+                      <label :for="orderItemsInputs.type.name">{{
+                        orderItemsInputs.type.label
+                      }}</label>
                       <select
                         :name="orderItemsInputs.type.name"
                         :id="orderItemsInputs.type.name"
@@ -22,17 +24,21 @@
                         class="form-control"
                       >
                         <option
-                          v-for="(option,index) in orderItemsInputs.type.options"
+                          v-for="(option, index) in orderItemsInputs.type
+                            .options"
                           :key="index"
                           :value="index"
-                        >{{option}}</option>
+                          >{{ option }}</option
+                        >
                       </select>
                     </div>
                   </div>
 
                   <div class="col-12 col-sm-3">
                     <div class="form-group">
-                      <label :for="orderItemsInputs.color.name">{{orderItemsInputs.color.label}}</label>
+                      <label :for="orderItemsInputs.color.name">{{
+                        orderItemsInputs.color.label
+                      }}</label>
                       <select
                         :name="orderItemsInputs.color.name"
                         :id="orderItemsInputs.color.name"
@@ -40,17 +46,21 @@
                         class="form-control"
                       >
                         <option
-                          v-for="(option,index) in orderItemsInputs.color.options"
+                          v-for="(option, index) in orderItemsInputs.color
+                            .options"
                           :key="index"
                           :value="index"
-                        >{{option}}</option>
+                          >{{ option }}</option
+                        >
                       </select>
                     </div>
                   </div>
 
                   <div class="col-12 col-sm-2">
                     <div class="form-group">
-                      <label :for="orderItemsInputs.genre.name">{{orderItemsInputs.genre.label}}</label>
+                      <label :for="orderItemsInputs.genre.name">{{
+                        orderItemsInputs.genre.label
+                      }}</label>
                       <select
                         :name="orderItemsInputs.genre.name"
                         :id="orderItemsInputs.genre.name"
@@ -58,17 +68,21 @@
                         class="form-control"
                       >
                         <option
-                          v-for="(option,index) in orderItemsInputs.genre.options"
+                          v-for="(option, index) in orderItemsInputs.genre
+                            .options"
                           :key="index"
                           :value="index"
-                        >{{option}}</option>
+                          >{{ option }}</option
+                        >
                       </select>
                     </div>
                   </div>
 
                   <div class="col-12 col-sm-2">
                     <div class="form-group">
-                      <label :for="orderItemsInputs.size.name">{{orderItemsInputs.size.label}}</label>
+                      <label :for="orderItemsInputs.size.name">{{
+                        orderItemsInputs.size.label
+                      }}</label>
                       <select
                         :name="orderItemsInputs.size.name"
                         :id="orderItemsInputs.size.name"
@@ -76,17 +90,21 @@
                         class="form-control"
                       >
                         <option
-                          v-for="(option,index) in orderItemsInputs.size.options"
+                          v-for="(option, index) in orderItemsInputs.size
+                            .options"
                           :key="index"
                           :value="index"
-                        >{{option}}</option>
+                          >{{ option }}</option
+                        >
                       </select>
                     </div>
                   </div>
 
                   <div class="col-12 col-sm-2">
                     <div class="form-group">
-                      <label :for="orderItemsInputs.total.name">{{orderItemsInputs.total.label}}</label>
+                      <label :for="orderItemsInputs.total.name">{{
+                        orderItemsInputs.total.label
+                      }}</label>
                       <input
                         :type="orderItemsInputs.total.type"
                         class="form-control"
@@ -98,27 +116,29 @@
                   </div>
                 </div>
                 <div class="row m-t-3">
-                    <div class="col-12">
-                      <div class="form-group">
-                        <label
-                          :for="orderItemsInputs.description.name"
-                        >{{orderItemsInputs.description.label}}</label>
-                        <textarea
-                          class="form-control"
-                          :id="orderItemsInputs.description.name"
-                          :name="orderItemsInputs.description.name"
-                          v-model="orderItemsInputs.description.value"
-                        ></textarea>
-                      </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label :for="orderItemsInputs.description.name">{{
+                        orderItemsInputs.description.label
+                      }}</label>
+                      <textarea
+                        class="form-control"
+                        :id="orderItemsInputs.description.name"
+                        :name="orderItemsInputs.description.name"
+                        v-model="orderItemsInputs.description.value"
+                      ></textarea>
                     </div>
                   </div>
+                </div>
                 <div class="row mt-3 justify-content-end">
                   <div class="col-12 col-md-3">
                     <button
                       @click="addItem()"
                       type="button"
                       class="btn btn-primary btn-add w-100"
-                    >Adicionar</button>
+                    >
+                      Adicionar
+                    </button>
                   </div>
                 </div>
               </div>
@@ -143,13 +163,13 @@
                   <th>Excluir</th>
                 </tr>
 
-                <tr v-for="(item,index) in orderItems" :key="index">
-                  <td>{{ index+1}}</td>
-                  <td>{{orderItemsInputs.type.options[item.tipo]}}</td>
-                  <td>{{orderItemsInputs.genre.options[item.genero]}}</td>
-                  <td>{{orderItemsInputs.color.options[item.cor]}}</td>
-                  <td>{{orderItemsInputs.size.options[item.tamanho]}}</td>
-                  <td>{{OutputHelper.money(item.valor)}}</td>
+                <tr v-for="(item, index) in orderItems" :key="index">
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ orderItemsInputs.type.options[item.tipo] }}</td>
+                  <td>{{ orderItemsInputs.genre.options[item.genero] }}</td>
+                  <td>{{ orderItemsInputs.color.options[item.cor] }}</td>
+                  <td>{{ orderItemsInputs.size.options[item.tamanho] }}</td>
+                  <td>{{ OutputHelper.money(item.valor) }}</td>
                   <td>
                     <button @click="removeItem(index)">
                       <i class="material-icons">delete</i>
@@ -168,7 +188,9 @@
                 <div class="row align-items-end">
                   <div class="col-12 col-sm-6">
                     <div class="form-group">
-                      <label :for="orderInputs.cpf.name">{{orderInputs.cpf.label}}</label>
+                      <label :for="orderInputs.cpf.name">{{
+                        orderInputs.cpf.label
+                      }}</label>
                       <input
                         :type="orderInputs.cpf.type"
                         class="form-control"
@@ -181,7 +203,9 @@
                   </div>
                   <div class="col-12 col-sm-3">
                     <div class="form-group">
-                      <label :for="orderInputs.discount.name">{{orderInputs.discount.label}}</label>
+                      <label :for="orderInputs.discount.name">{{
+                        orderInputs.discount.label
+                      }}</label>
                       <input
                         :type="orderInputs.discount.type"
                         class="form-control"
@@ -193,12 +217,21 @@
                   </div>
                   <div class="col-12 col-sm-3">
                     <div class="form-group">
-                      <button @click="discountCalculate()" class="btn btn-primary w-100">Aplicar</button>
+                      <button
+                        @click="discountCalculate()"
+                        class="btn btn-primary w-100"
+                      >
+                        Aplicar
+                      </button>
                     </div>
                   </div>
-                  <div class="col-12">
+                </div>
+                <div class="row align-items-end">
+                  <div class="col-sm-6 col-12">
                     <div class="form-group">
-                      <label :for="orderInputs.deliveryDate.name">{{orderInputs.deliveryDate.label}}</label>
+                      <label :for="orderInputs.deliveryDate.name">{{
+                        orderInputs.deliveryDate.label
+                      }}</label>
                       <input
                         :type="orderInputs.deliveryDate.type"
                         class="form-control"
@@ -208,14 +241,28 @@
                       />
                     </div>
                   </div>
+                  <div class="col-sm-6 col-12">
+                    <div class="form-group">
+                      <label :for="orderInputs.deliveryHour.name">{{
+                        orderInputs.deliveryHour.label
+                      }}</label>
+                      <input
+                        :type="orderInputs.deliveryHour.type"
+                        class="form-control"
+                        :id="orderInputs.deliveryHour.name"
+                        :name="orderInputs.deliveryHour.name"
+                        v-model="orderInputs.deliveryHour.value"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <div class="col-12 col-md-6">
                 <div class="text-center">
-                  <span
-                    class="total-value-label display-3"
-                  >{{OutputHelper.money(orderInputs.total.value)}}</span>
+                  <span class="total-value-label display-3">{{
+                    OutputHelper.money(orderInputs.total.value)
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -225,7 +272,9 @@
                 <button
                   @click="submitForm()"
                   class="btn btn-primary d-block text-white w-100"
-                >Finalizar Pedido</button>
+                >
+                  Finalizar Pedido
+                </button>
               </div>
             </div>
           </div>
@@ -243,7 +292,7 @@ import axios from "axios";
 
 export default {
   components: {
-    Breadcrumb: Breadcrumb
+    Breadcrumb: Breadcrumb,
   },
 
   created() {
@@ -260,27 +309,32 @@ export default {
           label: "CPF",
           name: "cpf",
           value: "",
-          regex: RegExp("^([0-9]{11})$")
+          regex: RegExp("^([0-9]{11})$"),
         },
         discount: {
           type: "text",
           label: "Desconto",
           name: "desconto",
           value: 0,
-          regex: RegExp("[+-]?([0-9]*[.])?[0-9]+")
+          regex: RegExp("[+-]?([0-9]*[.])?[0-9]+"),
         },
         deliveryDate: {
-          type: "datetime-local",
+          type: "date",
           label: "Data de Entrega",
-          name: "data_entrega"
+          name: "data_entrega",
+        },
+        deliveryHour: {
+          type: "time",
+          label: "hora da Entrega",
+          name: "hora_entrega",
         },
         total: {
           type: "text",
           label: "Total",
           name: "valor_pedido",
           value: 0,
-          regex: RegExp("[+-]?([0-9]*[.])?[0-9]+")
-        }
+          regex: RegExp("[+-]?([0-9]*[.])?[0-9]+"),
+        },
       },
       orderItemsInputs: {
         type: {
@@ -292,8 +346,8 @@ export default {
             bota: "Bota",
             sandalia: "Sandália",
             social: "Sapato Social",
-            tenis: "Tênis"
-          }
+            tenis: "Tênis",
+          },
         },
         genre: {
           type: "select",
@@ -303,8 +357,8 @@ export default {
           options: {
             m: "Masculino",
             f: "Feminino",
-            u: "Unissex"
-          }
+            u: "Unissex",
+          },
         },
         color: {
           type: "select",
@@ -337,8 +391,8 @@ export default {
             tijolo: "Tijolo",
             verde: "Verde",
             vermelho: "Vermelho",
-            vinho: "Vinho"
-          }
+            vinho: "Vinho",
+          },
         },
         size: {
           type: "select",
@@ -448,25 +502,25 @@ export default {
             97: "97",
             98: "98",
             99: "99",
-            100: "100"
-          }
+            100: "100",
+          },
         },
         description: {
           label: "Descrição do Serviço",
           name: "descricao",
-          value: ""
+          value: "",
         },
         total: {
           type: "text",
           label: "Valor",
           name: "valor_item",
           value: 0,
-          regex: RegExp("[+-]?([0-9]*[.])?[0-9]+")
-        }
+          regex: RegExp("[+-]?([0-9]*[.])?[0-9]+"),
+        },
       },
       orderItems: [],
       requestUrl: "/order/",
-      redirectUrl: "/pedidos/listar"
+      redirectUrl: "/pedidos/listar",
     };
   },
   methods: {
@@ -474,9 +528,10 @@ export default {
       return {
         cpf: InputHelper.cleanVal(this.orderInputs.cpf.value),
         data_entrega: this.orderInputs.deliveryDate.value,
+        hora_entrega: this.orderInputs.deliveryHour.value,
         desconto: InputHelper.money(this.orderInputs.discount.value),
         valor: this.orderInputs.total.value,
-        itens: this.orderItems
+        itens: this.orderItems,
       };
     },
     submitForm: function() {
@@ -484,7 +539,7 @@ export default {
       const data = this.getDataToSend();
       axios
         .post(url, data)
-        .then(response => {
+        .then((response) => {
           const responseBody = response.data;
           console.log(responseBody.data);
           alert(responseBody.message);
@@ -501,7 +556,7 @@ export default {
         cor: this.orderItemsInputs.color.value,
         tamanho: this.orderItemsInputs.size.value,
         valor: InputHelper.money(this.orderItemsInputs.total.value),
-        descricao: this.orderItemsInputs.description.value
+        descricao: this.orderItemsInputs.description.value,
       });
       this.refreshTotal();
     },
@@ -548,7 +603,7 @@ export default {
         InputHelper.setInvalidInputs(element.name);
         this.valid = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
