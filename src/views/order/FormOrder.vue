@@ -252,6 +252,8 @@
                         :id="orderInputs.deliveryHour.name"
                         :name="orderInputs.deliveryHour.name"
                         v-model="orderInputs.deliveryHour.value"
+                        :min="orderInputs.deliveryHour.min"
+                        :max="orderInputs.deliveryHour.max"
                       />
                     </div>
                   </div>
@@ -327,6 +329,8 @@ export default {
           type: "time",
           label: "hora da Entrega",
           name: "hora_entrega",
+          min: "07:00",
+          max: "18:00",
         },
         total: {
           type: "text",
