@@ -1,16 +1,16 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-import '../theme/global.scss';
-import VueTheMask from 'vue-the-mask';
+import Vue from "vue";
+import App from "./components/App.vue";
+import router from "./router/router";
+import store from "./store/store";
+import "../theme/global.scss";
+import VueTheMask from "vue-the-mask";
 
-Vue.use(VueTheMask)
+Vue.use(VueTheMask);
 
 Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
-  render: h => h(App)
-}).$mount('#app')
+  render: (h) => h(App),
+}).$mount("#app");

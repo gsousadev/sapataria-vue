@@ -6,7 +6,9 @@
           <li class="breadcrumb-item">
             <router-link to="/">Inicio</router-link>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">{{currentPageName}}</li>
+          <li class="breadcrumb-item active" aria-current="page">
+            {{ currentPageName }}
+          </li>
         </ol>
       </nav>
     </div>
@@ -15,12 +17,9 @@
 
 <script>
 export default {
-    name:'Breadcrumb',
-    props:{
-        currentPageName:String
-    }
+  name: "Breadcrumb",
+  props: {
+    currentPageName: String,
+  },
 };
 </script>
-
-<style>
-</style>

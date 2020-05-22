@@ -203,9 +203,9 @@
                   </div>
                   <div class="col-12 col-sm-3">
                     <div class="form-group">
-                      <label :for="orderInputs.discount.name">{{
-                        orderInputs.discount.label
-                      }}</label>
+                      <label :for="orderInputs.discount.name">
+                        {{ orderInputs.discount.label }}</label
+                      >
                       <input
                         :type="orderInputs.discount.type"
                         class="form-control"
@@ -287,7 +287,7 @@
 </template>
 
 <script>
-import Breadcrumb from "@/components/Breadcramb";
+import Breadcrumb from "@/components/Breadcrumb";
 import InputHelper from "@/helpers/inputHelper";
 import OutputHelper from "@/helpers/outputHelper";
 import axios from "axios";
@@ -544,13 +544,22 @@ export default {
       axios
         .post(url, data)
         .then((response) => {
-          const responseBody = response.data;
-          console.log(responseBody.data);
-          alert(responseBody.message);
+          const data = response.data;
+          alert("Pedido cadastrado com sucesso!");
           this.$router.push({ path: this.redirectUrl });
         })
-        .catch(function(error) {
-          console.log(error.message);
+        .catch((error) => {
+          const data = error.response.data;
+
+          const modalOptions = {
+            title: data.message,
+            textLines: data.errors,
+            confirmButton: true,
+            cancelButton: false,
+          };
+
+          this.$parent.modalData = modalOptions;
+          this.$parent.toggleModal();
         });
     },
     addItem() {

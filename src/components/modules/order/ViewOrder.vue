@@ -143,10 +143,10 @@
 </template>
 
 <script>
-import Breadcrumb from "@/components/Breadcramb";
+import Breadcrumb from "@/components/Breadcrumb";
 import OutputHelper from "@/helpers/outputHelper";
 import axios from "axios";
-import ServiceTable from "@/components/order/ServiceTable";
+import ServiceTable from "@/components/modules/order/ServiceTable";
 
 export default {
   components: {
@@ -187,7 +187,7 @@ export default {
       axios
         .get(`${process.env.VUE_APP_API_URL}/order/${this.orderId}`)
         .then((response) => {
-          this.orderInfo = response.data.data;
+          this.orderInfo = response.data;
           console.log(this.orderInfo);
           this.orderStatusSelect.value = this.orderInfo.status;
         })

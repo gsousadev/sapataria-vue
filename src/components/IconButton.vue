@@ -12,13 +12,13 @@ export default {
     url: String,
     buttonText: String,
     classNames: String,
-    iconClass: String
+    iconClass: String,
   },
   methods: {
     getClassNames: function() {
-      return 'sp-link bg-primary rounded';
-    }
-  }
+      return "sp-link bg-primary rounded";
+    },
+  },
 };
 </script>
 
@@ -37,10 +37,10 @@ export default {
   & .title {
     color: #fff;
   }
-  &:hover{
+  &:hover {
     text-decoration: none;
     transform: scale(1.03);
-    transition: .2s ease-in-out;
+    transition: 0.2s ease-in-out;
   }
 }
 </style>
