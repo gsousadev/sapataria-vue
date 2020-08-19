@@ -221,11 +221,21 @@ export default {
           this.getDataToSend()
         )
         .then((response) => {
-          alert(response.data.message);
+          alert('Status alterado com sucesso!');
           this.$router.push({ path: this.redirectUrl });
         })
         .catch((error) => {
-          console.log(error.message);
+          const data = error.response.data;
+
+          const modalOptions = {
+            isVisible: true,
+            title: data.message,
+            textLines: data.errors,
+            confirmButton: true,
+            cancelButton: false,
+          };
+
+          this.$parent.modalData = modalOptions;
         });
     },
   },

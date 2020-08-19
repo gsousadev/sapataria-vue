@@ -1,26 +1,21 @@
 <template>
-  <div name="modal">
+  <div name="modal" v-show="isVisible = false">
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="modal-header">
-            <slot name="header">
-              default header
-            </slot>
+            <slot name="header">{{title}}</slot>
           </div>
 
           <div class="modal-body">
             <slot name="body">
-              default body
+              <p v-for="(text, index) in textLines" :key="index">{{text}}</p>
             </slot>
           </div>
 
           <div class="modal-footer">
             <slot name="footer">
-              default footer
-              <button class="modal-default-button" @click="close">
-                OK
-              </button>
+              <button class="modal-default-button" @click="toggleModal">OK</button>
             </slot>
           </div>
         </div>
@@ -36,13 +31,20 @@ export default {
     title: String,
     textLines: Array,
     confirmButton: Boolean,
-    cancelButton: Boolean,
+    cancelButton: Boolean
   },
+
+  data (){
+    return {
+      isVisible
+    }
+  }, 
+  
   methods: {
-    close() {
-      this.$parent.toggleModal();
+    toggleModal() {
+      this.isVisible = !this.isVisible;
     },
-  },
+  }
 };
 </script>
 

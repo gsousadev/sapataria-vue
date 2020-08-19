@@ -1,8 +1,6 @@
 <template>
   <div id="app">
     <Modal
-      v-show="modalData.isVisible"
-      @close="toggleModal"
       :title="modalData.title"
       :textLines="modalData.textLines"
       :confirmButton="modalData.confirmButton"
@@ -32,7 +30,6 @@ export default {
   data() {
     return {
       modalData: {
-        isVisible: false,
         title: "Exemplo de Titulo",
         textLines: ["Exemplo texto 1", "Exemplo texto 2"],
         confirmButton: true,
@@ -40,10 +37,10 @@ export default {
       },
     };
   },
-  methods: {
-    toggleModal() {
-      this.modalData.isVisible = !this.modalData.isVisible;
-    },
+  methods:{
+    toogleModal: function(){
+      
+    }
   },
   components: {
     Modal,
