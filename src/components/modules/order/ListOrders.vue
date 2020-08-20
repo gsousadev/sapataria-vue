@@ -60,6 +60,7 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import axios from "axios";
 import OutputHelper from "@/helpers/outputHelper";
+import ModalHelper from '../../../helpers/modalHelper';
 
 export default {
   mounted() {
@@ -88,11 +89,11 @@ export default {
       axios
         .delete(`${process.env.VUE_APP_API_URL}/order/${itemId}`)
         .then((response) => {
-          alert(response.data.message);
+          ModalHelper.modalSuccess('Legal', ['Pedido deletado com sucesso!']);
           this.items.splice(localIndex, 1);
         })
         .catch((error) => {
-          console.log(error.message);
+          ModalHelper.modalError(error);
         });
     },
     showItem(itemId) {
