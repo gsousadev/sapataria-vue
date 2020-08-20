@@ -53,6 +53,7 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import axios from "axios";
 import OutputHelper from "@/helpers/outputHelper";
+import ModalHelper from "@/helpers/modalHelper";
 
 export default {
   mounted() {
@@ -76,7 +77,7 @@ export default {
           this.items = response.data;
         })
         .catch((error) => {
-          console.log(error.message);
+          ModalHelper.modalError(error);
         });
     },
 
@@ -84,11 +85,14 @@ export default {
       axios
         .delete(`${process.env.VUE_APP_API_URL}/customer/${itemId}`)
         .then((response) => {
-          alert("Item deletado com sucesso");
+          ModalHelper.modalSuccess(
+              "Ok!",
+              ["Cliente excluido com sucesso!"],
+            );
           this.items.splice(localIndex, 1);
         })
         .catch((error) => {
-          console.log(error.message);
+          ModalHelper.modalError(error);
         });
     },
     editItem(itemId) {

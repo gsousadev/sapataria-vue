@@ -1,2 +1,0 @@
-//Exemplo
-export default {};

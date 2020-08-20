@@ -9,9 +9,11 @@
             <div class="row my-3">
               <div class="col-12 col-sm-6">
                 <div class="form-group">
-                  <label :for="customerInfo.nome.name">{{
+                  <label :for="customerInfo.nome.name">
+                    {{
                     customerInfo.nome.label
-                  }}</label>
+                    }}
+                  </label>
                   <input
                     :type="customerInfo.nome.type"
                     class="form-control"
@@ -24,9 +26,11 @@
               </div>
               <div class="col-12 col-sm-6">
                 <div class="form-group">
-                  <label :for="customerInfo.cpf.name">{{
+                  <label :for="customerInfo.cpf.name">
+                    {{
                     customerInfo.cpf.label
-                  }}</label>
+                    }}
+                  </label>
                   <input
                     :type="customerInfo.cpf.type"
                     class="form-control"
@@ -41,9 +45,11 @@
               </div>
               <div class="col-12 col-sm-6">
                 <div class="form-group">
-                  <label :for="customerInfo.cep.name">{{
+                  <label :for="customerInfo.cep.name">
+                    {{
                     customerInfo.cep.label
-                  }}</label>
+                    }}
+                  </label>
                   <input
                     :type="customerInfo.cep.type"
                     class="form-control"
@@ -58,9 +64,11 @@
               </div>
               <div class="col-12 col-sm-6">
                 <div class="form-group">
-                  <label :for="customerInfo.rua.name">{{
+                  <label :for="customerInfo.rua.name">
+                    {{
                     customerInfo.rua.label
-                  }}</label>
+                    }}
+                  </label>
                   <input
                     :type="customerInfo.rua.type"
                     class="form-control"
@@ -73,9 +81,11 @@
               </div>
               <div class="col-12 col-sm-6">
                 <div class="form-group">
-                  <label :for="customerInfo.numero_residencia.name">{{
+                  <label :for="customerInfo.numero_residencia.name">
+                    {{
                     customerInfo.numero_residencia.label
-                  }}</label>
+                    }}
+                  </label>
                   <input
                     :type="customerInfo.numero_residencia.type"
                     class="form-control"
@@ -88,9 +98,11 @@
               </div>
               <div class="col-12 col-sm-6">
                 <div class="form-group">
-                  <label :for="customerInfo.cidade.name">{{
+                  <label :for="customerInfo.cidade.name">
+                    {{
                     customerInfo.cidade.label
-                  }}</label>
+                    }}
+                  </label>
                   <input
                     :type="customerInfo.cidade.type"
                     class="form-control"
@@ -103,9 +115,11 @@
               </div>
               <div class="col-12 col-sm-6">
                 <div class="form-group">
-                  <label :for="customerInfo.telefone_1.name">{{
+                  <label :for="customerInfo.telefone_1.name">
+                    {{
                     customerInfo.telefone_1.label
-                  }}</label>
+                    }}
+                  </label>
                   <input
                     :type="customerInfo.telefone_1.type"
                     class="form-control"
@@ -119,9 +133,11 @@
               </div>
               <div class="col-12 col-sm-6">
                 <div class="form-group">
-                  <label :for="customerInfo.telefone_2.name">{{
+                  <label :for="customerInfo.telefone_2.name">
+                    {{
                     customerInfo.telefone_2.label
-                  }}</label>
+                    }}
+                  </label>
                   <input
                     :type="customerInfo.telefone_2.type"
                     class="form-control"
@@ -140,9 +156,7 @@
                 <button
                   type="submit"
                   class="btn btn-primary d-block text-white"
-                >
-                  {{ textSubmitButton }}
-                </button>
+                >{{ textSubmitButton }}</button>
               </div>
             </div>
           </form>
@@ -156,10 +170,11 @@
 import axios from "axios";
 import Breadcrumb from "@/components/Breadcrumb";
 import InputHelper from "@/helpers/inputHelper";
+import ModalHelper from "@/helpers/modalHelper";
 
 export default {
   components: {
-    Breadcrumb: Breadcrumb,
+    Breadcrumb: Breadcrumb
   },
 
   created() {
@@ -181,7 +196,7 @@ export default {
           name: "nome",
           value: "",
           mask: false,
-          required: true,
+          required: true
         },
         cpf: {
           type: "text",
@@ -190,7 +205,7 @@ export default {
           disabled: false,
           value: "",
           mask: true,
-          required: true,
+          required: true
         },
         cep: {
           type: "text",
@@ -198,7 +213,7 @@ export default {
           name: "cep",
           value: "",
           mask: true,
-          required: true,
+          required: true
         },
         rua: {
           type: "text",
@@ -206,7 +221,7 @@ export default {
           name: "rua",
           value: "",
           mask: false,
-          required: true,
+          required: true
         },
         numero_residencia: {
           type: "number",
@@ -214,7 +229,7 @@ export default {
           name: "numero_residencia",
           value: "",
           mask: false,
-          required: true,
+          required: true
         },
         cidade: {
           type: "text",
@@ -222,7 +237,7 @@ export default {
           name: "cidade",
           value: "",
           mask: false,
-          required: true,
+          required: true
         },
         telefone_1: {
           type: "text",
@@ -230,7 +245,7 @@ export default {
           name: "telefone_1",
           value: "",
           mask: true,
-          required: true,
+          required: true
         },
         telefone_2: {
           type: "text",
@@ -238,12 +253,12 @@ export default {
           name: "telefone_2",
           value: "",
           mask: true,
-          required: false,
-        },
+          required: false
+        }
       },
       requestUrl: "/customer",
       redirectUrl: "/pedidos/cadastrar",
-      dataToSend: {},
+      dataToSend: {}
     };
   },
   methods: {
@@ -271,32 +286,36 @@ export default {
             `${process.env.VUE_APP_API_URL}${this.requestUrl}${this.customerId}`,
             this.dataToSend
           )
-          .then((response) => {
+          .then(response => {
             const responseBody = response.data;
-            console.log(responseBody);
-            alert(responseBody.message);
+            ModalHelper.modalSuccess(
+              "Muito bom!",
+              ["Os dados do cliente foram editado com sucesso!"],
+            );
             this.$router.push({
               path: this.redirectUrl,
-              query: { cpf: this.customerInfo.cpf.value },
+              query: { cpf: this.customerInfo.cpf.value }
             });
           })
           .catch(function(error) {
-            console.log(error);
+            ModalHelper.modalError(error);
           });
       } else {
         axios
           .post(process.env.VUE_APP_API_URL + this.requestUrl, this.dataToSend)
-          .then((response) => {
+          .then(response => {
             const responseBody = response.data;
-            console.log(responseBody);
-            alert(responseBody.message);
+           ModalHelper.modalSuccess(
+              "Muito bom!",
+              ["Cliente cadastrado com sucesso!"],
+            );
             this.$router.push({
               path: this.redirectUrl,
-              query: { cpf: this.customerInfo.cpf.value },
+              query: { cpf: this.customerInfo.cpf.value }
             });
           })
           .catch(function(error) {
-            console.log(error);
+            ModalHelper.modalError(error);
           });
       }
     },
@@ -307,7 +326,7 @@ export default {
         let url = `https://viacep.com.br/ws/${unmaksCep}/json/`;
         axios
           .get(url)
-          .then((response) => {
+          .then(response => {
             this.customerInfo.rua.value = response.data.logradouro;
             this.customerInfo.cidade.value = response.data.localidade;
             InputHelper.setValidInputs(this.customerInfo.cep.name);
@@ -315,7 +334,7 @@ export default {
             InputHelper.setValidInputs(this.customerInfo.cidade.name);
           })
           .catch(function(error) {
-            console.log(error);
+            ModalHelper.modalError(error);
           });
       }
     },
@@ -323,14 +342,14 @@ export default {
     getCustomerInfo() {
       axios
         .get(`${process.env.VUE_APP_API_URL}/customer/${this.customerId}`)
-        .then((response) => {
+        .then(response => {
           this.fillFields(response.data.data);
           this.disabledFieldsToEdit();
           this.setEditTitles();
           this.setEditRoute();
         })
-        .catch((error) => {
-          console.log(error.message);
+        .catch(error => {
+         ModalHelper.modalError(error);
         });
     },
 
@@ -354,7 +373,7 @@ export default {
       this.customerInfo.cidade.value = customerData.cidade;
       this.customerInfo.telefone_1.value = customerData.telefone_1;
       this.customerInfo.telefone_2.value = customerData.telefone_2;
-    },
-  },
+    }
+  }
 };
 </script>

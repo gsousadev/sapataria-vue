@@ -61,10 +61,7 @@
               <div class="col-12 col-sm-6">
                 <p>
                   <strong>Status:</strong>
-                  <span
-                    class="text-capitalize h4"
-                    v-html="OutputHelper.status(orderInfo.status)"
-                  />
+                  <span class="text-capitalize h4" v-html="OutputHelper.status(orderInfo.status)" />
                 </p>
               </div>
             </div>
@@ -74,11 +71,7 @@
             <h3>Items do Pedido</h3>
             <hr />
             <div class="row justify-content-center">
-              <div
-                class="col-12 py-3"
-                v-for="(item, index) in orderInfo.items"
-                :key="index"
-              >
+              <div class="col-12 py-3" v-for="(item, index) in orderInfo.items" :key="index">
                 <div
                   v-if="index != Object.keys(orderInfo.items).length - 1"
                   class="border-bottom p-2 rounded"
@@ -101,27 +94,18 @@
                   <div class="col-12 col-sm-6">
                     <div class="form-group">
                       <label>Selecione o novo status</label>
-                      <select
-                        v-model="orderStatusSelect.value"
-                        class="form-control"
-                      >
+                      <select v-model="orderStatusSelect.value" class="form-control">
                         <option
                           v-for="(option, index) in orderStatusSelect.options"
                           :key="index"
                           :value="index"
-                          >{{ option }}</option
-                        >
+                        >{{ option }}</option>
                       </select>
                     </div>
                   </div>
                   <div class="col-12 col-sm-6">
                     <div class="form-group ml-sm-3 ml-0">
-                      <button
-                        class="btn btn-primary w-100"
-                        @click="updateStatus()"
-                      >
-                        Alterar Status
-                      </button>
+                      <button class="btn btn-primary w-100" @click="updateStatus()">Alterar Status</button>
                     </div>
                   </div>
                 </div>
@@ -145,13 +129,14 @@
 <script>
 import Breadcrumb from "@/components/Breadcrumb";
 import OutputHelper from "@/helpers/outputHelper";
+import ModalHelper from "@/helpers/modalHelper";
 import axios from "axios";
 import ServiceTable from "@/components/modules/order/ServiceTable";
 
 export default {
   components: {
     Breadcrumb: Breadcrumb,
-    ServiceTable: ServiceTable,
+    ServiceTable: ServiceTable
   },
 
   created() {
@@ -167,50 +152,52 @@ export default {
       orderInfo: {
         customer: {
           nome: "",
-          cpf: "",
+          cpf: ""
         },
-        status: "",
+        status: ""
       },
       orderStatusSelect: {
         value: OutputHelper.status("pendente", true),
         options: {
           pendente: OutputHelper.status("pendente", true),
-          ativo: OutputHelper.status("ativo", true),
-          aguardando: OutputHelper.status("aguardando", true),
-          entregue: OutputHelper.status("entregue", true),
-        },
-      },
+          em_concerto: OutputHelper.status("em_concerto", true),
+          aguardando_retirada: OutputHelper.status("aguardando_retirada", true),
+          entregue: OutputHelper.status("entregue", true)
+        }
+      }
     };
   },
   methods: {
     getOrderInfo() {
       axios
         .get(`${process.env.VUE_APP_API_URL}/order/${this.orderId}`)
-        .then((response) => {
+        .then(response => {
           this.orderInfo = response.data;
-          console.log(this.orderInfo);
           this.orderStatusSelect.value = this.orderInfo.status;
         })
-        .catch((error) => {
-          console.log(error.message);
+        .catch(error => {
+          ModalHelper.modalError(error);
         });
     },
 
     getDataToSend() {
       return {
-        status: this.orderStatusSelect.value,
+        status: this.orderStatusSelect.value
       };
     },
 
     deleteOrder() {
       axios
         .delete(`${process.env.VUE_APP_API_URL}/order/${this.orderInfo.id}`)
-        .then((response) => {
-          alert(response.data.message);
+        .then(response => {
+          ModalHelper.modalSuccess(
+            "Ok!",
+            ["Pedido deletado com sucesso!"],
+          );
           this.$router.push({ path: this.redirectUrl });
         })
-        .catch((error) => {
-          console.log(error.message);
+        .catch(error => {
+          ModalHelper.modalError(error);
         });
     },
 
@@ -220,24 +207,17 @@ export default {
           `${process.env.VUE_APP_API_URL}/order/status/${this.orderId}`,
           this.getDataToSend()
         )
-        .then((response) => {
-          alert('Status alterado com sucesso!');
+        .then(response => {
+          ModalHelper.modalSuccess(
+            "Muito bom!",
+            ["Status alterado com sucesso!"],
+          );
           this.$router.push({ path: this.redirectUrl });
         })
-        .catch((error) => {
-          const data = error.response.data;
-
-          const modalOptions = {
-            isVisible: true,
-            title: data.message,
-            textLines: data.errors,
-            confirmButton: true,
-            cancelButton: false,
-          };
-
-          this.$parent.modalData = modalOptions;
+        .catch(error => {
+          ModalHelper.modalError(error);
         });
-    },
-  },
+    }
+  }
 };
 </script>

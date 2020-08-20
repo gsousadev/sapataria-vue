@@ -64,11 +64,11 @@ export default class OutputHelper {
         return onlyText
           ? "Entregue"
           : `<span class="badge badge-success">Entregue</span>`;
-      case "aguardando":
+      case "aguardando_retirada":
         return onlyText
           ? "Aguardando Retirada"
           : `<span class="badge badge-info">Aguardando Retirada</span>`;
-      case "ativo":
+      case "em_concerto":
         return onlyText
           ? "Em Concerto"
           : `<span class="badge badge-danger">Em Concerto</span>`;

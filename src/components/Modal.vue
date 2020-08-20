@@ -1,21 +1,21 @@
 <template>
-  <div name="modal" v-show="isVisible = false">
+  <div name="modal" v-if="getModalInfo.isVisible == true">
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="modal-header">
-            <slot name="header">{{title}}</slot>
+            <slot name="header">{{getModalInfo.title}}</slot>
           </div>
 
           <div class="modal-body">
             <slot name="body">
-              <p v-for="(text, index) in textLines" :key="index">{{text}}</p>
+              <p v-for="(text, index) in getModalInfo.textLines" :key="index">{{text}}</p>
             </slot>
           </div>
 
           <div class="modal-footer">
             <slot name="footer">
-              <button class="modal-default-button" @click="toggleModal">OK</button>
+              <button class="modal-default-button" @click="changeModalData({isVisible:false})">OK</button>
             </slot>
           </div>
         </div>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
 export default {
   name: "Modal",
   props: {
@@ -34,17 +35,14 @@ export default {
     cancelButton: Boolean
   },
 
-  data (){
-    return {
-      isVisible
-    }
-  }, 
-  
+  computed: {
+    ...mapGetters(['getModalInfo'])
+  },
+
   methods: {
-    toggleModal() {
-      this.isVisible = !this.isVisible;
-    },
+    ...mapMutations(['changeModalData'])
   }
+
 };
 </script>
 

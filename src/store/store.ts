@@ -1,14 +1,26 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import actions from "./actions";
-import mutations from "./mutations";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    customerId: "",
+    modal: {
+      isVisible: false,
+      title: "",
+      textLines: [],
+      confirmButton: true,
+      cancelButton: false,
+    }
   },
-  mutations,
-  actions,
+  getters: {
+    getModalInfo(state) {
+      return state.modal;
+    }
+  },
+  mutations: {
+    changeModalData(state, payload) {
+        state.modal = payload;
+    }
+  },
 });

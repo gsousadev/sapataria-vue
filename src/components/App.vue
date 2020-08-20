@@ -1,11 +1,6 @@
 <template>
   <div id="app">
-    <Modal
-      :title="modalData.title"
-      :textLines="modalData.textLines"
-      :confirmButton="modalData.confirmButton"
-      :cancelButton="modalData.cancelButton"
-    ></Modal>
+    <Modal></Modal>
 
     <div class="container-fluid my-3">
       <div class="row justify-content-center">
@@ -28,19 +23,7 @@ import Modal from "@/components/Modal";
 
 export default {
   data() {
-    return {
-      modalData: {
-        title: "Exemplo de Titulo",
-        textLines: ["Exemplo texto 1", "Exemplo texto 2"],
-        confirmButton: true,
-        cancelButton: false,
-      },
-    };
-  },
-  methods:{
-    toogleModal: function(){
-      
-    }
+    return {};
   },
   components: {
     Modal,

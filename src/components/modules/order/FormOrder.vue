@@ -291,6 +291,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import InputHelper from "@/helpers/inputHelper";
 import OutputHelper from "@/helpers/outputHelper";
 import axios from "axios";
+import ModalHelper from '../../../helpers/modalHelper';
 
 export default {
   components: {
@@ -545,21 +546,11 @@ export default {
         .post(url, data)
         .then((response) => {
           const data = response.data;
-          alert("Pedido cadastrado com sucesso!");
+          ModalHelper.modalSuccess('Pedido cadastrado com sucesso!')
           this.$router.push({ path: this.redirectUrl });
         })
         .catch((error) => {
-          const data = error.response.data;
-
-          const modalOptions = {
-            title: data.message,
-            textLines: data.errors,
-            confirmButton: true,
-            cancelButton: false,
-          };
-
-          this.$parent.modalData = modalOptions;
-          this.$parent.toggleModal();
+          ModalHelper.modalError(error)
         });
     },
     addItem() {
