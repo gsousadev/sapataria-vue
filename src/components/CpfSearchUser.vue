@@ -22,6 +22,7 @@
 <script>
 import IconButton from "@/components/IconButton";
 import InputHelper from "@/helpers/inputHelper";
+import ModalHelper from "@/helpers/modalHelper";
 import axios from "axios";
 
 export default {
@@ -49,21 +50,32 @@ export default {
       if (InputHelper.checkInput(this.searchText, "cpf")) {
         axios
           .get(
-            `${process.env.VUE_APP_API_URL}/customer/check-cpf/${InputHelper.cleanVal(searchText)}`
+            `${
+              process.env.VUE_APP_API_URL
+            }/customer/index?cpf=${InputHelper.cleanVal(searchText)}`
           )
-          .then(function(response) {
-            const responseBody = response.data;
-            const customer = responseBody.data;
-            router.push({
-              path: "/pedidos/cadastrar/",
-              query: { cpf: customer.cpf }
-            });
-          })
-          .catch(function() {
-            router.push({
-              path: "/clientes/cadastrar",
-              query: { cpf: searchText }
-            });
+          .then(response => {
+            const data = response.data;
+            if (data.length > 0) {
+              ModalHelper.modalSuccess(
+                "Cliente encontrado!",
+                ["Redirecionando para cadastro de pedido."],
+              );
+              router.push({
+                path: "/pedidos/cadastrar/",
+                query: { cpf: data[0].cpf }
+              });
+            } else {
+    
+              ModalHelper.modalSuccess(
+                "Cliente não encontrado!",
+                ["Redirecionando para cadastro de cliente."],
+              );
+              router.push({
+                path: "/clientes/cadastrar",
+                query: { cpf: searchText }
+              });
+            }
           });
       } else {
         InputHelper.setInvalidInputs("cpfInput");
@@ -72,4 +84,3 @@ export default {
   }
 };
 </script>
-
