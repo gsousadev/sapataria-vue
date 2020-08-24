@@ -2,6 +2,7 @@ import store from '@/store/store'
 
 export default class ModalHelper {
   public static modalError(error: any) {
+    console.log(error);
     let modalOptions = {};
     if (error.response == undefined) {
       modalOptions = {

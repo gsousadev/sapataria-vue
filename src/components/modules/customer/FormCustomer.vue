@@ -343,13 +343,14 @@ export default {
       axios
         .get(`${process.env.VUE_APP_API_URL}/customer/${this.customerId}`)
         .then(response => {
-          this.fillFields(response.data.data);
+          this.fillFields(response.data);
           this.disabledFieldsToEdit();
           this.setEditTitles();
           this.setEditRoute();
         })
         .catch(error => {
          ModalHelper.modalError(error);
+         console.log(error);
         });
     },
 
