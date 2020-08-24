@@ -5,9 +5,7 @@
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
-            <table
-              class="table table-striped text-center table-sm bg-white rounded"
-            >
+            <table class="table table-striped text-center table-sm bg-white rounded">
               <thead>
                 <tr>
                   <th scope="col">Nome</th>
@@ -54,9 +52,11 @@ import Breadcrumb from "@/components/Breadcrumb";
 import axios from "axios";
 import OutputHelper from "@/helpers/outputHelper";
 import ModalHelper from "@/helpers/modalHelper";
+import { mapMutations } from "vuex";
 
 export default {
-  mounted() {
+  created() {
+    this.loaderVisibility(true);
     this.indexCustomers();
   },
   data() {
@@ -70,6 +70,7 @@ export default {
   },
 
   methods: {
+    ...mapMutations(["loaderVisibility"]),
     indexCustomers() {
       axios
         .get(`${process.env.VUE_APP_API_URL}/customer/index`)
@@ -78,6 +79,9 @@ export default {
         })
         .catch((error) => {
           ModalHelper.modalError(error);
+        })
+        .finally(() => {
+          this.loaderVisibility(false);
         });
     },
 
@@ -85,10 +89,7 @@ export default {
       axios
         .delete(`${process.env.VUE_APP_API_URL}/customer/${itemId}`)
         .then((response) => {
-          ModalHelper.modalSuccess(
-              "Ok!",
-              ["Cliente excluido com sucesso!"],
-            );
+          ModalHelper.modalSuccess("Ok!", ["Cliente excluido com sucesso!"]);
           this.items.splice(localIndex, 1);
         })
         .catch((error) => {

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Modal></Modal>
-
+    <Loader></Loader>
     <div class="container-fluid my-3">
       <div class="row justify-content-center">
         <div class="col-6 col-md-2">
@@ -20,6 +20,7 @@
 
 <script>
 import Modal from "@/components/Modal";
+import Loader from "@/components/Loader";
 
 export default {
   data() {
@@ -27,6 +28,7 @@ export default {
   },
   components: {
     Modal,
+    Loader
   },
 };
 </script>
