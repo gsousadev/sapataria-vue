@@ -1,6 +1,11 @@
-# Sapataria
+# Sapataria FrontEnd - VUE 
 
-## Project setup
+## Sobre
+O projeto consiste em um pequeno sistema de criação de pedidos para uma sapataria. 
+É possivel criar um carrinho de pedidos e fazer o gerenciamento dos mesmos. 
+O sistema tambem possui um pequeno cadastro de clientes. 
+
+## Instalação de dependências
 ```
 npm install
 ```
