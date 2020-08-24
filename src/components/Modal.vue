@@ -3,20 +3,38 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-          <div class="modal-header">
-            <slot name="header">{{getModalInfo.title}}</slot>
+          <div class="header">
+            <img
+              class="img-fluid alert-icon"
+              v-if="getModalInfo.type == 'error'"
+              src="@/assets/images/error.png"
+            />
+            <img
+              class="img-fluid alert-icon"
+              v-if="getModalInfo.type == 'success'"
+              src="@/assets/images/success.png"
+            />
+            <img
+              class="img-fluid alert-icon"
+              v-if="getModalInfo.type == 'warning'"
+              src="@/assets/images/warning.png"
+            />
+            <h3 class="title">{{getModalInfo.title}}</h3>
           </div>
-
-          <div class="modal-body">
-            <slot name="body">
-              <p v-for="(text, index) in getModalInfo.textLines" :key="index">{{text}}</p>
-            </slot>
+          <div class="text">
+            <p v-for="(text, index) in getModalInfo.textLines" :key="index">{{text}}</p>
           </div>
-
-          <div class="modal-footer">
-            <slot name="footer">
-              <button class="modal-default-button" @click="changeModalData({isVisible:false})">OK</button>
-            </slot>
+          <div class="footer">
+            <button
+              class="btn btn-danger"
+              v-if="getModalInfo.cancelButton"
+              @click="changeModalData({isVisible:false})"
+            >Cancelar</button>
+            <button
+              class="btn btn-primary"
+              v-if="getModalInfo.confirmButton"
+              @click="changeModalData({isVisible:false})"
+            >OK</button>
           </div>
         </div>
       </div>
@@ -25,7 +43,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "Modal",
   props: {
@@ -36,13 +54,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getModalInfo'])
+    ...mapGetters(["getModalInfo"])
   },
 
   methods: {
-    ...mapMutations(['changeModalData'])
+    ...mapMutations(["changeModalData"])
   }
-
 };
 </script>
 
@@ -65,7 +82,8 @@ export default {
 }
 
 .modal-container {
-  width: 300px;
+  width: 500px;
+  text-align: center;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -73,5 +91,14 @@ export default {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
+  & .header{
+    & .title, .text, .footer{
+      padding: 10px 0;
+    }
+
+    & .alert-icon{
+        width: 90px;
+    }
+  }
 }
 </style>

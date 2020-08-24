@@ -67,7 +67,7 @@ export default {
               });
             } else {
     
-              ModalHelper.modalSuccess(
+              ModalHelper.modalWarning(
                 "Cliente não encontrado!",
                 ["Redirecionando para cadastro de cliente."],
               );
