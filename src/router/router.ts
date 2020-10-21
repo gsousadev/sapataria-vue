@@ -14,6 +14,10 @@ export default new Router({
       component: Home,
     },
     {
+      path: "/login",
+      component: () => import("../components/modules/login/Login.vue"),
+    },
+    {
       path: "/pedidos/cadastrar",
       component: () => import("../components/modules/order/FormOrder.vue"),
     },
