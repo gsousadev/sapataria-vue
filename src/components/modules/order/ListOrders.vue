@@ -53,7 +53,7 @@
 
 <script>
 import Breadcrumb from "@/components/Breadcrumb";
-import axios from "axios";
+import Api from "@/api";
 import OutputHelper from "@/helpers/outputHelper";
 import ModalHelper from "../../../helpers/modalHelper";
 import { mapMutations } from "vuex";
@@ -75,13 +75,12 @@ export default {
     ...mapMutations(["loaderVisibility"]),
 
     indexOrders() {
-      axios
-        .get(`${process.env.VUE_APP_API_URL}/order/index`)
+      Api.get(`${process.env.VUE_APP_API_URL}/order/index`)
         .then((response) => {
           this.items = response.data;
         })
         .catch((error) => {
-          console.log(error.message);
+          ModalHelper.modalWarning(error)
         })
         .finally(() => {
           this.loaderVisibility(false);

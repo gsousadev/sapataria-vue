@@ -49,7 +49,7 @@
 
 <script>
 import Breadcrumb from "@/components/Breadcrumb";
-import axios from "axios";
+import Api from "@/api";
 import OutputHelper from "@/helpers/outputHelper";
 import ModalHelper from "@/helpers/modalHelper";
 import { mapMutations } from "vuex";
@@ -72,8 +72,7 @@ export default {
   methods: {
     ...mapMutations(["loaderVisibility"]),
     indexCustomers() {
-      axios
-        .get(`${process.env.VUE_APP_API_URL}/customer/index`)
+     Api.get('/customer/index')
         .then((response) => {
           this.items = response.data;
         })

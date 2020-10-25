@@ -14,6 +14,10 @@ export default new Vuex.Store({
     },
     loader: {
       isVisible: false
+    },
+    authentication: {
+      signedIn: false,
+      token: ""
     }
   },
   getters: {
@@ -22,6 +26,9 @@ export default new Vuex.Store({
     },
     loaderVisibility(state) {
       return state.loader.isVisible;
+    },
+    authenticationStatus(state) {
+      return state.authentication.signedIn;
     }
   },
   mutations: {
@@ -30,6 +37,14 @@ export default new Vuex.Store({
     },
     loaderVisibility(state, payload: boolean) {
       state.loader.isVisible = payload;
+    },
+    logout(state) {
+      state.authentication.signedIn = false;
+      state.authentication.token = '';
+    },
+    login(state, token: string) {
+      state.authentication.signedIn = true;
+      state.authentication.token = token;
     }
   },
 });

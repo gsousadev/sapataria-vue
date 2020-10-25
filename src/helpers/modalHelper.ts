@@ -2,9 +2,8 @@ import store from '@/store/store'
 
 export default class ModalHelper {
   public static modalError(error: any) {
-    console.log(error);
     let modalOptions = {};
-    if (error.response == undefined) {
+    if (error == undefined) {
       modalOptions = {
         isVisible: true,
         title: "Desculpe! ",
@@ -14,11 +13,11 @@ export default class ModalHelper {
         type: "error",
       };
     } else {
-      const data = error.response.data;
+      error.errors.unshift(error.support);
       modalOptions = {
         isVisible: true,
-        title: data.support,
-        textLines: data.errors,
+        title: error.message,
+        textLines: error.errors,
         confirmButton: true,
         cancelButton: false,
         type: "error",
