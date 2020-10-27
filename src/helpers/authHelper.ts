@@ -2,6 +2,11 @@ import store from '@/store/store';
 
 export default class AuthHelper {
   public static isAuthenticated() {
+    if (!store.state.authentication.signedIn) {
+      if (localStorage.getItem("token") !== null) {
+        return true;
+      }
+    }
     return store.state.authentication.signedIn;
   }
 
@@ -10,7 +15,7 @@ export default class AuthHelper {
   }
 
   public static storeToken(token: string) {
-    store.commit('login');
+    store.commit('login', token);
   }
 
   public static logout() {

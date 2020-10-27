@@ -41,10 +41,18 @@ export default new Vuex.Store({
     logout(state) {
       state.authentication.signedIn = false;
       state.authentication.token = '';
+      localStorage.removeItem('token');
     },
     login(state, token: string) {
       state.authentication.signedIn = true;
       state.authentication.token = token;
-    }
+      localStorage.setItem('token', token);
+    },
+    initialiseStore(state) {
+      if (localStorage.getItem('token') !== null && typeof localStorage.getItem('token') == 'string') {
+        state.authentication.signedIn = true;
+        state.authentication.token = localStorage.getItem('token') || "";
+      }
+    },
   },
 });
