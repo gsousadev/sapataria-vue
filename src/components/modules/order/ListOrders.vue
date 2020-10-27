@@ -80,7 +80,7 @@ export default {
           this.items = response.data;
         })
         .catch((error) => {
-          ModalHelper.modalWarning(error)
+          ModalHelper.modalWarning(error.response.data)
         })
         .finally(() => {
           this.loaderVisibility(false);
@@ -94,7 +94,7 @@ export default {
           this.items.splice(localIndex, 1);
         })
         .catch((error) => {
-          ModalHelper.modalError(error);
+          ModalHelper.modalError(error.response.data);
         });
     },
     showItem(itemId) {

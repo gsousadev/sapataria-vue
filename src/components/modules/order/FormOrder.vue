@@ -550,7 +550,7 @@ export default {
           this.$router.push({ path: this.redirectUrl });
         })
         .catch((error) => {
-          ModalHelper.modalError(error)
+          ModalHelper.modalError(error.response.data)
         });
     },
     addItem() {

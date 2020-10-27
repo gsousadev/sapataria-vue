@@ -8,7 +8,6 @@ const api = axios.create({
 api.interceptors.request.use(
     config => {
         config.headers.authorization = 'Bearer ' + AuthHelper.getToken();
-        config.headers.
         return config;
     },
     error => Promise.reject(error)
@@ -23,7 +22,7 @@ api.interceptors.response.use(
         if (error.response.status == 401) {
            AuthHelper.logout();
         }
-        return error.response.data;
+        return Promise.reject(error);
     }
 );
 

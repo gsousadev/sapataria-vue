@@ -53,7 +53,7 @@ export default {
           router.push({name:'home'});
         })
         .catch((error) => {
-          ModalHelper.modalError(error);
+          ModalHelper.modalError(error.response.data);
         });
     },
   },
