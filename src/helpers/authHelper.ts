@@ -1,4 +1,5 @@
 import store from '@/store/store';
+import router from '@/router/router';
 
 export default class AuthHelper {
   public static isAuthenticated() {
@@ -20,5 +21,6 @@ export default class AuthHelper {
 
   public static logout() {
     store.commit('logout');
+    window.location.href = '/login';
   }
 }

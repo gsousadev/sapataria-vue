@@ -5,7 +5,9 @@
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
-            <table class="table table-striped text-center table-sm bg-white rounded">
+            <table
+              class="table table-striped text-center table-sm bg-white rounded"
+            >
               <thead>
                 <tr>
                   <th scope="col">Nome</th>
@@ -26,7 +28,10 @@
                   <td>{{ OutputHelper.money(item.valor) }}</td>
                   <td>{{ OutputHelper.money(item.desconto) }}</td>
                   <td>{{ item.data_entrega }}</td>
-                  <td v-html="OutputHelper.status(item.status)" class="text-capitalize"></td>
+                  <td
+                    v-html="OutputHelper.status(item.status)"
+                    class="text-capitalize"
+                  ></td>
                   <td>
                     <button @click="showItem(item.id)">
                       <i class="material-icons">description</i>
@@ -59,7 +64,7 @@ import ModalHelper from "../../../helpers/modalHelper";
 import { mapMutations } from "vuex";
 
 export default {
- created() {
+  created() {
     this.loaderVisibility(true);
     this.indexOrders();
   },
@@ -80,21 +85,20 @@ export default {
           this.items = response.data;
         })
         .catch((error) => {
-          ModalHelper.modalWarning(error.response.data)
+          ModalHelper.modalWarning(error.data);
         })
         .finally(() => {
           this.loaderVisibility(false);
         });
     },
     deleteItem(itemId, localIndex) {
-      axios
-        .delete(`${process.env.VUE_APP_API_URL}/order/${itemId}`)
+      Api.delete(`${process.env.VUE_APP_API_URL}/order/${itemId}`)
         .then((response) => {
           ModalHelper.modalSuccess("Legal", ["Pedido deletado com sucesso!"]);
           this.items.splice(localIndex, 1);
         })
         .catch((error) => {
-          ModalHelper.modalError(error.response.data);
+          ModalHelper.modalError(error.data);
         });
     },
     showItem(itemId) {

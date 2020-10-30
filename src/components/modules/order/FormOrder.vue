@@ -292,6 +292,7 @@ import InputHelper from "@/helpers/inputHelper";
 import OutputHelper from "@/helpers/outputHelper";
 import axios from "axios";
 import ModalHelper from '../../../helpers/modalHelper';
+import Api from '@/api';
 
 export default {
   components: {
@@ -542,7 +543,7 @@ export default {
     submitForm: function() {
       const url = process.env.VUE_APP_API_URL + this.requestUrl;
       const data = this.getDataToSend();
-      axios
+      Api
         .post(url, data)
         .then((response) => {
           const data = response.data;
@@ -550,7 +551,7 @@ export default {
           this.$router.push({ path: this.redirectUrl });
         })
         .catch((error) => {
-          ModalHelper.modalError(error.response.data)
+          ModalHelper.modalError(error.data)
         });
     },
     addItem() {

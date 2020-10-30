@@ -5,7 +5,9 @@
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
-            <table class="table table-striped text-center table-sm bg-white rounded">
+            <table
+              class="table table-striped text-center table-sm bg-white rounded"
+            >
               <thead>
                 <tr>
                   <th scope="col">Nome</th>
@@ -72,12 +74,12 @@ export default {
   methods: {
     ...mapMutations(["loaderVisibility"]),
     indexCustomers() {
-     Api.get('/customer/index')
+      Api.get("/customer/index")
         .then((response) => {
           this.items = response.data;
         })
         .catch((error) => {
-          ModalHelper.modalError(error.response.data);
+          ModalHelper.modalError(error.data);
         })
         .finally(() => {
           this.loaderVisibility(false);
@@ -85,14 +87,13 @@ export default {
     },
 
     deleteItem(itemId, localIndex) {
-      axios
-        .delete(`${process.env.VUE_APP_API_URL}/customer/${itemId}`)
+      Api.delete(`/customer/${itemId}`)
         .then((response) => {
           ModalHelper.modalSuccess("Ok!", ["Cliente excluido com sucesso!"]);
           this.items.splice(localIndex, 1);
         })
         .catch((error) => {
-          ModalHelper.modalError(error.response.data);
+          ModalHelper.modalError(error.data);
         });
     },
     editItem(itemId) {

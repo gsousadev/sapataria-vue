@@ -1,5 +1,10 @@
 export default class OutputHelper {
   public static cpf(clearCpf: string): string {
+
+    if (clearCpf == null) {
+      return "";
+    }
+    
     return clearCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "$1.$2.$3-$4");
   }
 

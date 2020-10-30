@@ -49,11 +49,11 @@ export default {
       const store = this.$store;
       AuthRequests.login({ email: this.email, password: this.password })
         .then((success) => {
-          AuthHelper.storeToken(success.data.data.access_token);
+          AuthHelper.storeToken(success.data.access_token);
           router.push({name:'home'});
         })
         .catch((error) => {
-          ModalHelper.modalError(error.response.data);
+          ModalHelper.modalError(error.data);
         });
     },
   },
