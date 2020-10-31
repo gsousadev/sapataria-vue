@@ -1,5 +1,3 @@
-import AuthHelper from '@/helpers/authHelper';
-
 export default [
     {
         path: "/login",
@@ -53,4 +51,8 @@ export default [
             import("../components/modules/customer/FormCustomer.vue"),
         meta: { requiresAuth: true }
     },
+    {
+        path: "/*",
+        component: () => import("../components/modules/error/NotFound.vue"),
+    }
 ];

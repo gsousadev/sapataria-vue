@@ -24,6 +24,7 @@ api.interceptors.response.use(
     },
     error => {
         if (error.response.status == 401) {
+            
             AuthHelper.logout();
         }
         return Promise.reject(error.response);
