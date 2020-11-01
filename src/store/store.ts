@@ -14,7 +14,12 @@ export default new Vuex.Store({
     },
     loader: {
       isVisible: false
-    }
+    },
+    authentication: {
+      signedIn: false,
+      token: ""
+    },
+    loggedUser: {}
   },
   getters: {
     getModalInfo(state) {
@@ -22,6 +27,9 @@ export default new Vuex.Store({
     },
     loaderVisibility(state) {
       return state.loader.isVisible;
+    },
+    authenticationStatus(state) {
+      return state.authentication.signedIn;
     }
   },
   mutations: {
@@ -30,6 +38,25 @@ export default new Vuex.Store({
     },
     loaderVisibility(state, payload: boolean) {
       state.loader.isVisible = payload;
-    }
+    },
+    logout(state) {
+      state.authentication.signedIn = false;
+      state.authentication.token = '';
+      localStorage.removeItem('token');
+    },
+    login(state, token: string) {
+      state.authentication.signedIn = true;
+      state.authentication.token = token;
+      localStorage.setItem('token', token);
+    },
+    loggedUser(state, payload) {
+      state.loggedUser = payload;
+    },
+    initialiseStore(state) {
+      if (localStorage.getItem('token') !== null && typeof localStorage.getItem('token') == 'string') {
+        state.authentication.signedIn = true;
+        state.authentication.token = localStorage.getItem('token') || "";
+      }
+    },
   },
 });

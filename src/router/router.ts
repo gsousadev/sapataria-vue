@@ -1,44 +1,49 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "@/components/modules/home/Home.vue";
+import AuthHelper from "@/helpers/authHelper";
+import routes from './routes';
 
 Vue.use(Router);
 
-export default new Router({
+var router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
-  routes: [
-    {
-      path: "/",
-      name: "home",
-      component: Home,
-    },
-    {
-      path: "/pedidos/cadastrar",
-      component: () => import("../components/modules/order/FormOrder.vue"),
-    },
-    {
-      path: "/pedidos/listar",
-      component: () => import("../components/modules/order/ListOrders.vue"),
-    },
-    {
-      path: "/pedidos/visualizar/:id",
-      component: () => import("../components/modules/order/ViewOrder.vue"),
-    },
-    {
-      path: "/clientes/cadastrar",
-      component: () =>
-        import("../components/modules/customer/FormCustomer.vue"),
-    },
-    {
-      path: "/clientes/listar",
-      component: () =>
-        import("../components/modules/customer/ListCustomers.vue"),
-    },
-    {
-      path: "/clientes/editar/:id",
-      component: () =>
-        import("../components/modules/customer/FormCustomer.vue"),
-    },
-  ],
+  routes: routes
 });
+
+router.beforeResolve((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!AuthHelper.isAuthenticated()) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+
+  if (to.name === 'login') {
+    if (AuthHelper.isAuthenticated()) {
+      next({
+        path: '/home',
+      })
+    } else {
+      next()
+    }
+  }
+
+  if (to.name === 'logout') {
+    AuthHelper.logout();
+    next({
+      name: 'login',
+    });
+  }
+
+});
+
+
+export default router;
+
