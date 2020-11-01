@@ -2,7 +2,6 @@
   <section class="login p-5">
     <div class="row justify-content-center">
       <div class="col-xs-12 text-center">
-        <p> Faça login para prosseguir ... </p>
         <form class="login" @submit.prevent="login">
           <div class="form-group">
             <input
