@@ -1,7 +1,8 @@
 <template>
-  <section class="login">
+  <section class="login p-5">
     <div class="row justify-content-center">
-      <div class="col-xs-12">
+      <div class="col-xs-12 text-center">
+        <p> Faça login para prosseguir ... </p>
         <form class="login" @submit.prevent="login">
           <div class="form-group">
             <input
@@ -9,6 +10,7 @@
               type="text"
               placeholder="Email"
               v-model="email"
+              class="form-control"
             />
           </div>
           <div class="form-group">
@@ -17,10 +19,11 @@
               type="password"
               placeholder="Senha"
               v-model="password"
+              class="form-control"
             />
           </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">
+          <div class="form-group ">
+            <button type="submit" class="btn btn-primary btn-block form-control">
               Entrar
             </button>
           </div>
@@ -31,9 +34,10 @@
 </template>
 
 <script>
-import AuthRequests from "@/requests/auth";
+import AuthRequests from "@/requests/AuthRequest";
 import ModalHelper from "@/helpers/modalHelper";
 import AuthHelper from "@/helpers/authHelper";
+import UserHelper from "@/helpers/userHelper";
 
 export default {
   data() {
@@ -50,6 +54,7 @@ export default {
       AuthRequests.login({ email: this.email, password: this.password })
         .then((success) => {
           AuthHelper.storeToken(success.data.access_token);
+          UserHelper.storeLoggedUser(success.loggedUserInfo);
           router.push({name:'home'});
         })
         .catch((error) => {

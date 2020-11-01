@@ -18,7 +18,8 @@ export default new Vuex.Store({
     authentication: {
       signedIn: false,
       token: ""
-    }
+    },
+    loggedUser: {}
   },
   getters: {
     getModalInfo(state) {
@@ -47,6 +48,9 @@ export default new Vuex.Store({
       state.authentication.signedIn = true;
       state.authentication.token = token;
       localStorage.setItem('token', token);
+    },
+    loggedUser(state, payload) {
+      state.loggedUser = payload;
     },
     initialiseStore(state) {
       if (localStorage.getItem('token') !== null && typeof localStorage.getItem('token') == 'string') {

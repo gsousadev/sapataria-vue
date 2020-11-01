@@ -1,5 +1,5 @@
-import store from '@/store/store';
 import router from '@/router/router';
+import store from '@/store/store';
 
 export default class AuthHelper {
   public static isAuthenticated() {
@@ -8,6 +8,7 @@ export default class AuthHelper {
         return true;
       }
     }
+
     return store.state.authentication.signedIn;
   }
 
@@ -21,6 +22,10 @@ export default class AuthHelper {
 
   public static logout() {
     store.commit('logout');
-    window.location.href = '/login';
+  }
+
+  public static logoutWithRedirectToLogin() {
+    AuthHelper.logout();
+    router.push('/login');
   }
 }
