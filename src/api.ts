@@ -1,6 +1,5 @@
 import axios from 'axios';
 import AuthHelper from '@/helpers/authHelper';
-import router from './router/router';
 
 const api = axios.create({
     baseURL: process.env.VUE_APP_API_URL,

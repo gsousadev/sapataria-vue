@@ -80,7 +80,7 @@ export default {
     ...mapMutations(["loaderVisibility"]),
 
     indexOrders() {
-      Api.get(`${process.env.VUE_APP_API_URL}/order/index`)
+      Api.get(`/order/index`)
         .then((response) => {
           this.items = response.data;
         })
@@ -92,7 +92,7 @@ export default {
         });
     },
     deleteItem(itemId, localIndex) {
-      Api.delete(`${process.env.VUE_APP_API_URL}/order/${itemId}`)
+      Api.delete(`/order/${itemId}`)
         .then((response) => {
           ModalHelper.modalSuccess("Legal", ["Pedido deletado com sucesso!"]);
           this.items.splice(localIndex, 1);

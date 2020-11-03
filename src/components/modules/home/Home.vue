@@ -21,6 +21,7 @@
 </template>
 
 <script>
+
 import CpfSearchUser from "@/components/CpfSearchUser";
 import IconButton from "@/components/IconButton";
 
