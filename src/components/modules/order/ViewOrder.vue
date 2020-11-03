@@ -147,7 +147,6 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import OutputHelper from "@/helpers/outputHelper";
 import ModalHelper from "@/helpers/modalHelper";
-import axios from "axios";
 import ServiceTable from "@/components/modules/order/ServiceTable";
 import Api from "@/api";
 
@@ -204,7 +203,7 @@ export default {
     },
 
     deleteOrder() {
-      axios
+      Api
         .delete(`/order/${this.orderInfo.id}`)
         .then((response) => {
           ModalHelper.modalSuccess("Ok!", ["Pedido deletado com sucesso!"]);
@@ -216,7 +215,7 @@ export default {
     },
 
     updateStatus() {
-      axios
+      Api
         .put(
           `/order/status/${this.orderId}`,
           this.getDataToSend()
