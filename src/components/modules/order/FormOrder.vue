@@ -541,7 +541,7 @@ export default {
       };
     },
     submitForm: function() {
-      const url = process.env.VUE_APP_API_URL + this.requestUrl;
+      const url = this.requestUrl;
       const data = this.getDataToSend();
       Api
         .post(url, data)

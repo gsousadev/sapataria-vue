@@ -187,7 +187,7 @@ export default {
   },
   methods: {
     getOrderInfo() {
-      Api.get(`${process.env.VUE_APP_API_URL}/order/${this.orderId}`)
+      Api.get(`/order/${this.orderId}`)
         .then((response) => {
           this.orderInfo = response.data;
           this.orderStatusSelect.value = this.orderInfo.status;
@@ -205,7 +205,7 @@ export default {
 
     deleteOrder() {
       axios
-        .delete(`${process.env.VUE_APP_API_URL}/order/${this.orderInfo.id}`)
+        .delete(`/order/${this.orderInfo.id}`)
         .then((response) => {
           ModalHelper.modalSuccess("Ok!", ["Pedido deletado com sucesso!"]);
           this.$router.push({ path: this.redirectUrl });
@@ -218,7 +218,7 @@ export default {
     updateStatus() {
       axios
         .put(
-          `${process.env.VUE_APP_API_URL}/order/status/${this.orderId}`,
+          `/order/status/${this.orderId}`,
           this.getDataToSend()
         )
         .then((response) => {

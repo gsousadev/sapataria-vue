@@ -284,7 +284,7 @@ export default {
       if (this.customerId) {
         Api
           .put(
-            `${process.env.VUE_APP_API_URL}${this.requestUrl}${this.customerId}`,
+            `${this.requestUrl}${this.customerId}`,
             this.dataToSend
           )
           .then(response => {
@@ -303,7 +303,7 @@ export default {
           });
       } else {
         Api
-          .post(process.env.VUE_APP_API_URL + this.requestUrl, this.dataToSend)
+          .post(this.requestUrl, this.dataToSend)
           .then(response => {
             const responseBody = response.data;
            ModalHelper.modalSuccess(
@@ -342,7 +342,7 @@ export default {
 
     getCustomerInfo() {
       Api
-        .get(`${process.env.VUE_APP_API_URL}/customer/${this.customerId}`)
+        .get(`/customer/${this.customerId}`)
         .then(response => {
           this.fillFields(response.data);
           this.disabledFieldsToEdit();
