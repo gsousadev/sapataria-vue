@@ -55,6 +55,7 @@ import Api from "@/api";
 import OutputHelper from "@/helpers/outputHelper";
 import ModalHelper from "@/helpers/modalHelper";
 import { mapMutations } from "vuex";
+import CustomerRequest from "@/requests/CustomerRequest";
 
 export default {
   created() {
@@ -74,7 +75,8 @@ export default {
   methods: {
     ...mapMutations(["loaderVisibility"]),
     indexCustomers() {
-      Api.get("/customer/index")
+      new CustomerRequest()
+        .index()
         .then((response) => {
           this.items = response.data;
         })
@@ -87,7 +89,7 @@ export default {
     },
 
     deleteItem(itemId, localIndex) {
-      Api.delete(`/customer/${itemId}`)
+      new CustomerRequest().delete(itemId)
         .then((response) => {
           ModalHelper.modalSuccess("Ok!", ["Cliente excluido com sucesso!"]);
           this.items.splice(localIndex, 1);

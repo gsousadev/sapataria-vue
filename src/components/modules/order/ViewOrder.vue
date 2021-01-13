@@ -192,7 +192,7 @@ export default {
           this.orderStatusSelect.value = this.orderInfo.status;
         })
         .catch((error) => {
-          ModalHelper.modalError(error);
+          ModalHelper.modalError(error.data);
         });
     },
 
@@ -210,7 +210,7 @@ export default {
           this.$router.push({ path: this.redirectUrl });
         })
         .catch((error) => {
-          ModalHelper.modalError(error);
+          ModalHelper.modalError(error.data);
         });
     },
 
@@ -227,7 +227,7 @@ export default {
           this.$router.push({ path: this.redirectUrl });
         })
         .catch((error) => {
-          ModalHelper.modalError(error);
+          ModalHelper.modalError(error.data);
         });
     },
   },

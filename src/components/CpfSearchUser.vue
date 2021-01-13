@@ -30,6 +30,7 @@ import InputHelper from "@/helpers/inputHelper";
 import ModalHelper from "@/helpers/modalHelper";
 import Api from "@/api";
 import axios from "axios";
+import CustomerRequest from '@/requests/CustomerRequest';
 
 export default {
   components: {
@@ -54,7 +55,7 @@ export default {
       const router = this.$router;
       const searchText = this.searchText;
       if (InputHelper.checkInput(this.searchText, "cpf")) {
-        Api.get(`/customer/index?cpf=${InputHelper.cleanVal(searchText)}`).then(
+        new CustomerRequest().index(`cpf=${InputHelper.cleanVal(searchText)}`).then(
           (response) => {
             const data = response.data;
             if (data.length > 0) {
