@@ -13,9 +13,13 @@ export default class BaseRequest {
         return Api.post(this.prefix, data)
     }
 
-    index(filters: any) {
-        filters = RequestHelper.buildQueryFilter(filters);
-        return Api.get(`${this.prefix}/index?${filters}`)
+    index(filters: any = "") {
+
+        if (filters) {
+            filters = "?" + filters;
+        }
+
+        return Api.get(`${this.prefix}${filters}`)
     }
 
     get(id: number) {

@@ -46,8 +46,6 @@ export default class ModalHelper {
 
   public static modalWarning(title: string, textLines: Array<string> = []) {
 
-    const errorImageUri = "@/assets/images/warning.png";
-
     const modalOptions = {
       isVisible: true,
       title: title,

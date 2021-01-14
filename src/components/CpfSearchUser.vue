@@ -55,8 +55,8 @@ export default {
       const router = this.$router;
       const searchText = this.searchText;
       if (InputHelper.checkInput(this.searchText, "cpf")) {
-        new CustomerRequest().index(`cpf=${InputHelper.cleanVal(searchText)}`).then(
-          (response) => {
+        new CustomerRequest().index(`cpf=${InputHelper.cleanVal(searchText)}`)
+        .then((response) => {
             const data = response.data;
             if (data.length > 0) {
               ModalHelper.modalSuccess("Cliente encontrado!", [

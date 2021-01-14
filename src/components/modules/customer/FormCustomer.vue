@@ -332,7 +332,6 @@ export default {
         })
         .catch((error) => {
           ModalHelper.modalError(error.data);
-          console.log(error);
         });
     },
 

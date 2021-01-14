@@ -30,57 +30,51 @@
               </div>
               <div class="col-12 col-sm-6">
                 <p>
-                  <strong>Data de Entrega:</strong>
-                  {{ orderInfo.data_entrega }}
-                </p>
-              </div>
-              <div class="col-12 col-sm-6">
-                <p>
-                  <strong>Hora da Entrega:</strong>
-                  {{ orderInfo.hora_entrega }}
-                </p>
-              </div>
-              <div class="col-12 col-sm-6">
-                <p>
                   <strong>Desconto:</strong>
                   {{ OutputHelper.money(orderInfo.desconto) }}
-                </p>
-              </div>
-              <div class="col-12 col-sm-6">
-                <p>
-                  <strong>Valor:</strong>
-                  {{ OutputHelper.money(orderInfo.valor) }}
-                </p>
-              </div>
-              <div class="col-12 col-sm-6">
-                <p>
-                  <strong>Valor com desconto:</strong>
-                  {{ OutputHelper.money(orderInfo.valor - orderInfo.desconto) }}
-                </p>
-              </div>
-              <div class="col-12 col-sm-6">
-                <p>
-                  <strong>Status:</strong>
-                  <span
-                    class="text-capitalize h4"
-                    v-html="OutputHelper.status(orderInfo.status)"
-                  />
                 </p>
               </div>
             </div>
           </section>
 
           <section class="bg-white p-3 mt-3 rounded">
-            <h3>Items do Pedido</h3>
+            <h3>Produtos do Pedido</h3>
             <hr />
             <div class="row justify-content-center">
               <div
                 class="col-12 py-3"
-                v-for="(item, index) in orderInfo.items"
+                v-for="(item, index) in orderInfo.product_items"
                 :key="index"
               >
                 <div
-                  v-if="index != Object.keys(orderInfo.items).length - 1"
+                  v-if="
+                    index != Object.keys(orderInfo.product_items).length - 1
+                  "
+                  class="border-bottom p-2 rounded"
+                >
+                  <ProductTable :item="item"></ProductTable>
+                </div>
+
+                <div v-else class="p-2 rounded">
+                  <ProductTable :item="item"></ProductTable>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="bg-white p-3 mt-3 rounded">
+            <h3>Servicos do Pedido</h3>
+            <hr />
+            <div class="row justify-content-center">
+              <div
+                class="col-12 py-3"
+                v-for="(item, index) in orderInfo.service_items"
+                :key="index"
+              >
+                <div
+                  v-if="
+                    index != Object.keys(orderInfo.service_items).length - 1
+                  "
                   class="border-bottom p-2 rounded"
                 >
                   <ServiceTable :item="item"></ServiceTable>
@@ -92,46 +86,15 @@
               </div>
             </div>
           </section>
+
           <section class="bg-white p-3 mt-3 rounded">
-            <h3>Ações</h3>
+            <h3>Ações </h3>
             <hr />
             <div class="row align-items-end justify-content-between">
-              <div class="col-12 col-lg-6">
-                <div class="row align-items-end">
-                  <div class="col-12 col-sm-6">
-                    <div class="form-group">
-                      <label>Selecione o novo status</label>
-                      <select
-                        v-model="orderStatusSelect.value"
-                        class="form-control"
-                      >
-                        <option
-                          v-for="(option, index) in orderStatusSelect.options"
-                          :key="index"
-                          :value="index"
-                        >
-                          {{ option }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-12 col-sm-6">
-                    <div class="form-group ml-sm-3 ml-0">
-                      <button
-                        class="btn btn-primary w-100"
-                        @click="updateStatus()"
-                      >
-                        Alterar Status
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <div class="col-12 col-lg-3">
                 <div class="form-group d-flex justify-content-end">
                   <button class="btn btn-danger w-100" @click="deleteOrder()">
-                    <i class="material-icons">delete</i>Excluir
+                    <i class="material-icons">delete</i>Excluir Pedido
                   </button>
                 </div>
               </div>
@@ -148,15 +111,21 @@ import Breadcrumb from "@/components/Breadcrumb";
 import OutputHelper from "@/helpers/outputHelper";
 import ModalHelper from "@/helpers/modalHelper";
 import ServiceTable from "@/components/modules/order/ServiceTable";
+import ProductTable from "@/components/modules/order/ProductTable";
 import Api from "@/api";
+import OrderRequest from "@/requests/OrderRequest";
+import ServiceItemRequest from "@/requests/ServiceItemRequest";
+import { mapMutations } from "vuex";
 
 export default {
   components: {
     Breadcrumb: Breadcrumb,
     ServiceTable: ServiceTable,
+    ProductTable: ProductTable,
   },
 
   created() {
+    this.loaderVisibility(true);
     this.getOrderInfo();
   },
 
@@ -173,38 +142,28 @@ export default {
         },
         status: "",
       },
-      orderStatusSelect: {
-        value: OutputHelper.status("pendente", true),
-        options: {
-          pendente: OutputHelper.status("pendente", true),
-          em_concerto: OutputHelper.status("em_concerto", true),
-          aguardando_retirada: OutputHelper.status("aguardando_retirada", true),
-          entregue: OutputHelper.status("entregue", true),
-        },
-      },
     };
   },
   methods: {
+    ...mapMutations(["loaderVisibility"]),
+
     getOrderInfo() {
-      Api.get(`/order/${this.orderId}`)
+      new OrderRequest()
+        .get(this.orderId)
         .then((response) => {
           this.orderInfo = response.data;
-          this.orderStatusSelect.value = this.orderInfo.status;
         })
         .catch((error) => {
           ModalHelper.modalError(error.data);
+        })
+        .finally(() => {
+          this.loaderVisibility(false);
         });
     },
 
-    getDataToSend() {
-      return {
-        status: this.orderStatusSelect.value,
-      };
-    },
-
     deleteOrder() {
-      Api
-        .delete(`/order/${this.orderInfo.id}`)
+      new OrderRequest()
+        .delete(this.orderInfo.id)
         .then((response) => {
           ModalHelper.modalSuccess("Ok!", ["Pedido deletado com sucesso!"]);
           this.$router.push({ path: this.redirectUrl });
@@ -212,24 +171,7 @@ export default {
         .catch((error) => {
           ModalHelper.modalError(error.data);
         });
-    },
-
-    updateStatus() {
-      Api
-        .put(
-          `/order/status/${this.orderId}`,
-          this.getDataToSend()
-        )
-        .then((response) => {
-          ModalHelper.modalSuccess("Muito bom!", [
-            "Status alterado com sucesso!",
-          ]);
-          this.$router.push({ path: this.redirectUrl });
-        })
-        .catch((error) => {
-          ModalHelper.modalError(error.data);
-        });
-    },
-  },
+    }
+  }
 };
 </script>
