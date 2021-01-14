@@ -27,10 +27,10 @@ export default class BaseRequest {
     }
 
     update(id: number, data: any) {
-        return Api.post(`${this.prefix}/update/${id}`, data)
+        return Api.put(`${this.prefix}/${id}`, data)
     }
 
     delete(id: number) {
-        return Api.delete(`${this.prefix}/delete/${id}`)
+        return Api.delete(`${this.prefix}/${id}`)
     }
 }
