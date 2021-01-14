@@ -1,11 +1,8 @@
 import Api from '@/api';
+import BaseRequest from './BaseRequest';
 
-
-export default class UserRequest {
-
-    static prefix = '/user';
-
-    public static getLoggedUserInfo() {
-        return Api.get(`${UserRequest.prefix}/logged-info`);
+export default class UserRequest extends BaseRequest {
+    constructor() {
+        super('/user');
     }
 }

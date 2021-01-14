@@ -50,7 +50,7 @@ export default {
     login() {
       const router = this.$router;
       const store = this.$store;
-      AuthRequests.login({ email: this.email, password: this.password })
+      new AuthRequests().login({ email: this.email, password: this.password })
         .then((success) => {
           AuthHelper.storeToken(success.data.access_token);
           UserHelper.storeLoggedUser(success.loggedUserInfo);

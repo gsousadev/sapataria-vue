@@ -7,7 +7,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
     (config) => {
-        if (config.url !== "/auth/login") {
+        if (config.url !== "/auth/login" && config.baseURL !== "https://viacep.com.br") {
             config.headers['Authorization'] = 'Bearer ' + AuthHelper.getToken();
         }
 

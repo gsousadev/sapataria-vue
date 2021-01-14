@@ -1,18 +1,21 @@
 import Api from '@/api';
+import BaseRequest from './BaseRequest';
 
-export default class AuthRequest {
+export default class AuthRequest extends BaseRequest {
 
-    static prefix = '/auth';
-
-    public static login(payload: object) {
-        return Api.post(`${AuthRequest.prefix}/login`, payload);
+    constructor() {
+        super('/auth');
     }
 
-    public static logout() {
-        return Api.post(`${AuthRequest.prefix}/logout`);
+    public login(payload: object) {
+        return Api.post(`${this.prefix}/login`, payload);
     }
 
-    public static refresh() {
-        return Api.post(`${AuthRequest.prefix}/refresh`);
+    public logout() {
+        return Api.post(`${this.prefix}/logout`);
+    }
+
+    public refresh() {
+        return Api.post(`${this.prefix}/refresh`);
     }
 }

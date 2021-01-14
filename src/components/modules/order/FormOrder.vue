@@ -28,8 +28,9 @@
                             .options"
                           :key="index"
                           :value="index"
-                          >{{ option }}</option
                         >
+                          {{ option }}
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -50,8 +51,9 @@
                             .options"
                           :key="index"
                           :value="index"
-                          >{{ option }}</option
                         >
+                          {{ option }}
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -72,8 +74,9 @@
                             .options"
                           :key="index"
                           :value="index"
-                          >{{ option }}</option
                         >
+                          {{ option }}
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -94,8 +97,9 @@
                             .options"
                           :key="index"
                           :value="index"
-                          >{{ option }}</option
                         >
+                          {{ option }}
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -291,8 +295,9 @@ import Breadcrumb from "@/components/Breadcrumb";
 import InputHelper from "@/helpers/inputHelper";
 import OutputHelper from "@/helpers/outputHelper";
 import axios from "axios";
-import ModalHelper from '../../../helpers/modalHelper';
-import Api from '@/api';
+import ModalHelper from "../../../helpers/modalHelper";
+import Api from "@/api";
+import OrderRequest from "@/requests/OrderRequest";
 
 export default {
   components: {
@@ -525,7 +530,6 @@ export default {
         },
       },
       orderItems: [],
-      requestUrl: "/order/",
       redirectUrl: "/pedidos/listar",
     };
   },
@@ -540,18 +544,18 @@ export default {
         itens: this.orderItems,
       };
     },
-    submitForm: function() {
+    submitForm: function () {
       const url = this.requestUrl;
       const data = this.getDataToSend();
-      Api
-        .post(url, data)
+      new OrderRequest()
+        .create(data)
         .then((response) => {
           const data = response.data;
-          ModalHelper.modalSuccess('Pedido cadastrado com sucesso!')
+          ModalHelper.modalSuccess("Pedido cadastrado com sucesso!");
           this.$router.push({ path: this.redirectUrl });
         })
         .catch((error) => {
-          ModalHelper.modalError(error.data)
+          ModalHelper.modalError(error.data);
         });
     },
     addItem() {
@@ -592,7 +596,7 @@ export default {
       });
     },
 
-    validFields: function(element) {
+    validFields: function (element) {
       if (element.value != "") {
         if (element.regex) {
           if (element.regex.test(element.value)) {

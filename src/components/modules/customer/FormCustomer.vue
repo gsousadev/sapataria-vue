@@ -10,9 +10,7 @@
               <div class="col-12 col-sm-6">
                 <div class="form-group">
                   <label :for="customerInfo.nome.name">
-                    {{
-                    customerInfo.nome.label
-                    }}
+                    {{ customerInfo.nome.label }}
                   </label>
                   <input
                     :type="customerInfo.nome.type"
@@ -27,9 +25,7 @@
               <div class="col-12 col-sm-6">
                 <div class="form-group">
                   <label :for="customerInfo.cpf.name">
-                    {{
-                    customerInfo.cpf.label
-                    }}
+                    {{ customerInfo.cpf.label }}
                   </label>
                   <input
                     :type="customerInfo.cpf.type"
@@ -46,9 +42,7 @@
               <div class="col-12 col-sm-6">
                 <div class="form-group">
                   <label :for="customerInfo.cep.name">
-                    {{
-                    customerInfo.cep.label
-                    }}
+                    {{ customerInfo.cep.label }}
                   </label>
                   <input
                     :type="customerInfo.cep.type"
@@ -65,9 +59,7 @@
               <div class="col-12 col-sm-6">
                 <div class="form-group">
                   <label :for="customerInfo.rua.name">
-                    {{
-                    customerInfo.rua.label
-                    }}
+                    {{ customerInfo.rua.label }}
                   </label>
                   <input
                     :type="customerInfo.rua.type"
@@ -82,9 +74,7 @@
               <div class="col-12 col-sm-6">
                 <div class="form-group">
                   <label :for="customerInfo.numero_residencia.name">
-                    {{
-                    customerInfo.numero_residencia.label
-                    }}
+                    {{ customerInfo.numero_residencia.label }}
                   </label>
                   <input
                     :type="customerInfo.numero_residencia.type"
@@ -99,9 +89,7 @@
               <div class="col-12 col-sm-6">
                 <div class="form-group">
                   <label :for="customerInfo.cidade.name">
-                    {{
-                    customerInfo.cidade.label
-                    }}
+                    {{ customerInfo.cidade.label }}
                   </label>
                   <input
                     :type="customerInfo.cidade.type"
@@ -116,9 +104,7 @@
               <div class="col-12 col-sm-6">
                 <div class="form-group">
                   <label :for="customerInfo.telefone_1.name">
-                    {{
-                    customerInfo.telefone_1.label
-                    }}
+                    {{ customerInfo.telefone_1.label }}
                   </label>
                   <input
                     :type="customerInfo.telefone_1.type"
@@ -134,9 +120,7 @@
               <div class="col-12 col-sm-6">
                 <div class="form-group">
                   <label :for="customerInfo.telefone_2.name">
-                    {{
-                    customerInfo.telefone_2.label
-                    }}
+                    {{ customerInfo.telefone_2.label }}
                   </label>
                   <input
                     :type="customerInfo.telefone_2.type"
@@ -156,7 +140,9 @@
                 <button
                   type="submit"
                   class="btn btn-primary d-block text-white"
-                >{{ textSubmitButton }}</button>
+                >
+                  {{ textSubmitButton }}
+                </button>
               </div>
             </div>
           </form>
@@ -168,14 +154,15 @@
 
 <script>
 import Api from "@/api";
-import axios from 'axios';
+import axios from "axios";
 import Breadcrumb from "@/components/Breadcrumb";
 import InputHelper from "@/helpers/inputHelper";
 import ModalHelper from "@/helpers/modalHelper";
+import CustomerRequest from "@/requests/CustomerRequest";
 
 export default {
   components: {
-    Breadcrumb: Breadcrumb
+    Breadcrumb: Breadcrumb,
   },
 
   created() {
@@ -187,6 +174,7 @@ export default {
 
   data() {
     return {
+
       customerId: this.$route.params.id,
       headerTitle: "Cadastro de Cliente",
       textSubmitButton: "Cadastrar",
@@ -197,7 +185,7 @@ export default {
           name: "nome",
           value: "",
           mask: false,
-          required: true
+          required: true,
         },
         cpf: {
           type: "text",
@@ -206,7 +194,7 @@ export default {
           disabled: false,
           value: "",
           mask: true,
-          required: true
+          required: true,
         },
         cep: {
           type: "text",
@@ -214,7 +202,7 @@ export default {
           name: "cep",
           value: "",
           mask: true,
-          required: true
+          required: true,
         },
         rua: {
           type: "text",
@@ -222,7 +210,7 @@ export default {
           name: "rua",
           value: "",
           mask: false,
-          required: true
+          required: true,
         },
         numero_residencia: {
           type: "number",
@@ -230,7 +218,7 @@ export default {
           name: "numero_residencia",
           value: "",
           mask: false,
-          required: true
+          required: true,
         },
         cidade: {
           type: "text",
@@ -238,7 +226,7 @@ export default {
           name: "cidade",
           value: "",
           mask: false,
-          required: true
+          required: true,
         },
         telefone_1: {
           type: "text",
@@ -246,7 +234,7 @@ export default {
           name: "telefone_1",
           value: "",
           mask: true,
-          required: true
+          required: true,
         },
         telefone_2: {
           type: "text",
@@ -254,12 +242,11 @@ export default {
           name: "telefone_2",
           value: "",
           mask: true,
-          required: false
-        }
+          required: false,
+        },
       },
-      requestUrl: "/customer",
       redirectUrl: "/pedidos/cadastrar",
-      dataToSend: {}
+      dataToSend: {},
     };
   },
   methods: {
@@ -282,41 +269,36 @@ export default {
     submitForm() {
       this.generateDataToSend();
       if (this.customerId) {
-        Api
-          .put(
-            `${this.requestUrl}${this.customerId}`,
-            this.dataToSend
-          )
-          .then(response => {
+        new CustomerRequest()
+          .update(this.customerId, this.dataToSend)
+          .then((response) => {
             const responseBody = response.data;
-            ModalHelper.modalSuccess(
-              "Muito bom!",
-              ["Os dados do cliente foram editado com sucesso!"],
-            );
+            ModalHelper.modalSuccess("Muito bom!", [
+              "Os dados do cliente foram editado com sucesso!",
+            ]);
             this.$router.push({
               path: this.redirectUrl,
-              query: { cpf: this.customerInfo.cpf.value }
+              query: { cpf: this.customerInfo.cpf.value },
             });
           })
-          .catch(function(error) {
-            ModalHelper.modalError(error);
+          .catch(function (error) {
+            ModalHelper.modalError(error.data);
           });
       } else {
-        Api
-          .post(this.requestUrl, this.dataToSend)
-          .then(response => {
+        new CustomerRequest()
+          .create(this.dataToSend)
+          .then((response) => {
             const responseBody = response.data;
-           ModalHelper.modalSuccess(
-              "Muito bom!",
-              ["Cliente cadastrado com sucesso!"],
-            );
+            ModalHelper.modalSuccess("Muito bom!", [
+              "Cliente cadastrado com sucesso!",
+            ]);
             this.$router.push({
               path: this.redirectUrl,
-              query: { cpf: this.customerInfo.cpf.value }
+              query: { cpf: this.customerInfo.cpf.value },
             });
           })
-          .catch(function(error) {
-            ModalHelper.modalError(error);
+          .catch(function (error) {
+            ModalHelper.modalError(error.data);
           });
       }
     },
@@ -327,31 +309,29 @@ export default {
         let url = `https://viacep.com.br/ws/${unmaksCep}/json/`;
         axios
           .get(url)
-          .then(response => {
+          .then((response) => {
             this.customerInfo.rua.value = response.data.logradouro;
             this.customerInfo.cidade.value = response.data.localidade;
             InputHelper.setValidInputs(this.customerInfo.cep.name);
             InputHelper.setValidInputs(this.customerInfo.rua.name);
             InputHelper.setValidInputs(this.customerInfo.cidade.name);
           })
-          .catch(function(error) {
-            ModalHelper.modalError(error);
+          .catch(function (error) {
+            ModalHelper.modalError(error.data);
           });
       }
     },
 
     getCustomerInfo() {
-      Api
-        .get(`/customer/${this.customerId}`)
-        .then(response => {
+      new CustomerRequest().get(this.customerId)
+        .then((response) => {
           this.fillFields(response.data);
           this.disabledFieldsToEdit();
           this.setEditTitles();
           this.setEditRoute();
         })
-        .catch(error => {
-         ModalHelper.modalError(error);
-         console.log(error);
+        .catch((error) => {
+          ModalHelper.modalError(error.data);
         });
     },
 
@@ -361,7 +341,6 @@ export default {
     },
 
     setEditRoute() {
-      this.requestUrl = "/customer/";
       this.redirectUrl = "/clientes/listar";
     },
 
@@ -375,7 +354,7 @@ export default {
       this.customerInfo.cidade.value = customerData.cidade;
       this.customerInfo.telefone_1.value = customerData.telefone_1;
       this.customerInfo.telefone_2.value = customerData.telefone_2;
-    }
-  }
+    },
+  },
 };
 </script>

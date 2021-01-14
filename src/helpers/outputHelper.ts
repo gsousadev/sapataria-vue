@@ -61,22 +61,22 @@ export default class OutputHelper {
 
   public static status(clearStatus: string, onlyText = false) {
     switch (clearStatus) {
-      case "pendente":
+      case "PENDENTE":
         return onlyText
           ? "Pendente"
           : `<span class="badge badge-warning">Pendente</span>`;
-      case "entregue":
+      case "PROCESSANDO":
         return onlyText
-          ? "Entregue"
-          : `<span class="badge badge-success">Entregue</span>`;
-      case "aguardando_retirada":
+          ? "Em processamento"
+          : `<span class="badge badge-success">Em processamento</span>`;
+      case "RETIRAR":
         return onlyText
           ? "Aguardando Retirada"
           : `<span class="badge badge-info">Aguardando Retirada</span>`;
-      case "em_concerto":
+      case "ENTREGUE":
         return onlyText
-          ? "Em Concerto"
-          : `<span class="badge badge-danger">Em Concerto</span>`;
+          ? "Entregue"
+          : `<span class="badge badge-danger">Entregue</span>`;
       default:
         return onlyText
           ? clearStatus

@@ -10,28 +10,19 @@
             >
               <thead>
                 <tr>
-                  <th scope="col">Nome</th>
-                  <th scope="col">CPF</th>
-                  <th scope="col">Quantidade de itens</th>
-                  <th scope="col">Valor Total</th>
-                  <th scope="col">Desconto</th>
-                  <th scope="col">Data de entrega</th>
-                  <th scope="col">Status</th>
+                  <th scope="col">Codigo do Pedido</th>
+                  <th scope="col">Nome do Cliente</th>
+                  <th scope="col">CPF do Cliente</th>
+                  <th scope="col">Desconto do Pedido</th>
                   <th scope="col">Visualizar | Excluir</th>
                 </tr>
               </thead>
               <tbody v-if="this.items.length != 0">
                 <tr v-for="(item, index) in items" :key="index">
+                  <td>{{ item.id }}</td>
                   <td>{{ item.customer.nome }}</td>
                   <td>{{ OutputHelper.cpf(item.customer.cpf) }}</td>
-                  <td>{{ item.items.length }}</td>
-                  <td>{{ OutputHelper.money(item.valor) }}</td>
                   <td>{{ OutputHelper.money(item.desconto) }}</td>
-                  <td>{{ item.data_entrega }}</td>
-                  <td
-                    v-html="OutputHelper.status(item.status)"
-                    class="text-capitalize"
-                  ></td>
                   <td>
                     <button @click="showItem(item.id)">
                       <i class="material-icons">description</i>
@@ -62,6 +53,7 @@ import Api from "@/api";
 import OutputHelper from "@/helpers/outputHelper";
 import ModalHelper from "../../../helpers/modalHelper";
 import { mapMutations } from "vuex";
+import OrderRequest from "@/requests/OrderRequest";
 
 export default {
   created() {
@@ -80,19 +72,21 @@ export default {
     ...mapMutations(["loaderVisibility"]),
 
     indexOrders() {
-      Api.get(`/order/index`)
+      new OrderRequest()
+        .index()
         .then((response) => {
           this.items = response.data;
         })
         .catch((error) => {
-          ModalHelper.modalWarning(error.data);
+          ModalHelper.modalError(error.data);
         })
         .finally(() => {
           this.loaderVisibility(false);
         });
     },
     deleteItem(itemId, localIndex) {
-      Api.delete(`/order/${itemId}`)
+      new OrderRequest()
+        .delete(itemId)
         .then((response) => {
           ModalHelper.modalSuccess("Legal", ["Pedido deletado com sucesso!"]);
           this.items.splice(localIndex, 1);
