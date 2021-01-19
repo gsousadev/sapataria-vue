@@ -4,7 +4,7 @@ export default class OutputHelper {
     if (clearCpf == null) {
       return "";
     }
-    
+
     return clearCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "$1.$2.$3-$4");
   }
 
@@ -24,13 +24,27 @@ export default class OutputHelper {
     return clearPhone;
   }
 
-  public static money(clearMoney: string): string {
-    return (
-      "R$ " +
-      parseFloat(clearMoney)
-        .toFixed(2)
-        .replace(".", ",")
-    );
+  public static money(clearMoney: any): string {
+
+    if (typeof (clearMoney) == "number") {
+      return (
+        "R$ " +
+        clearMoney
+          .toFixed(2)
+          .replace(".", ",")
+      );
+    }
+
+    if (typeof (clearMoney) == "string") {
+      return (
+        "R$ " +
+        parseFloat(clearMoney)
+          .toFixed(2)
+          .replace(".", ",")
+      );
+    }
+
+    return "R$ " + clearMoney;
   }
 
   public static productSize(clearSize: any) {
