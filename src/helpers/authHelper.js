@@ -2,7 +2,7 @@ import router from '@/router/router';
 import store from '@/store/store';
 
 export default class AuthHelper {
-  public static isAuthenticated() {
+  static isAuthenticated() {
     if (!store.state.authentication.signedIn) {
       if (localStorage.getItem("token") !== null) {
         return true;
@@ -12,19 +12,19 @@ export default class AuthHelper {
     return store.state.authentication.signedIn;
   }
 
-  public static getToken() {
+  static getToken() {
     return store.state.authentication.token;
   }
 
-  public static storeToken(token: string) {
+  static storeToken(token){
     store.commit('login', token);
   }
 
-  public static logout() {
+  static logout() {
     store.commit('logout');
   }
 
-  public static logoutWithRedirectToLogin() {
+ static logoutWithRedirectToLogin() {
     AuthHelper.logout();
     router.push('/login');
   }

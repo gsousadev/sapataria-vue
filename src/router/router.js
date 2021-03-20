@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import AuthHelper from "@/helpers/authHelper";
+import AuthHelper from "./../helpers/authHelper";
 import routes from './routes';
 
 Vue.use(Router);

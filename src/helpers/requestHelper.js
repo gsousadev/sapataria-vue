@@ -1,6 +1,6 @@
 export default class RequestHelper {
 
-  public static buildQueryFilter(filters: any): string {
+ static buildQueryFilter(filters) {
     if (typeof (filters) === 'string') return filters;
     var query = [];
     for (var key in filters) {
