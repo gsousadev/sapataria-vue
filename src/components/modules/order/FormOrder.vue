@@ -107,7 +107,7 @@
             </div>
           </div>
 
-          <div class="bg-white p-3 mt-3 rounded">
+          <!-- <div class="bg-white p-3 mt-3 rounded">
             <h4>Adicionar Serviços</h4>
             <hr/>
             <div class="box-order-items">
@@ -236,7 +236,7 @@
                 </tr>
               </table>
             </div>
-          </div>
+          </div> -->
 
           <div class="bg-white p-3 mt-3 rounded">
             <h4>Informações Gerais</h4>
@@ -410,10 +410,11 @@ export default {
     },
 
     addProduct() {
-      const product = this.getEnabledProductById(this.selectProductField.value);
-      product["disabled"] = true;
+      const productData = {...this.getEnabledProductById(this.selectProductField.value)};
+      productData.disabled = true;
+      productData.quantidade = this.qtdProductField.value;
+      this.orderProductItems.push(productData);
       this.addProductButton.disabled = true;
-      this.orderProductItems.push({...product, ...{quantidade: this.qtdProductField.value}});
       this.refreshCart();
     },
 
