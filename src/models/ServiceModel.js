@@ -1,4 +1,6 @@
-class ServiceModel extends Model {
+import {Model} from "./Model";
+
+export class ServiceModel extends Model {
 
     constructor(data) {
         super(data);

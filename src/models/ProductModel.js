@@ -1,5 +1,6 @@
-class ProductModel extends ServiceModel {
+import {ServiceModel} from "./ServiceModel";
 
+export class ProductModel extends ServiceModel {
     constructor(data) {
         super(data);
         this._estoque = data.estoque;
@@ -9,3 +10,4 @@ class ProductModel extends ServiceModel {
         return this._estoque;
     }
 }
+

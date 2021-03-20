@@ -25,17 +25,12 @@
 </template>
 
 <script>
-import IconButton from "@/components/IconButton";
+
 import InputHelper from "@/helpers/inputHelper";
 import ModalHelper from "@/helpers/modalHelper";
-import Api from "@/api";
-import axios from "axios";
 import CustomerRequest from '@/requests/CustomerRequest';
 
 export default {
-  components: {
-    IconButton,
-  },
   data() {
     return {
       InputHelper,

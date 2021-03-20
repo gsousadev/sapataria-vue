@@ -1,4 +1,4 @@
-class Model {
+export class Model {
 
     constructor(data) {
         this._id = data.id;

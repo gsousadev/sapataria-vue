@@ -11,7 +11,7 @@ api.interceptors.request.use(
             config.headers['Authorization'] = 'Bearer ' + AuthHelper.getToken();
         }
 
-        if (config.method == 'post' || config.method == 'delete' || config.method == 'put') {
+        if (config.method === 'post' || config.method === 'delete' || config.method === 'put') {
             config.headers['Content-Type'] = 'application/json;charset=utf-8';
         }
 
@@ -26,7 +26,7 @@ api.interceptors.response.use(
         return response.data;
     },
     error => {
-        if (error.response.status == 401) {
+        if (error.response.status === 401) {
             AuthHelper.logout();
             if(error.config.url !== "/auth/login"){
                 AuthHelper.logoutWithRedirectToLogin();

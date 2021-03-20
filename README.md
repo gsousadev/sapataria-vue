@@ -1,26 +1,24 @@
-# Venda Fácil Front
+# venda-facil-front
 
-## Sobre
-O projeto consiste em um sistema de gerenciamento de pedidos para estabelecimentos em geral.
-
-## Instalação de dependências
+## Project setup
 ```
 npm install
 ```
 
-### Rodar o comando a seguir para criação de servidor local para desenvolvimento 
+### Compiles and hot-reloads for development
 ```
-npm run serve --port=8080
+npm run serve
 ```
 
-### Compilação de arquivos para produção
+### Compiles and minifies for production
 ```
 npm run build
 ```
 
-### O usuário padrão criado inicialmente para manipulação do projeto
+### Lints and fixes files
+```
+npm run lint
+```
 
-````
-Email: admin@admin.com
-Senha: 12345678
-````
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

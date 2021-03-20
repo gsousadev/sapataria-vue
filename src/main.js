@@ -2,7 +2,7 @@ import Vue from "vue";
 import App from "./components/App.vue";
 import router from "./router/router";
 import store from "./store/store";
-import "./theme/global.scss";
+import "../theme/global.scss";
 import VueTheMask from "vue-the-mask";
 
 Vue.use(VueTheMask);
