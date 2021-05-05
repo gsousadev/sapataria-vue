@@ -29,9 +29,6 @@ static modalError(error) {
   }
 
  static modalSuccess(title, textLines = []) {
-
-    const errorImageUri = "@/assets/images/success.png";
-
     const modalOptions = {
       isVisible: true,
       title: title,
