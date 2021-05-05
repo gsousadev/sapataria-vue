@@ -1,5 +1,5 @@
 export default class OutputHelper {
-  public static cpf(clearCpf: string): string {
+   static cpf(clearCpf){
 
     if (clearCpf == null) {
       return "";
@@ -8,7 +8,7 @@ export default class OutputHelper {
     return clearCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "$1.$2.$3-$4");
   }
 
-  public static phone(clearPhone: string = ""): string {
+   static phone(clearPhone = "") {
     if (clearPhone == null) {
       return "";
     }
@@ -24,7 +24,7 @@ export default class OutputHelper {
     return clearPhone;
   }
 
-  public static money(clearMoney: any): string {
+   static money(clearMoney){
 
     if (typeof (clearMoney) == "number") {
       return (
@@ -47,7 +47,7 @@ export default class OutputHelper {
     return "R$ " + clearMoney;
   }
 
-  public static productSize(clearSize: any) {
+   static productSize(clearSize) {
     switch (clearSize) {
       case "p":
         return "pequeno";
@@ -60,7 +60,7 @@ export default class OutputHelper {
     }
   }
 
-  public static productGenre(clearGenre: any) {
+   static productGenre(clearGenre) {
     switch (clearGenre) {
       case "m":
         return "masculino";
@@ -73,7 +73,7 @@ export default class OutputHelper {
     }
   }
 
-  public static status(clearStatus: string, onlyText = false) {
+   static status(clearStatus, onlyText = false) {
     switch (clearStatus) {
       case "PENDENTE":
         return onlyText

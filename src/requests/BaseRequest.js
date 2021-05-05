@@ -1,19 +1,18 @@
 import Api from '@/api';
-import RequestHelper from '@/helpers/requestHelper';
 
 export default class BaseRequest {
 
-    prefix: string;
+ 
 
-    constructor(prefix: string) {
+    constructor(prefix) {
         this.prefix = prefix;
     }
 
-    create(data: any) {
+    create(data) {
         return Api.post(this.prefix, data)
     }
 
-    index(filters: any = "") {
+    index(filters = "") {
 
         if (filters) {
             filters = "?" + filters;
@@ -22,15 +21,15 @@ export default class BaseRequest {
         return Api.get(`${this.prefix}${filters}`)
     }
 
-    get(id: number) {
+    get(id) {
         return Api.get(`${this.prefix}/${id}`)
     }
 
-    update(id: number, data: any) {
+    update(id, data) {
         return Api.put(`${this.prefix}/${id}`, data)
     }
 
-    delete(id: number) {
+    delete(id) {
         return Api.delete(`${this.prefix}/${id}`)
     }
 }

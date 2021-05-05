@@ -1,6 +1,6 @@
-@import './variables.scss';
-@import '../node_modules/bootstrap/scss/bootstrap.scss';
-@import './material.scss';
+@import 'variables';
+@import '/node_modules/bootstrap/scss/bootstrap';
+@import 'material';
 
 body{
     min-width: 350px;

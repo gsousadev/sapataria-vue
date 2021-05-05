@@ -1,7 +1,7 @@
 import store from '@/store/store';
 
 export default class UserHelper {
-  public static storeLoggedUser(payload: object) {
+  static storeLoggedUser(payload) {
     store.commit('loggedUser', payload);
   }
 }

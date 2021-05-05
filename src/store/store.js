@@ -36,7 +36,7 @@ export default new Vuex.Store({
     changeModalData(state, payload) {
       state.modal = payload;
     },
-    loaderVisibility(state, payload: boolean) {
+    loaderVisibility(state, payload) {
       state.loader.isVisible = payload;
     },
     logout(state) {
@@ -44,7 +44,7 @@ export default new Vuex.Store({
       state.authentication.token = '';
       localStorage.removeItem('token');
     },
-    login(state, token: string) {
+    login(state, token) {
       state.authentication.signedIn = true;
       state.authentication.token = token;
       localStorage.setItem('token', token);

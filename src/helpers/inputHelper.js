@@ -1,8 +1,8 @@
 export default class InputHelper {
-  public static checkInput(val: string = "", regexType: string = ""): boolean {
+  static checkInput(val = "", regexType = ""){
     let cepRegex = RegExp("([0-9]{5,5}[-]?[0-9]{3})$"),
       cpfRegex = RegExp("([0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2})$"),
-      regexTest: RegExp = RegExp("");
+      regexTest = RegExp("");
 
     switch (regexType) {
       case "cpf":
@@ -15,28 +15,28 @@ export default class InputHelper {
     return regexTest.test(val);
   }
 
-  public static setInvalidInputs(elementId: string = "") {
+  static setInvalidInputs(elementId = "") {
     if (elementId != "") {
-      const htmlElement = document.getElementById(elementId)!;
+      const htmlElement = document.getElementById(elementId);
       htmlElement.classList.add("is-invalid");
       htmlElement.classList.remove("is-valid");
     }
     return false;
   }
-  public static setValidInputs(elementId: string = "") {
+  static setValidInputs(elementId = "") {
     if (elementId != "") {
-      const htmlElement = document.getElementById(elementId)!;
+      const htmlElement = document.getElementById(elementId);
       htmlElement.classList.remove("is-invalid");
       htmlElement.classList.add("is-valid");
     }
     return false;
   }
 
-  public static money(maskedValue: any = "") {
+  static money(maskedValue = "") {
     return parseFloat(maskedValue.toString().replace(",", "."));
   }
 
-  public static cleanVal(maskedValue: string = ""): string {
+  static cleanVal(maskedValue = "") {
     return maskedValue.replace(/[^0-9a-zA-Z]/g, "");
   }
 }

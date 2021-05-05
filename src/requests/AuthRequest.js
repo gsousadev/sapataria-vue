@@ -7,15 +7,15 @@ export default class AuthRequest extends BaseRequest {
         super('/auth');
     }
 
-    public login(payload: object) {
+    login(payload) {
         return Api.post(`${this.prefix}/login`, payload);
     }
 
-    public logout() {
+    logout() {
         return Api.post(`${this.prefix}/logout`);
     }
 
-    public refresh() {
+    refresh() {
         return Api.post(`${this.prefix}/refresh`);
     }
 }

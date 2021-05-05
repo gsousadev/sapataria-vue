@@ -8,7 +8,7 @@
 
           <div class="bg-white p-3 mt-3 rounded">
             <h4>Adicionar Produtos</h4>
-            <hr />
+            <hr/>
             <div class="box-order-items">
               <div class="order-item">
                 <div class="row mt-3">
@@ -16,21 +16,26 @@
                     <div class="form-group">
                       <label for="product_select">Selecione um produto</label>
                       <select
-                        name="product_select"
-                        id="product_select"
-                        class="form-control"
-                        v-model="productSelected.produto_id"
-                        @change="productSelectedStockCheck()"
+                          name="product_select"
+                          id="product_select"
+                          class="form-control"
+                          v-model="selectProductField.value"
+                          @change="checkSelectedProduct()"
+
                       >
                         <option
-                          v-for="(product, index) in enabledProducts"
-                          :key="index"
-                          :value="product.id"
+                            v-for="(product, index) in enabledProductsToSelect"
+                            :key="'product_'+ index"
+                            :value="product.id"
+                            :disabled="product.disabled"
                         >
                           {{
                             product.nome +
                             " - " +
-                            OutputHelper.money(product.valor)
+                            OutputHelper.money(product.valor) +
+                            " - Estoque atual " +
+                            product.estoque +
+                            " unidade(s) "
                           }}
                         </option>
                       </select>
@@ -40,12 +45,12 @@
                     <div class="form-group">
                       <label for="select_services">Quantidade de items</label>
                       <input
-                        type="number"
-                        class="form-control"
-                        min="1"
-                        name="product_quantity"
-                        v-model="productSelected.quantidade"
-                        :disabled="productSelected.quantidade == 0"
+                          type="number"
+                          class="form-control"
+                          min="1"
+                          :max="qtdProductField.maxValue"
+                          name="product_quantity"
+                          v-model="qtdProductField.value"
                       />
                     </div>
                   </div>
@@ -53,10 +58,11 @@
                 <div class="row mt-3 justify-content-end">
                   <div class="col-12 col-md-3">
                     <button
-                      @click="addProduct()"
-                      type="button"
-                      class="btn btn-primary btn-add w-100"
-                      :disabled="productSelected.quantidade == 0">
+                        @click="addProduct()"
+                        type="button"
+                        class="btn btn-primary btn-add w-100"
+                        :disabled="addProductButton.disabled"
+                    >
                       Adicionar
                     </button>
                   </div>
@@ -67,8 +73,8 @@
 
           <div class="bg-white p-3 mt-3 rounded">
             <h4>Produtos do Pedido</h4>
-            <hr />
-            <div class="order-items-box" v-if="orderProductItems.length == 0">
+            <hr/>
+            <div class="order-items-box" v-if="orderProductItems.length === 0">
               <p class="text-center">Nenhum item adicionado</p>
             </div>
             <div class="order-items-box table-responsive" v-else>
@@ -82,12 +88,14 @@
                 </tr>
 
                 <tr
-                  v-for="(productItem, index) in orderProductItems"
-                  :key="index"
+                    v-for="(productItem, index) in orderProductItems"
+                    :key="index"
                 >
                   <td>{{ index + 1 }}</td>
-                  <td>{{ productItemName(productItem.produto_id) }}</td>
-                  <td>{{ OutputHelper.money(productItemValue(productItem.produto_id)) }}</td>
+                  <td>{{ productItem.nome }}</td>
+                  <td>
+                    {{ OutputHelper.money(productItem.valor) }}
+                  </td>
                   <td>{{ productItem.quantidade }}</td>
                   <td>
                     <button @click="removeProduct(index)">
@@ -99,9 +107,9 @@
             </div>
           </div>
 
-          <div class="bg-white p-3 mt-3 rounded">
+          <!-- <div class="bg-white p-3 mt-3 rounded">
             <h4>Adicionar Serviços</h4>
-            <hr />
+            <hr/>
             <div class="box-order-items">
               <div class="order-item">
                 <div class="row mt-3">
@@ -109,15 +117,15 @@
                     <div class="form-group">
                       <label for="service_select">Selecione um serviço</label>
                       <select
-                        name="service_select"
-                        id="service_select"
-                        class="form-control"
-                        v-model="serviceSelected.servico_id"
+                          name="service_select"
+                          id="service_select"
+                          class="form-control"
+                          v-model="serviceSelected.id"
                       >
                         <option
-                          v-for="(service, index) in enabledServices"
-                          :key="index"
-                          :value="service.id"
+                            v-for="(service, index) in enabledServices"
+                            :key="index"
+                            :value="service.id"
                         >
                           {{
                             service.nome +
@@ -131,13 +139,13 @@
                   <div class="col-12 col-sm-4">
                     <div class="form-group">
                       <label for="service_additional_value"
-                        >Valor Adicional</label
+                      >Valor Adicional</label
                       >
                       <input
-                        type="text"
-                        class="form-control"
-                        name="service_additional_value"
-                        v-model="serviceSelected.valor_adicional"
+                          type="text"
+                          class="form-control"
+                          name="service_additional_value"
+                          v-model="serviceSelected.valor_adicional"
                       />
                     </div>
                   </div>
@@ -145,10 +153,10 @@
                     <div class="form-group">
                       <label for="service_delivery_date">Data da Entrega</label>
                       <input
-                        type="date"
-                        class="form-control"
-                        name="service_delivery_date"
-                        v-model="serviceSelected.data_entrega"
+                          type="date"
+                          class="form-control"
+                          name="service_delivery_date"
+                          v-model="serviceSelected.data_entrega"
                       />
                     </div>
                   </div>
@@ -156,10 +164,10 @@
                     <div class="form-group">
                       <label for="service_delivery_hour">Hora da Entrega</label>
                       <input
-                        type="time"
-                        class="form-control"
-                        name="service_delivery_hour"
-                        v-model="serviceSelected.hora_entrega"
+                          type="time"
+                          class="form-control"
+                          name="service_delivery_hour"
+                          v-model="serviceSelected.hora_entrega"
                       />
                     </div>
                   </div>
@@ -167,10 +175,10 @@
                     <div class="form-group">
                       <label for="service_observation">Observação</label>
                       <input
-                        type="text"
-                        class="form-control"
-                        name="service_observation"
-                        v-model="serviceSelected.observacao"
+                          type="text"
+                          class="form-control"
+                          name="service_observation"
+                          v-model="serviceSelected.observacao"
                       />
                     </div>
                   </div>
@@ -178,9 +186,9 @@
                 <div class="row mt-3 justify-content-end">
                   <div class="col-12 col-md-3">
                     <button
-                      @click="addService()"
-                      type="button"
-                      class="btn btn-primary btn-add w-100"
+                        @click="addService()"
+                        type="button"
+                        class="btn btn-primary btn-add w-100"
                     >
                       Adicionar
                     </button>
@@ -192,8 +200,8 @@
 
           <div class="bg-white p-3 mt-3 rounded">
             <h4>Serviços do Pedido</h4>
-            <hr />
-            <div class="order-items-box" v-if="orderServiceItems.length == 0">
+            <hr/>
+            <div class="order-items-box" v-if="orderServiceItems.length === 0">
               <p class="text-center">Nenhum item adicionado</p>
             </div>
             <div class="order-items-box table-responsive" v-else>
@@ -207,12 +215,18 @@
                 </tr>
 
                 <tr
-                  v-for="(serviceItem, index) in orderServiceItems"
-                  :key="index"
+                    v-for="(serviceItem, index) in orderServiceItems"
+                    :key="index"
                 >
                   <td>{{ index + 1 }}</td>
-                  <td>{{ serviceItemName(serviceItem.servico_id) }}</td>
-                  <td>{{ OutputHelper.money(serviceItemValue(serviceItem.servico_id)) }}</td>
+                  <td>{{ serviceItem.nome }}</td>
+                  <td>
+                    {{
+                      OutputHelper.money(
+                          serviceItem.valor
+                      )
+                    }}
+                  </td>
                   <td>{{ serviceItem.observacao }}</td>
                   <td>
                     <button @click="removeService(index)">
@@ -222,11 +236,11 @@
                 </tr>
               </table>
             </div>
-          </div>
+          </div> -->
 
           <div class="bg-white p-3 mt-3 rounded">
             <h4>Informações Gerais</h4>
-            <hr />
+            <hr/>
             <div class="row mt-3 align-items-center">
               <div class="col-12 col-md-6">
                 <div class="row align-items-end">
@@ -234,12 +248,12 @@
                     <div class="form-group">
                       <label>CPF do cliente</label>
                       <input
-                        type="text"
-                        class="form-control"
-                        id="order_customer_cpf"
-                        name="order_customer_cpf"
-                        v-model="orderCustomer.cpf"
-                        v-mask="'###.###.###-##'"
+                          type="text"
+                          class="form-control"
+                          id="order_customer_cpf"
+                          name="order_customer_cpf"
+                          v-model="orderCustomer.cpf"
+                          v-mask="'###.###.###-##'"
                       />
                     </div>
                   </div>
@@ -247,14 +261,14 @@
                     <div class="form-group">
                       <label>Desconto %</label>
                       <input
-                        type="text"
-                        class="form-control"
-                        id="order_discount"
-                        name="order_discount"
-                        v-model="orderDiscount"
-                        @input="discountCalculate()"
-                        :disabled="totalOrderAmount == 0"
-                        v-mask="'##'"
+                          type="text"
+                          class="form-control"
+                          id="order_discount"
+                          name="order_discount"
+                          v-model="orderDiscount"
+                          @input="discountCalculate()"
+                          :disabled="totalOrderAmount === 0"
+                          v-mask="'##'"
                       />
                     </div>
                   </div>
@@ -273,8 +287,8 @@
             <div class="row mt-5 justify-content-end">
               <div class="col-12 col-md-3">
                 <button
-                  @click="submitForm()"
-                  class="btn btn-primary d-block text-white w-100"
+                    @click="submitForm()"
+                    class="btn btn-primary d-block text-white w-100"
                 >
                   Finalizar Pedido
                 </button>
@@ -295,7 +309,9 @@ import ModalHelper from "../../../helpers/modalHelper";
 import OrderRequest from "@/requests/OrderRequest";
 import ProductRequest from "@/requests/ProductRequest";
 import ServiceRequest from "@/requests/ServiceRequest";
-import { mapMutations } from "vuex";
+import {ProductModel} from "@/models/ProductModel";
+import {ServiceModel} from "@/models/ServiceModel";
+import {mapMutations} from "vuex";
 
 export default {
   components: {
@@ -307,126 +323,115 @@ export default {
     this.getEnabledProductsAndServices();
   },
 
-  computed: {},
-
   data() {
     return {
       OutputHelper,
       headerTitle: "Cadastro de Pedido",
       redirectUrl: "/pedidos/listar",
-      productSelected: {
-        produto_id: 1,
-        quantidade: 1,
+      selectProductField: {
+        value: "",
+        disabled: false
       },
-      serviceSelected: {
-        servico_id: 1,
-        valor_adicional: 0,
-        observacao: "",
-        data_entrega: "",
-        hora_entrega: "",
+      selectServiceField: {
+        value: "",
+        disabled: false
+      },
+      addProductButton: {
+        disabled: false,
+      },
+
+      qtdProductField: {
+        value: 1,
+        maxValue: 1,
+        disabled: false
       },
       orderCustomer: {
         cpf: "",
       },
-      orderDiscount: 0,
+
       orderProductItems: [],
       orderServiceItems: [],
       totalOrderAmount: 0,
       enabledProducts: [],
       enabledServices: [],
+      orderDiscount: 0,
     };
+  },
+
+  computed: {
+    enabledProductsToSelect() {
+      return this.enabledProducts.filter((product) => product.disabled !== true);
+    }
   },
 
   methods: {
     ...mapMutations(["loaderVisibility"]),
 
-    productItemName(id){
-      const productItem = this.getEnabledProductById(id);
-      return productItem.nome;
-    },
-    productItemValue(id){
-     const productItem = this.getEnabledProductById(id);
-      return productItem.valor;
+    setProductToSelect(product) {
+      this.selectProductField.value = product.id;
     },
 
-    serviceItemName(id){
-      const serviceItem = this.getEnabledServiceById(id);
-      return serviceItem.nome;
-    },
-    serviceItemValue(id){
-     const serviceItem = this.getEnabledServiceById(id);
-      return serviceItem.valor;
+    setServiceToSelect(service) {
+      this.selectServiceField.value = service.id;
     },
 
     getEnabledProductsAndServices() {
       this.loaderVisibility(true);
       new ProductRequest()
-        .index()
-        .then((response) => {
-          this.enabledProducts = response.data;
-        })
-        .catch((error) => {
-          ModalHelper.modalError(error);
-        })
-        .finally(() => {
-          this.loaderVisibility(false);
-        });
+          .index()
+          .then((response) => {
+            this.enabledProducts = response.data.map((product) => new ProductModel(product)) ?? [];
+            if (this.enabledProducts.length !== 0) {
+              this.setProductToSelect(this.enabledProducts[0]);
+            }
+          })
+          .catch((error) => {
+            ModalHelper.modalError(error);
+          })
+          .finally(() => {
+            this.loaderVisibility(false);
+          });
 
       this.loaderVisibility(true);
       new ServiceRequest()
-        .index()
-        .then((response) => {
-          this.enabledServices = response.data;
-        })
-        .catch((error) => {
-          ModalHelper.modalError(error);
-        })
-        .finally(() => {
-          this.loaderVisibility(false);
-        });
-    },
-
-    submitForm: function () {
-      const data = order;
-      new OrderRequest()
-        .create(this.generateDataToSend())
-        .then((response) => {
-          const data = response.data;
-          ModalHelper.modalSuccess("Pedido cadastrado com sucesso!");
-          this.$router.push({ path: this.redirectUrl });
-        })
-        .catch((error) => {
-          ModalHelper.modalError(error.data);
-        });
+          .index()
+          .then((response) => {
+            this.enabledServices = response.data.map((service) => new ServiceModel(service)) ?? [];
+            if (this.enabledServices.length !== 0) {
+              this.setServiceToSelect(this.enabledServices[0]);
+            }
+          })
+          .catch((error) => {
+            ModalHelper.modalError(error);
+          })
+          .finally(() => {
+            this.loaderVisibility(false);
+          });
     },
 
     addProduct() {
-      const productBase = this.getEnabledProductById(
-        this.productSelected.produto_id
-      );
-      productBase.estoque -= this.productSelected.quantidade;
-      this.orderProductItems.push(this.productSelected);
-      this.refreshTotal();
-      this.productSelectedStockCheck();
+      const productData = {...this.getEnabledProductById(this.selectProductField.value)};
+      productData.disabled = true;
+      productData.quantidade = this.qtdProductField.value;
+      this.orderProductItems.push(productData);
+      this.addProductButton.disabled = true;
+      this.refreshCart();
     },
 
-    productSelectedStockCheck(){
-      const productBase = this.getEnabledProductById(
-        this.productSelected.produto_id
-      );
-      this.productSelected.quantidade = productBase.estoque;
+    checkSelectedProduct() {
+      const product = this.getEnabledProductById(this.selectProductField.value);
+      this.qtdProductField.maxValue = product.estoque;
     },
 
     removeProduct(index) {
-      this.rearrangeStock(index);
+      const product = this.getEnabledProductById(this.orderProductItems[index].id);
+      product["disabled"] = false;
       this.orderProductItems.splice(index, 1);
-      this.refreshTotal();
+      this.refreshCart();
     },
 
-    rearrangeStock(productItemIndex) {
-      const productItem = this.orderProductItems[productItemIndex];
-      const productBase = this.getEnabledProductById(productItem.produto_id);
-      productBase.estoque += productItem.quantidade;
+    refreshCart() {
+      this.refreshTotal();
     },
 
     addService() {
@@ -439,15 +444,15 @@ export default {
       this.refreshTotal();
     },
 
-    getEnabledProductById(id) {
-      return this.enabledProducts.filter((product) => {
-        return product.id === id;
-      })[0];
-    },
-
     getEnabledServiceById(id) {
       return this.enabledServices.filter((service) => {
         return service.id === id;
+      })[0];
+    },
+
+    getEnabledProductById(id) {
+      return this.enabledProducts.filter((product) => {
+        return product.id === id;
       })[0];
     },
 
@@ -455,13 +460,13 @@ export default {
       this.totalOrderAmount = 0;
 
       this.orderProductItems.forEach((productItem) => {
-        const productBase = this.getEnabledProductById(productItem.produto_id);
+        const productBase = this.getEnabledProductById(productItem.id);
         const totalWithQuantity = productBase.valor * productItem.quantidade;
         this.totalOrderAmount += totalWithQuantity;
       });
 
       this.orderServiceItems.forEach((serviceItem) => {
-        const serviceBase = this.getEnabledServiceById(serviceItem.servico_id);
+        const serviceBase = this.getEnabledServiceById(serviceItem.id);
         this.totalOrderAmount += serviceBase.valor;
       });
     },
@@ -470,7 +475,7 @@ export default {
       this.refreshTotal();
       if (this.totalOrderAmount > 0 && this.orderDiscount > 0) {
         let totalDiscount =
-          this.totalOrderAmount * (InputHelper.money(this.orderDiscount) / 100);
+            this.totalOrderAmount * (InputHelper.money(this.orderDiscount) / 100);
         this.totalOrderAmount -= totalDiscount;
       }
     },
@@ -482,6 +487,18 @@ export default {
         cpf_cliente: this.orderCustomer.cpf,
         desconto: this.orderDiscount,
       };
+    },
+
+    submitForm: function () {
+      new OrderRequest()
+          .create(this.generateDataToSend())
+          .then(() => {
+            ModalHelper.modalSuccess("Pedido cadastrado com sucesso!");
+            this.$router.push({path: this.redirectUrl});
+          })
+          .catch((error) => {
+            ModalHelper.modalError(error.data);
+          });
     },
   },
 };

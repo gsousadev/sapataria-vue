@@ -1,7 +1,7 @@
 import store from '@/store/store'
 
 export default class ModalHelper {
-  public static modalError(error: any) {
+static modalError(error) {
     let modalOptions = {};
     if (error == undefined) {
       modalOptions = {
@@ -28,10 +28,7 @@ export default class ModalHelper {
 
   }
 
-  public static modalSuccess(title: string, textLines: Array<string> = []) {
-
-    const errorImageUri = "@/assets/images/success.png";
-
+ static modalSuccess(title, textLines = []) {
     const modalOptions = {
       isVisible: true,
       title: title,
@@ -44,7 +41,7 @@ export default class ModalHelper {
     store.commit('changeModalData', modalOptions);
   }
 
-  public static modalWarning(title: string, textLines: Array<string> = []) {
+static modalWarning(title, textLines = []) {
 
     const modalOptions = {
       isVisible: true,
