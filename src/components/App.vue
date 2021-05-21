@@ -9,7 +9,7 @@
           <router-link to="/home">
             <img
               class="img-fluid"
-              src="@/assets/images/brand_text_transparent_1000x1000.png"
+              src="@/assets/images/venda_facil_logo_1400x1400.png"
             />
           </router-link>
         </div>
