@@ -2,14 +2,13 @@ import Api from '@/api';
 
 export default class BaseRequest {
 
- 
-
     constructor(prefix) {
         this.prefix = prefix;
+        this.api = Api;
     }
 
     create(data) {
-        return Api.post(this.prefix, data)
+        return this.api.post(this.prefix, data)
     }
 
     index(filters = "") {
@@ -18,18 +17,18 @@ export default class BaseRequest {
             filters = "?" + filters;
         }
 
-        return Api.get(`${this.prefix}${filters}`)
+        return this.api.get(`${this.prefix}${filters}`)
     }
 
     get(id) {
-        return Api.get(`${this.prefix}/${id}`)
+        return this.api.get(`${this.prefix}/${id}`)
     }
 
     update(id, data) {
-        return Api.put(`${this.prefix}/${id}`, data)
+        return this.api.put(`${this.prefix}/${id}`, data)
     }
 
     delete(id) {
-        return Api.delete(`${this.prefix}/${id}`)
+        return this.api.delete(`${this.prefix}/${id}`)
     }
 }

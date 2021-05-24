@@ -25,10 +25,9 @@
 </template>
 
 <script>
-
 import InputHelper from "@/helpers/inputHelper";
 import ModalHelper from "@/helpers/modalHelper";
-import CustomerRequest from '@/requests/CustomerRequest';
+import CustomerRequest from "@/requests/CustomerRequest";
 
 export default {
   data() {
@@ -50,28 +49,34 @@ export default {
       const router = this.$router;
       const searchText = this.searchText;
       if (InputHelper.checkInput(this.searchText, "cpf")) {
-        new CustomerRequest().index(`cpf=${InputHelper.cleanVal(searchText)}`)
-        .then((response) => {
+        new CustomerRequest()
+          .getByCpf(InputHelper.cleanVal(searchText))
+          .then((response) => {
             const data = response.data;
-            if (data.length > 0) {
+
+            if (data.deleted_at) {
+              ModalHelper.modalWarning("Cliente desativado!", [
+                "Para prosseguir com a venda ative o cliente.",
+              ]);
+            } else {
               ModalHelper.modalSuccess("Cliente encontrado!", [
                 "Redirecionando para cadastro de pedido.",
               ]);
               router.push({
                 path: "/pedidos/cadastrar/",
-                query: { cpf: data[0].cpf },
-              });
-            } else {
-              ModalHelper.modalWarning("Cliente não encontrado!", [
-                "Redirecionando para cadastro de cliente.",
-              ]);
-              router.push({
-                path: "/clientes/cadastrar",
-                query: { cpf: searchText },
+                query: { cpf: data.cpf },
               });
             }
-          }
-        );
+          })
+          .catch(() => {
+            ModalHelper.modalWarning("Cliente não encontrado!", [
+              "Redirecionando para cadastro de cliente.",
+            ]);
+            router.push({
+              path: "/clientes/cadastrar",
+              query: { cpf: searchText },
+            });
+          });
       } else {
         InputHelper.setInvalidInputs("cpfInput");
       }

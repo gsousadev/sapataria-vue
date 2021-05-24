@@ -112,9 +112,7 @@ import OutputHelper from "@/helpers/outputHelper";
 import ModalHelper from "@/helpers/modalHelper";
 import ServiceTable from "@/components/modules/order/ServiceTable";
 import ProductTable from "@/components/modules/order/ProductTable";
-import Api from "@/api";
 import OrderRequest from "@/requests/OrderRequest";
-import ServiceItemRequest from "@/requests/ServiceItemRequest";
 import { mapMutations } from "vuex";
 
 export default {
@@ -164,7 +162,7 @@ export default {
     deleteOrder() {
       new OrderRequest()
         .delete(this.orderInfo.id)
-        .then((response) => {
+        .then(() => {
           ModalHelper.modalSuccess("Ok!", ["Pedido deletado com sucesso!"]);
           this.$router.push({ path: this.redirectUrl });
         })

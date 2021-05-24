@@ -8,11 +8,11 @@ export default class AuthRequest extends BaseRequest {
     }
 
     login(payload) {
-        return Api.post(`${this.prefix}/login`, payload);
+        return this.api.post(`${this.prefix}/login`, payload);
     }
 
     logout() {
-        return Api.post(`${this.prefix}/logout`);
+        return this.api.post(`${this.prefix}/logout`);
     }
 
     refresh() {

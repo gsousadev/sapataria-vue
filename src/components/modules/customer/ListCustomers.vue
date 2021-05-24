@@ -51,7 +51,6 @@
 
 <script>
 import Breadcrumb from "@/components/Breadcrumb";
-import Api from "@/api";
 import OutputHelper from "@/helpers/outputHelper";
 import ModalHelper from "@/helpers/modalHelper";
 import { mapMutations } from "vuex";
@@ -90,7 +89,7 @@ export default {
 
     deleteItem(itemId, localIndex) {
       new CustomerRequest().delete(itemId)
-        .then((response) => {
+        .then(() => {
           ModalHelper.modalSuccess("Ok!", ["Cliente excluido com sucesso!"]);
           this.items.splice(localIndex, 1);
         })

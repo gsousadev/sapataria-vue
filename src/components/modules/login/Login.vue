@@ -49,7 +49,6 @@ export default {
   methods: {
     login() {
       const router = this.$router;
-      const store = this.$store;
       new AuthRequests().login({ email: this.email, password: this.password })
         .then((success) => {
           AuthHelper.storeToken(success.data.access_token);

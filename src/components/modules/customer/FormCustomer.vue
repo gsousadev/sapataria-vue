@@ -153,7 +153,7 @@
 </template>
 
 <script>
-import Api from "@/api";
+
 import axios from "axios";
 import Breadcrumb from "@/components/Breadcrumb";
 import InputHelper from "@/helpers/inputHelper";
@@ -271,8 +271,7 @@ export default {
       if (this.customerId) {
         new CustomerRequest()
           .update(this.customerId, this.dataToSend)
-          .then((response) => {
-            const responseBody = response.data;
+          .then(() => {
             ModalHelper.modalSuccess("Muito bom!", [
               "Os dados do cliente foram editado com sucesso!",
             ]);
@@ -287,8 +286,7 @@ export default {
       } else {
         new CustomerRequest()
           .create(this.dataToSend)
-          .then((response) => {
-            const responseBody = response.data;
+          .then(() => {
             ModalHelper.modalSuccess("Muito bom!", [
               "Cliente cadastrado com sucesso!",
             ]);
