@@ -27,7 +27,7 @@
                   <td>{{ OutputHelper.phone(item.telefone_2) }}</td>
                   <td>
                     <button @click="editItem(item.id)">
-                      <i class="material-icons">edit</i>
+                      <span class="material-icons">edit</span>
                     </button>
                     |
                     <button @click="deleteItem(item.id, index)">
