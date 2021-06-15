@@ -4,41 +4,15 @@ export class ServiceModel extends Model {
 
     constructor(data) {
         super(data);
-        this._nome = data.nome;
-        this._slug = data.slug;
-        this._descricao = data.descricao;
-        this._valor = data.valor;
-    }
-
-    get nome() {
-        return this._nome;
-    }
-
-    set nome(value) {
-        this._nome = value;
-    }
-
-    get slug() {
-        return this._slug;
-    }
-
-    set slug(value) {
-        this._slug = value;
-    }
-
-    get descricao() {
-        return this._descricao;
-    }
-
-    set descricao(value) {
-        this._descricao = value;
-    }
-
-    get valor() {
-        return this._valor;
-    }
-
-    set valor(value) {
-        this._valor = value;
+        this.nome = data.nome;
+        this.slug = data.slug;
+        this.descricao = data.descricao;
+        this.valor = data.valor;
+        this.servico_id = data.id;
+        this.valor_adicional = data.valor_adicional
+        this.data_entrega = data.data_entrega;
+        this.hora_entrega = data.hora_entrega;
+        this.observacao = data.observacao;
+    
     }
 }

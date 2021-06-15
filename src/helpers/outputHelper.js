@@ -1,5 +1,5 @@
 export default class OutputHelper {
-   static cpf(clearCpf){
+  static cpf(clearCpf) {
 
     if (clearCpf == null) {
       return "";
@@ -8,7 +8,7 @@ export default class OutputHelper {
     return clearCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "$1.$2.$3-$4");
   }
 
-   static phone(clearPhone = "") {
+  static phone(clearPhone = "") {
     if (clearPhone == null) {
       return "";
     }
@@ -24,30 +24,20 @@ export default class OutputHelper {
     return clearPhone;
   }
 
-   static money(clearMoney){
-
-    if (typeof (clearMoney) == "number") {
-      return (
-        "R$ " +
-        clearMoney
-          .toFixed(2)
-          .replace(".", ",")
-      );
-    }
+  static money(clearMoney) {
 
     if (typeof (clearMoney) == "string") {
-      return (
-        "R$ " +
-        parseFloat(clearMoney)
-          .toFixed(2)
-          .replace(".", ",")
-      );
+      clearMoney = parseFloat(clearMoney)
     }
 
-    return "R$ " + clearMoney;
+    if (typeof (clearMoney) == "number") {
+      return "R$ " + clearMoney.toFixed(2).replace(".", ",");
+    }
+
+    return clearMoney;
   }
 
-   static productSize(clearSize) {
+  static productSize(clearSize) {
     switch (clearSize) {
       case "p":
         return "pequeno";
@@ -60,7 +50,7 @@ export default class OutputHelper {
     }
   }
 
-   static productGenre(clearGenre) {
+  static productGenre(clearGenre) {
     switch (clearGenre) {
       case "m":
         return "masculino";
@@ -73,28 +63,32 @@ export default class OutputHelper {
     }
   }
 
-   static status(clearStatus, onlyText = false) {
+  static status(clearStatus, onlyText = false) {
     switch (clearStatus) {
       case "PENDENTE":
-        return onlyText
-          ? "Pendente"
-          : `<span class="badge badge-warning">Pendente</span>`;
-      case "PROCESSANDO":
-        return onlyText
-          ? "Em processamento"
-          : `<span class="badge badge-success">Em processamento</span>`;
+        return onlyText ?
+          "Pendente" :
+          `<span class="badge badge-warning">Pendente</span>`;
       case "RETIRAR":
-        return onlyText
-          ? "Aguardando Retirada"
-          : `<span class="badge badge-info">Aguardando Retirada</span>`;
+        return onlyText ?
+          "Aguardando Retirada" :
+          `<span class="badge badge-info">Aguardando Retirada</span>`;
       case "ENTREGUE":
-        return onlyText
-          ? "Entregue"
-          : `<span class="badge badge-danger">Entregue</span>`;
+        return onlyText ?
+          "Entregue" :
+          `<span class="badge badge-success">Entregue</span>`;
+      case "PAGO_50":
+        return onlyText ?
+          "Pago 50%" :
+          `<span class="badge badge-warning">Pago 50%</span>`;
+      case "PAGO":
+        return onlyText ?
+          "Pago" :
+          `<span class="badge badge-success">Pago</span>`;
       default:
-        return onlyText
-          ? clearStatus
-          : `<span class="badge badge-light">${clearStatus} (Erro no banco)</span>`;
+        return onlyText ?
+          clearStatus :
+          `<span class="badge badge-light">${clearStatus}</span>`;
     }
   }
 }

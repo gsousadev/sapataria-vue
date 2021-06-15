@@ -6,7 +6,11 @@ export default class ServiceItemRequest extends BaseRequest {
         super('/service-item');
     }
                                        
-    updateStatus(id, status) {
-        return Api.put(`${this.prefix}/status/${id}`, { status: status })
+    progressStatusUpdate(id, status) {
+        return Api.put(`${this.prefix}/progress-status/${id}`, { status: status })
+    }
+
+    paymentStatusUpdate(id, status) {
+        return Api.put(`${this.prefix}/payment-status/${id}`, { status: status })
     }
 }

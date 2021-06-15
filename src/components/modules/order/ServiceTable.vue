@@ -55,18 +55,27 @@
       </tr>
       <tr>
         <td class="w-25">
-          <strong>Status:</strong>
+          <strong>Status Progresso:</strong>
         </td>
-        <td v-html="OutputHelper.status(item.status)"></td>
+        <td v-html="OutputHelper.status(item.status_progresso)"></td>
+      </tr>
+      <tr>
+        <td class="w-25">
+          <strong>Status Pagamento:</strong>
+        </td>
+        <td v-html="OutputHelper.status(item.status_pagamento)"></td>
       </tr>
     </table>
     <div class="row align-items-end">
-      <div class="col-12 col-sm-6">
+      <div class="col-12 col-sm-8">
         <div class="form-group">
-          <label>Selecione o novo status</label>
-          <select v-model="orderStatusSelect.value" class="form-control">
+          <label>Status de Progresso</label>
+          <select
+            v-model="orderProgressStatusSelect.value"
+            class="form-control"
+          >
             <option
-              v-for="(option, index) in orderStatusSelect.options"
+              v-for="(option, index) in orderProgressStatusSelect.options"
               :key="index"
               :value="index"
             >
@@ -75,9 +84,32 @@
           </select>
         </div>
       </div>
-      <div class="col-12 col-sm-6">
+      <div class="col-12 col-sm-4">
         <div class="form-group ml-sm-3 ml-0">
-          <button class="btn btn-primary w-100" @click="updateStatus()">
+          <button class="btn btn-primary w-100" @click="progressStatusUpdate()">
+            Alterar Status
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-end">
+      <div class="col-12 col-sm-8">
+        <div class="form-group">
+          <label>Status de Pagamento</label>
+          <select v-model="orderPaymentStatusSelect.value" class="form-control">
+            <option
+              v-for="(option, index) in orderPaymentStatusSelect.options"
+              :key="index"
+              :value="index"
+            >
+              {{ option }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-12 col-sm-4">
+        <div class="form-group ml-sm-3 ml-0">
+          <button class="btn btn-primary w-100" @click="paymentStatusUpdate()">
             Alterar Status
           </button>
         </div>
@@ -102,25 +134,49 @@ export default {
     return {
       OutputHelper,
       redirectUrl: "/pedidos/listar",
-      orderStatusSelect: {
-        value: this.item.status,
+      orderProgressStatusSelect: {
+        value: this.item.status_progresso,
         options: {
           PENDENTE: OutputHelper.status("PENDENTE", true),
-          PROCESSANDO: OutputHelper.status("PROCESSANDO", true),
           RETIRAR: OutputHelper.status("RETIRAR", true),
           ENTREGUE: OutputHelper.status("ENTREGUE", true),
+        },
+      },
+      orderPaymentStatusSelect: {
+        value: this.item.status_pagamento,
+        options: {
+          PENDENTE: OutputHelper.status("PENDENTE", true),
+          PAGO_50: OutputHelper.status("PAGO_50", true),
+          PAGO: OutputHelper.status("PAGO", true),
         },
       },
     };
   },
   methods: {
     ...mapMutations(["loaderVisibility"]),
-    updateStatus() {
+    progressStatusUpdate() {
       this.loaderVisibility(true);
       new ServiceItemRequest()
-        .updateStatus(this.item.id, this.orderStatusSelect.value)
+        .progressStatusUpdate(
+          this.item.id,
+          this.orderProgressStatusSelect.value
+        )
         .then((response) => {
-          this.item.status = response.data.status;
+          this.item.status_progresso = response.data.status_progresso;
+        })
+        .catch((error) => {
+          ModalHelper.modalError(error.data);
+        })
+        .finally(() => {
+          this.loaderVisibility(false);
+        });
+    },
+    paymentStatusUpdate() {
+      this.loaderVisibility(true);
+      new ServiceItemRequest()
+        .paymentStatusUpdate(this.item.id, this.orderPaymentStatusSelect.value)
+        .then((response) => {
+          this.item.status_pagamento = response.data.status_pagamento;
         })
         .catch((error) => {
           ModalHelper.modalError(error.data);

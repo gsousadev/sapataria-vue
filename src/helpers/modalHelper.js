@@ -1,7 +1,7 @@
 import store from '@/store/store'
 
 export default class ModalHelper {
-static modalError(error) {
+  static modalError(error) {
     let modalOptions = {};
     if (error == undefined) {
       modalOptions = {
@@ -13,6 +13,7 @@ static modalError(error) {
         type: "error",
       };
     } else {
+      console.log(error);
       error.errors.unshift(error.support);
       modalOptions = {
         isVisible: true,
@@ -28,7 +29,7 @@ static modalError(error) {
 
   }
 
- static modalSuccess(title, textLines = []) {
+  static modalSuccess(title, textLines = []) {
     const modalOptions = {
       isVisible: true,
       title: title,
@@ -41,7 +42,7 @@ static modalError(error) {
     store.commit('changeModalData', modalOptions);
   }
 
-static modalWarning(title, textLines = []) {
+  static modalWarning(title, textLines = []) {
 
     const modalOptions = {
       isVisible: true,
