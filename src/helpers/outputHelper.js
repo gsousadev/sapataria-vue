@@ -68,27 +68,27 @@ export default class OutputHelper {
       case "PENDENTE":
         return onlyText ?
           "Pendente" :
-          `<span class="badge badge-warning">Pendente</span>`;
+          `<span class="badge badge-warning status-tag">Pendente</span>`;
       case "RETIRAR":
         return onlyText ?
           "Aguardando Retirada" :
-          `<span class="badge badge-info">Aguardando Retirada</span>`;
+          `<span class="badge badge-info status-tag">Aguardando Retirada</span>`;
       case "ENTREGUE":
         return onlyText ?
           "Entregue" :
-          `<span class="badge badge-success">Entregue</span>`;
-      case "PAGO_50":
+          `<span class="badge badge-success status-tag">Entregue</span>`;
+      case "PAGO_SINAL":
         return onlyText ?
-          "Pago 50%" :
-          `<span class="badge badge-warning">Pago 50%</span>`;
+          "Pago Sinal" :
+          `<span class="badge badge-warning status-tag">Pago Sinal</span>`;
       case "PAGO":
         return onlyText ?
           "Pago" :
-          `<span class="badge badge-success">Pago</span>`;
+          `<span class="badge badge-success status-tag">Pago</span>`;
       default:
         return onlyText ?
           clearStatus :
-          `<span class="badge badge-light">${clearStatus}</span>`;
+          `<span class="badge badge-light status-tag">${clearStatus}</span>`;
     }
   }
 }

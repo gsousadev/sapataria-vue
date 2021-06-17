@@ -6,268 +6,263 @@
         <div class="col-12">
           <h4 class="bg-primary p-2 text-white rounded">{{ headerTitle }}</h4>
 
-            <div class="bg-white p-3 mt-3 rounded">
-              <h4>Adicionar Produtos</h4>
-              <hr />
-              <div class="box-order-items">
-                <div class="order-item" v-if="hasEnabledProducts">
-                  <div class="row mt-3">
-                    <div class="col-12 col-sm-8">
-                      <div class="form-group">
-                        <label for="product_select">Selecione um produto</label>
-                        <select
-                          name="product_select"
-                          id="product_select"
-                          class="form-control"
-                          v-model="modules.products.fields.selectProductField.value"
-                          @change="checkSelectedProduct()"
-                        >
-                          <option
-                            v-for="(product, index) in modules.products.enabledItems"
-                            :key="'product_' + index"
-                            :value="product.id"
-                            :disabled="product.disabled"
-                          >
-                            {{
-                              product.nome +
-                              " - " +
-                              OutputHelper.money(product.valor) +
-                              " - Estoque atual " +
-                              product.estoque +
-                              " unidade(s) "
-                            }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-4">
-                      <div class="form-group">
-                        <label for="select_services">Quantidade de items</label>
-                        <input
-                          type="number"
-                          class="form-control"
-                          min="1"
-                          :max="modules.products.fields.qtdProductField.maxValue"
-                          name="product_quantity"
-                          v-model="modules.products.fields.qtdProductField.value"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row mt-3 justify-content-end">
-                    <div class="col-12 col-md-3">
-                      <button
-                        @click="addProduct()"
-                        type="button"
-                        class="btn btn-primary btn-add w-100"
+          <div class="bg-white p-3 mt-3 rounded">
+            <h4>Adicionar Produtos</h4>
+            <hr />
+            <div class="box-order-items">
+              <div class="order-item" v-if="hasEnabledProducts">
+                <div class="row mt-3">
+                  <div class="col-12 col-sm-8">
+                    <div class="form-group">
+                      <label for="product_select">Selecione um produto</label>
+                      <select
+                        name="product_select"
+                        id="product_select"
+                        class="form-control"
+                        v-model="
+                          modules.products.fields.selectProductField.value
+                        "
+                        @change="checkSelectedProduct()"
                       >
-                        Adicionar
-                      </button>
+                        <option
+                          v-for="(product, index) in modules.products
+                            .enabledItems"
+                          :key="'product_' + index"
+                          :value="product.id"
+                          :disabled="product.disabled"
+                        >
+                          {{
+                            product.nome +
+                            " - " +
+                            OutputHelper.money(product.valor) +
+                            " - Estoque atual " +
+                            product.estoque +
+                            " unidade(s) "
+                          }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-4">
+                    <div class="form-group">
+                      <label for="select_services">Quantidade de items</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        min="1"
+                        :max="modules.products.fields.qtdProductField.maxValue"
+                        name="product_quantity"
+                        v-model="modules.products.fields.qtdProductField.value"
+                      />
                     </div>
                   </div>
                 </div>
-                <div class="order-item" v-else>
-                    <p class="text-center">Nenhum produto cadastrado</p>
+                <div class="row mt-3 justify-content-end">
+                  <div class="col-12 col-md-3">
+                    <button
+                      @click="addProduct()"
+                      type="button"
+                      class="btn btn-primary btn-add w-100"
+                    >
+                      Adicionar
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div class="bg-white p-3 mt-3 rounded" v-if="hasEnabledProducts">
-              <h4>Produtos do Pedido</h4>
-              <hr />
-              <div
-                class="order-items-box"
-                v-if="!hasProductOrderItems"
-              >
-                <p class="text-center">Nenhum item adicionado</p>
-              </div>
-              <div class="order-items-box table-responsive" v-else>
-                <table class="table table-borderless text-center">
-                  <tr>
-                    <th>#</th>
-                    <th>Nome</th>
-                    <th>Valor</th>
-                    <th>Quantidade</th>
-                    <th>Excluir</th>
-                  </tr>
-
-                  <tr
-                    v-for="(productItem, index) in modules.products.orderItems"
-                    :key="index"
-                  >
-                    <td>{{ index + 1 }}</td>
-                    <td>{{ productItem.nome }}</td>
-                    <td>
-                      {{ OutputHelper.money(productItem.valor) }}
-                    </td>
-                    <td>{{ productItem.quantidade }}</td>
-                    <td>
-                      <button @click="removeProduct(index)">
-                        <i class="material-icons">delete</i>
-                      </button>
-                    </td>
-                  </tr>
-                </table>
+              <div class="order-item" v-else>
+                <p class="text-center">Nenhum produto cadastrado</p>
               </div>
             </div>
-                   
-         
-            <div class="bg-white p-3 mt-3 rounded">
-              <h4>Adicionar Serviços</h4>
-              <hr />
-              <div class="box-order-items">
-                <div class="order-item" v-if="hasEnabledServices">
-                  <div class="row mt-3">
-                    <div class="col-12 col-sm-12">
-                      <div class="form-group">
-                        <label for="service_select">Selecione um serviço</label>
-                        <select
-                          name="service_select"
-                          id="service_select"
-                          class="form-control"
-                          v-model="modules.services.fields.selectServiceField.value"
-                        >
-                          <option
-                            v-for="(service, index) in modules.services.enabledItems"
-                            :key="index"
-                            :value="service.id"
-                          >
-                            {{
-                              service.nome +
-                              " - " +
-                              OutputHelper.money(service.valor)
-                            }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-4">
-                      <div class="form-group">
-                        <label for="service_additional_value"
-                          >Valor Adicional</label
-                        >
-                        <input
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          name="service_additional_value"
-                          v-model="
-                            modules.services.fields.additionalValueField.value
-                          "
-                        />
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-4">
-                      <div class="form-group">
-                        <label for="service_delivery_date"
-                          >Data da Entrega</label
-                        >
-                        <input
-                          type="date"
-                          class="form-control"
-                          name="service_delivery_date"
-                          v-model="
-                            modules.services.fields.deliveryDateField.value
-                          "
-                        />
-                      </div>
-                    </div>
-                    <div class="col-12 col-sm-4">
-                      <div class="form-group">
-                        <label for="service_delivery_hour"
-                          >Hora da Entrega</label
-                        >
-                        <input
-                          type="time"
-                          class="form-control"
-                          name="service_delivery_hour"
-                          v-model="
-                           modules.services.fields.deliveryHourField.value
-                          "
-                        />
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <div class="form-group">
-                        <label for="service_observation">Observação</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          name="service_observation"
-                          v-model="
-                            modules.services.fields.observationField.value
-                          "
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row mt-3 justify-content-end">
-                    <div class="col-12 col-md-3">
-                      <button
-                        @click="addService()"
-                        type="button"
-                        class="btn btn-primary btn-add w-100"
+          </div>
+
+          <div class="bg-white p-3 mt-3 rounded" v-if="hasEnabledProducts">
+            <h4>Produtos do Pedido</h4>
+            <hr />
+            <div class="order-items-box" v-if="!hasProductOrderItems">
+              <p class="text-center">Nenhum item adicionado</p>
+            </div>
+            <div class="order-items-box table-responsive" v-else>
+              <table class="table table-borderless text-center">
+                <tr>
+                  <th>#</th>
+                  <th>Nome</th>
+                  <th>Valor</th>
+                  <th>Quantidade</th>
+                  <th>Excluir</th>
+                </tr>
+
+                <tr
+                  v-for="(productItem, index) in modules.products.orderItems"
+                  :key="index"
+                >
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ productItem.nome }}</td>
+                  <td>
+                    {{ OutputHelper.money(productItem.valor) }}
+                  </td>
+                  <td>{{ productItem.quantidade }}</td>
+                  <td>
+                    <button @click="removeProduct(index)">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="bg-white p-3 mt-3 rounded">
+            <h4>Adicionar Serviços</h4>
+            <hr />
+            <div class="box-order-items">
+              <div class="order-item" v-if="hasEnabledServices">
+                <div class="row mt-3">
+                  <div class="col-12 col-sm-12">
+                    <div class="form-group">
+                      <label for="service_select">Selecione um serviço</label>
+                      <select
+                        name="service_select"
+                        id="service_select"
+                        class="form-control"
+                        v-model="
+                          modules.services.fields.selectServiceField.value
+                        "
                       >
-                        Adicionar
-                      </button>
+                        <option
+                          v-for="(service, index) in modules.services
+                            .enabledItems"
+                          :key="index"
+                          :value="service.id"
+                        >
+                          {{
+                            service.nome +
+                            " - " +
+                            OutputHelper.money(service.valor)
+                          }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-4">
+                    <div class="form-group">
+                      <label for="service_additional_value"
+                        >Valor Adicional</label
+                      >
+                      <input
+                        type="number"
+                        min="0"
+                        class="form-control"
+                        name="service_additional_value"
+                        v-model="
+                          modules.services.fields.additionalValueField.value
+                        "
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-4">
+                    <div class="form-group">
+                      <label for="service_delivery_date">Data da Entrega</label>
+                      <input
+                        type="date"
+                        class="form-control"
+                        name="service_delivery_date"
+                        v-model="
+                          modules.services.fields.deliveryDateField.value
+                        "
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-4">
+                    <div class="form-group">
+                      <label for="service_delivery_hour">Hora da Entrega</label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        name="service_delivery_hour"
+                        v-model="
+                          modules.services.fields.deliveryHourField.value
+                        "
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="service_observation">Observação</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="service_observation"
+                        v-model="modules.services.fields.observationField.value"
+                      />
                     </div>
                   </div>
                 </div>
-                <div class="order-item" v-else>
-                  <p class="text-center">Nenhum serviço cadastrado</p>
+                <div class="row mt-3 justify-content-end">
+                  <div class="col-12 col-md-3">
+                    <button
+                      @click="addService()"
+                      type="button"
+                      class="btn btn-primary btn-add w-100"
+                    >
+                      Adicionar
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div class="bg-white p-3 mt-3 rounded" v-if="hasEnabledServices">
-              <h4>Serviços do Pedido</h4>
-              <hr />
-              <div
-                class="order-items-box"
-                v-if="!hasServiceOrderItems"
-              >
-                <p class="text-center">Nenhum item adicionado</p>
-              </div>
-              <div class="order-items-box table-responsive" v-else>
-                <table class="table table-borderless text-center">
-                  <tr>
-                    <th>#</th>
-                    <th>Nome</th>
-                    <th>Valor</th>
-                    <th>Observação</th>
-                    <th>Data Entrega</th>
-                    <th>Hora Entrega</th>
-                    <th>Valor Adicional</th>
-                    <th>Excluir</th>
-                  </tr>
-
-                  <tr
-                    v-for="(serviceItem, index) in modules.services.orderItems"
-                    :key="index"
-                  >
-                    <td>{{ index + 1 }}</td>
-                    <td>{{ serviceItem.nome || "-" }}</td>
-                    <td>
-                      {{ OutputHelper.money(serviceItem.valor) || "-" }}
-                    </td>
-                    <td>{{ serviceItem.observacao || "-" }}</td>
-                    <td>{{ serviceItem.data_entrega || "-" }}</td>
-                    <td>{{ serviceItem.hora_entrega || "-" }}</td>
-                    <td>
-                      {{ OutputHelper.money(serviceItem.valor_adicional) }}
-                    </td>
-                    <td>
-                      <button @click="removeService(index)">
-                        <i class="material-icons">delete</i>
-                      </button>
-                    </td>
-                  </tr>
-                </table>
+              <div class="order-item" v-else>
+                <p class="text-center">Nenhum serviço cadastrado</p>
               </div>
             </div>
-   
+          </div>
 
-          <div class="bg-white p-3 mt-3 rounded" v-if="hasEnabledServices || hasEnabledProducts">
+          <div class="bg-white p-3 mt-3 rounded" v-if="hasEnabledServices">
+            <h4>Serviços do Pedido</h4>
+            <hr />
+            <div class="order-items-box" v-if="!hasServiceOrderItems">
+              <p class="text-center">Nenhum item adicionado</p>
+            </div>
+            <div class="order-items-box table-responsive" v-else>
+              <table class="table table-borderless text-center">
+                <tr>
+                  <th>#</th>
+                  <th>Nome</th>
+                  <th>Valor</th>
+                  <th>Observação</th>
+                  <th>Data Entrega</th>
+                  <th>Hora Entrega</th>
+                  <th>Valor Adicional</th>
+                  <th>Excluir</th>
+                </tr>
+
+                <tr
+                  v-for="(serviceItem, index) in modules.services.orderItems"
+                  :key="index"
+                >
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ serviceItem.nome || "-" }}</td>
+                  <td>
+                    {{ OutputHelper.money(serviceItem.valor) || "-" }}
+                  </td>
+                  <td>{{ serviceItem.observacao || "-" }}</td>
+                  <td>{{ serviceItem.data_entrega || "-" }}</td>
+                  <td>{{ serviceItem.hora_entrega || "-" }}</td>
+                  <td>
+                    {{ OutputHelper.money(serviceItem.valor_adicional) }}
+                  </td>
+                  <td>
+                    <button @click="removeService(index)">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div
+            class="bg-white p-3 mt-3 rounded"
+            v-if="hasEnabledServices || hasEnabledProducts"
+          >
             <h4>Informações Gerais</h4>
             <hr />
             <div class="row mt-3 align-items-center">
@@ -298,6 +293,21 @@
                         @input="discountCalculate()"
                         :disabled="totalOrderAmount === 0"
                         v-mask="'##'"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row align-items-end">
+                  <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Valor Pago</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="order_paid_value"
+                        name="order_paid_value"
+                        v-model="orderPaidValue"
+                        :disabled="totalOrderAmount === 0"
                       />
                     </div>
                   </div>
@@ -407,7 +417,7 @@ export default {
               value: "",
               isValid: true,
               isRequired: false,
-            }
+            },
           },
           orderItems: [],
           enabledItems: [],
@@ -417,25 +427,34 @@ export default {
       orderCustomer: {
         cpf: "",
       },
+      orderPaidValue: 0,
       totalOrderAmount: 0,
       orderDiscount: 0,
+      orderPaymentStatusSelect: {
+        value: "",
+        options: {
+          PENDENTE: OutputHelper.status("PENDENTE", true),
+          PAGO_SINAL: OutputHelper.status("PAGO_SINAL", true),
+          PAGO: OutputHelper.status("PAGO", true),
+        },
+      },
     };
   },
 
-  computed:{
-    hasEnabledProducts(){
-       return this.modules.products.enabledItems.length !== 0;
+  computed: {
+    hasEnabledProducts() {
+      return this.modules.products.enabledItems.length !== 0;
     },
-    hasEnabledServices(){
+    hasEnabledServices() {
       return this.modules.services.enabledItems.length !== 0;
     },
 
-    hasProductOrderItems(){
-       return this.modules.products.orderItems.length !== 0;
+    hasProductOrderItems() {
+      return this.modules.products.orderItems.length !== 0;
     },
-    hasServiceOrderItems(){
+    hasServiceOrderItems() {
       return this.modules.services.orderItems.length !== 0;
-    }
+    },
   },
 
   methods: {
@@ -450,21 +469,21 @@ export default {
     },
 
     getEnabledProductsAndServices() {
-      
       new ProductRequest()
         .index()
         .then((response) => {
-         this.modules.products.enabledItems =
+          this.modules.products.enabledItems =
             response.data.map((product) => new ProductModel(product)) ?? [];
           if (this.modules.products.enabledItems.length !== 0) {
             this.setProductToSelect(this.modules.products.enabledItems[0]);
-            this.modules.products.fields.qtdProductField.maxValue = this.modules.products.enabledItems[0].estoque;
+            this.modules.products.fields.qtdProductField.maxValue =
+              this.modules.products.enabledItems[0].estoque;
             this.modules.products.active = true;
           }
         })
         .catch((error) => {
           ModalHelper.modalError(error);
-        })
+        });
 
       new ServiceRequest()
         .index()
@@ -478,18 +497,21 @@ export default {
         })
         .catch((error) => {
           ModalHelper.modalError(error);
-        }).finally(()=>{
-          this.loaderVisibility(false);
         })
-    
+        .finally(() => {
+          this.loaderVisibility(false);
+        });
     },
 
     addProduct() {
       let productData = {
-        ...this.getEnabledProductById(this.modules.products.fields.selectProductField.value),
+        ...this.getEnabledProductById(
+          this.modules.products.fields.selectProductField.value
+        ),
       };
 
-      productData.quantidade = this.modules.products.fields.qtdProductField.value;
+      productData.quantidade =
+        this.modules.products.fields.qtdProductField.value;
 
       this.modules.products.orderItems.push(new ProductModel(productData));
       this.refreshCart();
@@ -514,7 +536,7 @@ export default {
         serviceData.observacao =
           this.modules.services.fields.observationField.value;
 
-       this.modules.services.orderItems.push(new ServiceModel(serviceData));
+        this.modules.services.orderItems.push(new ServiceModel(serviceData));
         this.refreshCart();
       }
     },
@@ -525,13 +547,15 @@ export default {
     },
 
     checkSelectedProduct() {
-      const product = this.getEnabledProductById(this.modules.products.fields.selectProductField.value);
+      const product = this.getEnabledProductById(
+        this.modules.products.fields.selectProductField.value
+      );
       this.modules.products.fields.qtdField.maxValue = product.estoque;
     },
 
     removeProduct(index) {
       const product = this.getEnabledProductById(
-       this.modules.products.orderItems[index].id
+        this.modules.products.orderItems[index].id
       );
       product["disabled"] = false;
       this.modules.products.orderItems.splice(index, 1);
@@ -586,11 +610,26 @@ export default {
     },
 
     generateDataToSend() {
+      let paidStatus = "";
+
+      if (parseFloat(this.orderPaidValue) === parseFloat(this.totalOrderAmount)) {
+        paidStatus = "PAGO";
+      } else if (
+        parseFloat(this.orderPaidValue) < parseFloat(this.totalOrderAmount) &&
+        parseFloat(this.orderPaidValue) != 0
+      ) {
+        paidStatus = "PAGO_SINAL";
+      } else {
+        paidStatus = "PENDENTE";
+      }
+
       return {
         produtos_pedido: this.modules.products.orderItems,
         servicos_pedido: this.modules.services.orderItems,
         cpf_cliente: this.orderCustomer.cpf,
         desconto: this.orderDiscount,
+        valor_pago: this.orderPaidValue,
+        status_pagamento: paidStatus,
       };
     },
 
