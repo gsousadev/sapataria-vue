@@ -8,7 +8,7 @@
         <div class="col-6 col-md-2">
           <router-link to="/home">
             <img
-              class="img-fluid"
+              class="img-fluid no-print"
               src="@/assets/images/venda_facil_logo_1400x1400.png"
             />
           </router-link>

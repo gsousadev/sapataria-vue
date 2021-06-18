@@ -1,7 +1,7 @@
 <template>
   <div
     id="menu"
-    class="d-flex flex-row-reverse"
+    class="d-flex flex-row-reverse no-print"
     v-if="authenticationStatus == true"
   >
     <strong>

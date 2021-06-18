@@ -19,7 +19,7 @@
       </tr>
       <tr>
         <td class="w-25">
-          <strong>Valor Inicial:</strong>
+          <strong>Valor Base:</strong>
         </td>
         <td>
           <span class="text-capitalize">{{
@@ -60,7 +60,7 @@
         <td v-html="OutputHelper.status(item.status_progresso)"></td>
       </tr>
     </table>
-    <div class="row align-items-end">
+    <div class="row align-items-end justify-content-between">
       <div class="col-12 col-sm-8">
         <div class="form-group">
           <label>Status de Progresso</label>
@@ -78,7 +78,7 @@
           </select>
         </div>
       </div>
-      <div class="col-12 col-sm-4">
+      <div class="col-12 col-lg-2 col-md-3 col-sm-4">
         <div class="form-group ml-sm-3 ml-0">
           <button class="btn btn-primary w-100" @click="progressStatusUpdate()">
             Alterar Status

@@ -34,6 +34,11 @@ export default [
         meta: { requiresAuth: true }
     },
     {
+        path: "/pedidos/imprimir/:id",
+        component: () => import("../components/modules/order/ViewOrderToPrint.vue"),
+        meta: { requiresAuth: true }
+    },
+    {
         path: "/clientes/cadastrar",
         component: () =>
             import("../components/modules/customer/FormCustomer.vue"),

@@ -29,3 +29,13 @@ textarea{
 .status-tag{
     font-size: 1.2em;
 }
+
+
+@media print {
+    .no-print{
+        display: none!important;
+    }
+    *{
+        -webkit-print-color-adjust: exact!important; 
+    }
+}

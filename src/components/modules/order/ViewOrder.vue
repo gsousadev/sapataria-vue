@@ -61,7 +61,7 @@
           <section class="bg-white p-3 mt-3 rounded">
             <h3>Produtos do Pedido</h3>
             <hr />
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" v-if="orderInfo.product_items.length !== 0">
               <div
                 class="col-12 py-3"
                 v-for="(item, index) in orderInfo.product_items"
@@ -81,12 +81,20 @@
                 </div>
               </div>
             </div>
+
+            <div class="row justify-content-center" v-else>
+              <div
+                class="col-12 py-3"
+              >
+               <p class="text-center">Não há produtos neste pedido!</p>
+              </div>
+            </div>
           </section>
 
           <section class="bg-white p-3 mt-3 rounded">
             <h3>Servicos do Pedido</h3>
             <hr />
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" v-if="orderInfo.service_items.length !== 0">
               <div
                 class="col-12 py-3"
                 v-for="(item, index) in orderInfo.service_items"
@@ -106,6 +114,13 @@
                 </div>
               </div>
             </div>
+            <div class="row justify-content-center" v-else>
+              <div
+                class="col-12 py-3"
+              >
+               <p class="text-center">Não há serviços neste pedido!</p>
+              </div>
+            </div>
           </section>
 
           <section class="bg-white p-3 mt-3 rouded">
@@ -123,8 +138,8 @@
                 </div>
               </div>
             </div>
-            <div class="row justify-content-center">
-              <div class="col-4 py-3">
+            <div class="row justify-content-end">
+              <div class="col-12 col-lg-2 col-md-3 col-sm-4">
                 <div class="form-group">
                   <button
                     @click="addObservation()"
@@ -156,7 +171,7 @@
           <section class="bg-white p-3 mt-3 rouded">
             <h3>Ações</h3>
             <hr />
-            <div class="row align-items-end justify-content-center">
+            <div class="row align-items-end justify-content-between">
               <div class="col-12 col-sm-8">
                 <div class="form-group">
                   <label>Status de Pagamento</label>
@@ -176,8 +191,8 @@
                   </select>
                 </div>
               </div>
-              <div class="col-12 col-sm-4">
-                <div class="form-group ml-sm-3 ml-0">
+              <div class="col-12 col-lg-2 col-md-3 col-sm-4">
+                <div class="form-group">
                   <button
                     class="btn btn-primary w-100"
                     @click="paymentStatusUpdate()"
@@ -187,11 +202,18 @@
                 </div>
               </div>
             </div>
-            <div class="row align-items-end justify-content-center">
-              <div class="col-12 col-lg-3">
-                <div class="form-group d-flex justify-content-end">
+            <div class="row align-items-end justify-content-end">
+              <div class="col-12 col-lg-2 col-md-3 col-sm-4">
+                <div class="form-group">
+                  <button class="btn btn-primary w-100" @click="printOrder()">
+                    <i class="material-icons">print</i> Imprimir Pedido
+                  </button>
+                </div>
+              </div>
+              <div class="col-12 col-lg-2 col-md-3 col-sm-4">
+                <div class="form-group">
                   <button class="btn btn-danger w-100" @click="deleteOrder()">
-                    <i class="material-icons">delete</i>Excluir Pedido
+                    <i class="material-icons">delete</i> Excluir Pedido
                   </button>
                 </div>
               </div>
@@ -355,6 +377,10 @@ export default {
           ModalHelper.modalError(error.data);
         });
     },
+
+    printOrder(){
+      this.$router.push({ path: `/pedidos/imprimir/${this.orderInfo.id}` });
+    }
   },
 };
 </script>

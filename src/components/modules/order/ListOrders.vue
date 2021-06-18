@@ -13,7 +13,7 @@
                   <th scope="col">Codigo do Pedido</th>
                   <th scope="col">Nome do Cliente</th>
                   <th scope="col">CPF do Cliente</th>
-                  <th scope="col">Desconto do Pedido</th>
+                  <th scope="col">Data do Pedido</th>
                   <th scope="col">Visualizar | Excluir</th>
                 </tr>
               </thead>
@@ -22,7 +22,7 @@
                   <td>{{ item.id }}</td>
                   <td>{{ item.customer.nome }}</td>
                   <td>{{ OutputHelper.cpf(item.customer.cpf) }}</td>
-                  <td>{{ OutputHelper.money(item.desconto) }}</td>
+                  <td>{{ item.created_at }}</td>
                   <td>
                     <button @click="showItem(item.id)">
                       <i class="material-icons">description</i>
