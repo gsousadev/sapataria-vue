@@ -15,7 +15,9 @@
                   <th scope="col">Cidade</th>
                   <th scope="col">Telefone 1</th>
                   <th scope="col">Telefone 2</th>
-                  <th scope="col">Atualizar | Excluir</th>
+                  <th scope="col">Novo Pedido</th>
+                  <th scope="col">Atualizar Cliente</th>
+                  <th scope="col">Excluir Cliente</th>
                 </tr>
               </thead>
               <tbody v-if="this.items.length != 0">
@@ -26,10 +28,16 @@
                   <td>{{ OutputHelper.phone(item.telefone_1) }}</td>
                   <td>{{ OutputHelper.phone(item.telefone_2) }}</td>
                   <td>
+                    <button @click="newOrder(item.id)">
+                      <span class="material-icons">playlist_add</span>
+                    </button>
+                  </td>
+                  <td>
                     <button @click="editItem(item.id)">
                       <span class="material-icons">edit</span>
                     </button>
-                    |
+                  </td>
+                  <td>
                     <button @click="deleteItem(item.id, index)">
                       <i class="material-icons">delete</i>
                     </button>
@@ -53,6 +61,7 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import OutputHelper from "@/helpers/outputHelper";
 import ModalHelper from "@/helpers/modalHelper";
+import RequestHelper from "@/helpers/requestHelper";
 import { mapMutations } from "vuex";
 import CustomerRequest from "@/requests/CustomerRequest";
 
@@ -74,8 +83,9 @@ export default {
   methods: {
     ...mapMutations(["loaderVisibility"]),
     indexCustomers() {
+      const filters = RequestHelper.buildQueryFilter(this.$route.query);
       new CustomerRequest()
-        .index()
+        .index(filters)
         .then((response) => {
           this.items = response.data;
         })
@@ -86,9 +96,15 @@ export default {
           this.loaderVisibility(false);
         });
     },
-
+    newOrder(itemId) {
+      this.$router.push({
+        path: `/pedidos/cadastrar`,
+        query: { cliente_id: itemId },
+      });
+    },
     deleteItem(itemId, localIndex) {
-      new CustomerRequest().delete(itemId)
+      new CustomerRequest()
+        .delete(itemId)
         .then(() => {
           ModalHelper.modalSuccess("Ok!", ["Cliente excluido com sucesso!"]);
           this.items.splice(localIndex, 1);

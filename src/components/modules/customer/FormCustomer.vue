@@ -166,7 +166,7 @@ export default {
   },
 
   created() {
-    this.customerInfo.cpf.value = InputHelper.cleanVal(this.$route.query.cpf);
+    this.customerInfo.telefone_1.value = this.$route.query.telefone_1;
     if (this.$route.params.id) {
       this.getCustomerInfo();
     }
@@ -174,7 +174,6 @@ export default {
 
   data() {
     return {
-
       customerId: this.$route.params.id,
       headerTitle: "Cadastro de Cliente",
       textSubmitButton: "Cadastrar",
@@ -194,7 +193,7 @@ export default {
           disabled: false,
           value: "",
           mask: true,
-          required: true,
+          required: false,
         },
         cep: {
           type: "text",
@@ -202,7 +201,7 @@ export default {
           name: "cep",
           value: "",
           mask: true,
-          required: true,
+          required: false,
         },
         rua: {
           type: "text",
@@ -210,7 +209,7 @@ export default {
           name: "rua",
           value: "",
           mask: false,
-          required: true,
+          required: false,
         },
         numero_residencia: {
           type: "number",
@@ -218,7 +217,7 @@ export default {
           name: "numero_residencia",
           value: "",
           mask: false,
-          required: true,
+          required: false,
         },
         cidade: {
           type: "text",
@@ -226,7 +225,7 @@ export default {
           name: "cidade",
           value: "",
           mask: false,
-          required: true,
+          required: false,
         },
         telefone_1: {
           type: "text",
@@ -251,7 +250,7 @@ export default {
   },
   methods: {
     disabledFieldsToEdit() {
-      this.customerInfo.cpf.disabled = true;
+      this.customerInfo.telefone_1.disabled = true;
     },
 
     generateDataToSend() {
@@ -277,7 +276,7 @@ export default {
             ]);
             this.$router.push({
               path: this.redirectUrl,
-              query: { cpf: this.customerInfo.cpf.value },
+              query: { cliente_id: this.customerId },
             });
           })
           .catch(function (error) {
@@ -292,7 +291,7 @@ export default {
             ]);
             this.$router.push({
               path: this.redirectUrl,
-              query: { cpf: this.customerInfo.cpf.value },
+              query: { cliente_id: this.customerId },
             });
           })
           .catch(function (error) {

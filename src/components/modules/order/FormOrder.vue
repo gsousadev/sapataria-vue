@@ -188,12 +188,11 @@
                   <div class="col-12">
                     <div class="form-group">
                       <label for="service_observation">Observação</label>
-                      <input
-                        type="text"
+                      <textarea
                         class="form-control"
                         name="service_observation"
                         v-model="modules.services.fields.observationField.value"
-                      />
+                      ></textarea>
                     </div>
                   </div>
                 </div>
@@ -270,19 +269,6 @@
                 <div class="row align-items-end">
                   <div class="col-12 col-sm-6">
                     <div class="form-group">
-                      <label>CPF do cliente</label>
-                      <the-mask
-                        type="text"
-                        class="form-control"
-                        id="order_customer_cpf"
-                        name="order_customer_cpf"
-                        v-model="orderCustomer.cpf"
-                        mask="###.###.###-##"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-12 col-sm-6">
-                    <div class="form-group">
                       <label>Desconto %</label>
                       <input
                         type="text"
@@ -296,9 +282,7 @@
                       />
                     </div>
                   </div>
-                </div>
-                <div class="row align-items-end">
-                  <div class="col-12 col-sm-6">
+                                    <div class="col-12 col-sm-6">
                     <div class="form-group">
                       <label>Valor Pago</label>
                       <input
@@ -359,7 +343,7 @@ export default {
 
   created() {
     this.loaderVisibility(true);
-    this.orderCustomer.cpf = this.$route.query.cpf;
+    this.orderCustomer.id = this.$route.query.cliente_id;
     this.getEnabledProductsAndServices();
   },
 
@@ -368,7 +352,6 @@ export default {
       OutputHelper,
       headerTitle: "Cadastro de Pedido",
       redirectUrl: "/pedidos/listar",
-
       modules: {
         products: {
           active: false,
@@ -423,9 +406,8 @@ export default {
           enabledItems: [],
         },
       },
-
       orderCustomer: {
-        cpf: "",
+        id: 0,
       },
       orderPaidValue: 0,
       totalOrderAmount: 0,
@@ -626,7 +608,7 @@ export default {
       return {
         produtos_pedido: this.modules.products.orderItems,
         servicos_pedido: this.modules.services.orderItems,
-        cpf_cliente: this.orderCustomer.cpf,
+        cliente_id: this.orderCustomer.id,
         desconto: this.orderDiscount,
         valor_pago: this.orderPaidValue,
         status_pagamento: paidStatus,
