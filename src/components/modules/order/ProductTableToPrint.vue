@@ -4,7 +4,7 @@
 
        <tr>
         <td>
-          <strong>Item:</strong>
+          Item:
         </td>
         <td>
           <span class="text-capitalize">#{{ itemNumber }}</span>
@@ -12,7 +12,7 @@
       </tr>
     <tr>
       <td>
-        <strong>Código do Produto:</strong>
+        Código do Produto:
       </td>
       <td>
         <span class="text-capitalize">{{item.product.id}}</span>
@@ -20,7 +20,7 @@
     </tr>
     <tr>
       <td>
-        <strong>Nome:</strong>
+        Nome:
       </td>
       <td>
         <span class="text-capitalize">{{item.product.nome}}</span>
@@ -28,7 +28,7 @@
     </tr>
     <tr>
       <td>
-        <strong>Valor Unitário:</strong>
+        Valor Unitário:
       </td>
       <td>
         <span class="text-capitalize">{{OutputHelper.money(item.product.valor)}}</span>
@@ -36,7 +36,7 @@
     </tr>
     <tr>
       <td>
-        <strong>Quantidade:</strong>
+        Quantidade:
       </td>
       <td>
         <span class="text-capitalize">{{item.quantidade}}</span>

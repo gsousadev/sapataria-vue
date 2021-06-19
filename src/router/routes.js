@@ -57,6 +57,36 @@ export default [
         meta: { requiresAuth: true }
     },
     {
+        path: "/produtos/cadastrar",
+        component: () => import("../components/modules/product/FormProduct.vue"),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/produtos/listar",
+        component: () => import("../components/modules/product/ListProducts.vue"),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/produtos/editar/:id",
+        component: () => import("../components/modules/product/FormProduct.vue"),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/servicos/cadastrar",
+        component: () => import("../components/modules/service/FormService.vue"),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/servicos/listar",
+        component: () => import("../components/modules/service/ListServices.vue"),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/servicos/editar/:id",
+        component: () => import("../components/modules/service/FormService.vue"),
+        meta: { requiresAuth: true }
+    },
+    {
         path: "/*",
         component: () => import("../components/modules/error/NotFound.vue"),
     }

@@ -4,54 +4,54 @@
     <h2 class="text-center mb-3">Impressão de Pedido</h2>
     <hr />
     <section>
-      <p><strong>Informações Gerais</strong></p>
+      <p>Informações Gerais</p>
       <table class="table table-striped table-borderless table-sm">
         <tbody>
           <tr>
-            <td><strong>Código do Pedido: </strong></td>
+            <td>Código do Pedido: </td>
             <td>
               <strong class="order-code">{{ orderInfo.id }}</strong
               >
             </td>
           </tr>
           <tr>
-            <td><strong>Nome do Cliente: </strong></td>
+            <td>Nome do Cliente: </td>
             <td>{{ orderInfo.customer.nome }}</td>
           </tr>
           <tr>
-            <td><strong>CPF do Cliente: </strong></td>
+            <td>CPF do Cliente: </td>
             <td>{{ OutputHelper.cpf(orderInfo.customer.cpf) }}</td>
           </tr>
           <tr>
-            <td><strong>Telefone Principal: </strong></td>
+            <td>Telefone Principal: </td>
             <td>{{ OutputHelper.phone(orderInfo.customer.telefone_1) }}</td>
           </tr>
           <tr>
-            <td><strong>Desconto: </strong></td>
+            <td>Desconto: </td>
             <td>{{ OutputHelper.money(orderInfo.desconto) }}</td>
           </tr>
           <tr>
-            <td><strong>Valor Pago: </strong></td>
+            <td>Valor Pago: </td>
             <td>{{ OutputHelper.money(totalOrderValue) }}</td>
           </tr>
           <tr>
-            <td><strong>Valor Pago: </strong></td>
+            <td>Valor Pago: </td>
             <td>{{ OutputHelper.money(orderInfo.valor_pago) }}</td>
           </tr>
           <tr>
-            <td><strong>Valor Faltante: </strong></td>
+            <td>Valor Faltante: </td>
             <td>{{ OutputHelper.money(missingValue) }}</td>
           </tr>
           <tr>
         <td>
-          <strong>Data:</strong>
+          Data:
         </td>
         <td>
           <span class="text-capitalize">{{ orderInfo.created_at }}</span>
         </td>
       </tr>
           <tr>
-            <td><strong>Status Pagamento: </strong></td>
+            <td>Status Pagamento: </td>
             <td>{{ OutputHelper.status(orderInfo.status_pagamento, true) }}</td>
           </tr>
         </tbody>
@@ -59,8 +59,8 @@
     </section>
     <hr>
     <section v-if="orderInfo.product_items.length !== 0">
-      <p><strong>Informações de Produtos</strong></p>
-      <p><strong>Quantidade de Itens: {{ orderInfo.product_items.length }}</strong></p>
+      <p>Informações de Produtos</p>
+      <p>Quantidade de Itens: {{ orderInfo.product_items.length }}</p>
       <div v-for="(item, index) in orderInfo.product_items" :key="index">
         <ProductTableToPrint
           :item="item"
@@ -70,8 +70,8 @@
       </div>
     </section>
     <section v-if="orderInfo.service_items.length !== 0">
-      <p><strong>Informações de Serviços</strong></p>
-       <p><strong>Quantidade de Itens: {{ orderInfo.service_items.length }}</strong></p>
+      <p>Informações de Serviços</p>
+       <p>Quantidade de Itens: {{ orderInfo.service_items.length }}</p>
       <div v-for="(item, index) in orderInfo.service_items" :key="index">
         <ServiceTableToPrint
           :item="item"
@@ -85,10 +85,15 @@
 
 <style lang="scss">
 .page {
-  width: 5.8cm;
-  font-size: 0.6em !important;
+  & hr{
+    border-top: 1px solid #000;
+  }
+  width: 70mm;
+  margin:6mm;
+  font-size: 1.1em !important;
+  font-family: Arial, Helvetica, sans-serif;
   & .order-code{
-    font-size: 1.1em;
+    font-size: 1.3em;
   }
   & p{
     padding: 0;

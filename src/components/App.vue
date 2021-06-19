@@ -5,7 +5,7 @@
     <Menu></Menu>
     <div class="container-fluid my-3">
       <div class="row justify-content-center">
-        <div class="col-6 col-md-2">
+        <div class="col-4 col-md-2">
           <router-link to="/home">
             <img
               class="img-fluid no-print"

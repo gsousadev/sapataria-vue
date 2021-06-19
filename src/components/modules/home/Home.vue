@@ -4,15 +4,45 @@
       <div class="col-12 col-sm-8">
         <CpfSearchUser />
         <div class="row py-3 justify-content-center">
-          <IconButton
-            url="/clientes/listar"
-            iconClass="list"
-            buttonText="Lista de Clientes"
+           <IconButton
+            url="/pedidos/cadastrar"
+            iconClass="playlist_add"
+            buttonText="Novo Pedido"
           />
           <IconButton
             url="/pedidos/listar"
-            iconClass="table"
-            buttonText="Lista de Pedidos"
+            iconClass="list"
+            buttonText="Listar Pedidos"
+          />
+          <IconButton
+            url="/clientes/cadastrar"
+            iconClass="playlist_add"
+            buttonText="Cadastrar Clientes"
+          />
+          <IconButton
+            url="/clientes/listar"
+            iconClass="list"
+            buttonText="Listar Clientes"
+          />
+           <IconButton
+            url="/produtos/cadastrar"
+            iconClass="playlist_add"
+            buttonText="Cadastrar Produtos"
+          />
+           <IconButton
+            url="/produtos/listar"
+            iconClass="list"
+            buttonText="Listar Produtos"
+          />
+          <IconButton
+            url="/servicos/cadastrar"
+            iconClass="playlist_add"
+            buttonText="Cadastrar Serviços"
+          />
+           <IconButton
+            url="/servicos/listar"
+            iconClass="list"
+            buttonText="Listar Serviços"
           />
         </div>
       </div>

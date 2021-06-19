@@ -1,5 +1,5 @@
 export default class InputHelper {
-  static checkInput(val = "", regexType = ""){
+  static checkInput(val = "", regexType = "") {
     let cepRegex = RegExp("([0-9]{5,5}[-]?[0-9]{3})$"),
       cpfRegex = RegExp("([0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2})$"),
       regexTest = RegExp("");
@@ -38,5 +38,23 @@ export default class InputHelper {
 
   static cleanVal(maskedValue = "") {
     return maskedValue.replace(/[^0-9a-zA-Z]/g, "");
+  }
+
+  static createSlug(str = "") {
+    str = str.replace(/^\s+|\s+$/g, ''); // trim
+    str = str.toLowerCase();
+
+    // remove accents, swap ñ for n, etc
+    var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;";
+    var to = "aaaaaeeeeeiiiiooooouuuunc------";
+    for (var i = 0, l = from.length; i < l; i++) {
+      str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+    }
+
+    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+      .replace(/\s+/g, '_') // collapse whitespace and replace by -
+      .replace(/-+/g, '_'); // collapse dashes
+
+    return str;
   }
 }

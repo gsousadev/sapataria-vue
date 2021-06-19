@@ -1,7 +1,10 @@
 <template>
   <div class="col-12 col-lg-6">
-    <router-link :class="getClassNames()" :to="url">
-      <h3 class="title">{{ buttonText }}</h3>
+    <router-link :to="url" class="sp-link bg-primary rounded d-flex justify-content-center">
+      <h3 class="title">
+        <i class="material-icons">{{iconClass}}</i>
+        <span>{{buttonText}}</span>
+      </h3>
     </router-link>
   </div>
 </template>
@@ -13,11 +16,6 @@ export default {
     buttonText: String,
     classNames: String,
     iconClass: String,
-  },
-  methods: {
-    getClassNames: function() {
-      return "sp-link bg-primary rounded";
-    },
   },
 };
 </script>
@@ -36,6 +34,9 @@ export default {
   }
   & .title {
     color: #fff;
+    & i{
+      width: 50px;
+    }
   }
   &:hover {
     text-decoration: none;

@@ -3,7 +3,7 @@
       <tbody>
        <tr>
         <td>
-          <strong>Item:</strong>
+          Item:
         </td>
         <td>
           <span class="text-capitalize">#{{ itemNumber }}</span>
@@ -12,7 +12,7 @@
 
       <tr>
         <td>
-          <strong>Código do Serviço:</strong>
+          Código do Serviço:
         </td>
         <td>
           <span class="text-capitalize">{{ item.service.id }}</span>
@@ -20,7 +20,7 @@
       </tr>
       <tr>
         <td>
-          <strong>Nome:</strong>
+          Nome:
         </td>
         <td>
           <span class="text-capitalize">{{ item.service.nome }}</span>
@@ -28,7 +28,7 @@
       </tr>
       <tr>
         <td>
-          <strong>Valor Base:</strong>
+          Valor Base:
         </td>
         <td>
           <span class="text-capitalize">{{
@@ -38,7 +38,7 @@
       </tr>
       <tr>
         <td>
-          <strong>Valor Adicional:</strong>
+          Valor Adicional:
         </td>
         <td>
           <span class="text-capitalize">{{
@@ -48,7 +48,7 @@
       </tr>
       <tr>
         <td>
-          <strong>Descrição:</strong>
+          Descrição:
         </td>
         <td>
           <span class="text-capitalize">{{ item.service.descricao }}</span>
@@ -56,7 +56,7 @@
       </tr>
       <tr>
         <td>
-          <strong>Observação:</strong>
+          Observação:
         </td>
         <td>
           <span class="text-capitalize">{{ item.observacao ? item.observacao : '-' }}</span>
@@ -64,7 +64,7 @@
       </tr>
       <tr>
         <td>
-          <strong>Data Entrega:</strong>
+          Data Entrega:
         </td>
         <td>
           <span class="text-capitalize">{{ item.data_entrega }}</span>
@@ -72,7 +72,7 @@
       </tr>
       <tr>
         <td>
-          <strong>Status Progresso:</strong>
+          Status Progresso:
         </td>
         <td>{{ OutputHelper.status(item.status_progresso, true) }}</td>
       </tr>
