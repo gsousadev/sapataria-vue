@@ -14,7 +14,9 @@
                   <th scope="col">Nome do Cliente</th>
                   <th scope="col">CPF do Cliente</th>
                   <th scope="col">Data do Pedido</th>
-                  <th scope="col">Visualizar | Excluir</th>
+                  <th scope="col">Visualizar</th>
+                  <th scope="col">Imprimir</th>
+                  <th scope="col">Excluir</th>
                 </tr>
               </thead>
               <tbody v-if="this.items.length != 0">
@@ -27,7 +29,13 @@
                     <button @click="showItem(item.id)">
                       <i class="material-icons">description</i>
                     </button>
-                    |
+                  </td>
+                  <td>
+                    <button @click="printOrder(item.id)">
+                      <i class="material-icons">print</i>
+                    </button>
+                  </td>
+                  <td>
                     <button @click="deleteItem(item.id, index)">
                       <i class="material-icons">delete</i>
                     </button>
@@ -36,7 +44,7 @@
               </tbody>
               <tbody v-else>
                 <tr>
-                  <td colspan="8">Nenhum dado localizado</td>
+                  <td colspan="7">Nenhum dado localizado</td>
                 </tr>
               </tbody>
             </table>
@@ -97,6 +105,10 @@ export default {
     showItem(itemId) {
       this.$router.push({ path: `/pedidos/visualizar/${itemId}` });
     },
+
+    printOrder(itemId){
+      this.$router.push({ path: `/pedidos/imprimir/${itemId}` });
+    }
   },
 
   components: {

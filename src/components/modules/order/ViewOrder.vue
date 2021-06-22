@@ -152,7 +152,7 @@
               </div>
             </div>
             <div class="row justify-content-center">
-              <div class="col-12"><h4>Observações Criadas</h4></div>
+              <div class="col-12"><h4>Observações do Pedido</h4></div>
               <div
                 class="col-12 my-2"
                 v-for="(observation, index) in orderInfo.observations"
@@ -338,7 +338,7 @@ export default {
       new OrderRequest()
         .createOrderObservation(data)
         .then(() => {
-          ModalHelper.modalSuccess("Ok!", ["Observção cadastrada com sucesso"]);
+          ModalHelper.modalSuccess("Ok!", ["Observação cadastrada com sucesso"]);
           this.getOrderInfo();
           this.observation.textarea.value = 0;
         })

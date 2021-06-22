@@ -5,7 +5,6 @@
       <div class="row justify-content-center">
         <div class="col-12">
           <h4 class="bg-primary p-2 text-white rounded">{{ headerTitle }}</h4>
-
           <div class="bg-white p-3 mt-3 rounded">
             <h4>Adicionar Produtos</h4>
             <hr />
@@ -343,7 +342,7 @@ export default {
 
   created() {
     this.loaderVisibility(true);
-    this.orderCustomer.id = this.$route.query.cliente_id;
+    this.orderCustomer.id = this.$route.params.cliente_id;
     this.getEnabledProductsAndServices();
   },
 

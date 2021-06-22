@@ -1,83 +1,13 @@
 <template>
-    <table class="table table-borderless table-sm table-striped">
-      <tbody>
-       <tr>
-        <td>
-          Item:
-        </td>
-        <td>
-          <span class="text-capitalize">#{{ itemNumber }}</span>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          Código do Serviço:
-        </td>
-        <td>
-          <span class="text-capitalize">{{ item.service.id }}</span>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Nome:
-        </td>
-        <td>
-          <span class="text-capitalize">{{ item.service.nome }}</span>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Valor Base:
-        </td>
-        <td>
-          <span class="text-capitalize">{{
-            OutputHelper.money(item.service.valor)
-          }}</span>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Valor Adicional:
-        </td>
-        <td>
-          <span class="text-capitalize">{{
-            OutputHelper.money(item.valor_adicional)
-          }}</span>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Descrição:
-        </td>
-        <td>
-          <span class="text-capitalize">{{ item.service.descricao }}</span>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Observação:
-        </td>
-        <td>
-          <span class="text-capitalize">{{ item.observacao ? item.observacao : '-' }}</span>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Data Entrega:
-        </td>
-        <td>
-          <span class="text-capitalize">{{ item.data_entrega }}</span>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Status Progresso:
-        </td>
-        <td>{{ OutputHelper.status(item.status_progresso, true) }}</td>
-      </tr>
-      </tbody>
-    </table>
+  <div class="order-item">
+    <p><i>Item: </i>#{{ itemNumber }}</p>
+    <p><i>Nome: </i>{{ item.service.nome }}</p>
+    <p><i>Valor Base: </i>{{ OutputHelper.money(item.service.valor) }}</p>
+    <p><i>Valor Adic.: </i>{{ OutputHelper.money(item.valor_adicional) }}</p>
+    <p><i>Descrição: </i>{{ item.service.descricao }}</p>
+    <p><i>Observação: </i>{{ item.observacao }}</p>
+    <p><i>Entrega: </i>{{ item.data_entrega }}</p>
+  </div>
 </template>
 
 <script>
@@ -87,7 +17,7 @@ export default {
   name: "ServiceTableToPrint",
   props: {
     item: Object,
-    itemNumber: Number
+    itemNumber: Number,
   },
 
   data() {
@@ -95,7 +25,6 @@ export default {
       OutputHelper,
     };
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>

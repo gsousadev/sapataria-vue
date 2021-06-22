@@ -46,7 +46,7 @@
               </tbody>
               <tbody v-else>
                 <tr>
-                  <td colspan="6">Nenhum dado localizado</td>
+                  <td colspan="8">Nenhum dado localizado</td>
                 </tr>
               </tbody>
             </table>
@@ -96,10 +96,9 @@ export default {
           this.loaderVisibility(false);
         });
     },
-    newOrder(itemId) {
+    newOrder(cliente_id) {
       this.$router.push({
-        path: `/pedidos/cadastrar`,
-        query: { cliente_id: itemId },
+        path: `/pedidos/cadastrar/${cliente_id}`,
       });
     },
     deleteItem(itemId, localIndex) {

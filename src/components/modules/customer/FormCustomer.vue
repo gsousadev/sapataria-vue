@@ -275,8 +275,7 @@ export default {
               "Os dados do cliente foram editado com sucesso!",
             ]);
             this.$router.push({
-              path: this.redirectUrl,
-              query: { cliente_id: this.customerId },
+             path: `${this.redirectUrl}` ,
             });
           })
           .catch(function (error) {
@@ -285,13 +284,12 @@ export default {
       } else {
         new CustomerRequest()
           .create(this.dataToSend)
-          .then(() => {
+          .then((response) => {
             ModalHelper.modalSuccess("Muito bom!", [
               "Cliente cadastrado com sucesso!",
             ]);
             this.$router.push({
-              path: this.redirectUrl,
-              query: { cliente_id: this.customerId },
+              path: `${this.redirectUrl}/${response.data.id}` ,
             });
           })
           .catch(function (error) {

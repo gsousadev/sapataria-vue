@@ -1,83 +1,51 @@
 <template>
   <div class="page">
-    <h1 class="text-center mb-3">Venda Fácil</h1>
-    <h2 class="text-center mb-3">Impressão de Pedido</h2>
+    <p class="text-center mb-3">Venda Fácil</p>
+    <h3 class="text-center mb-3">Sapataria São Crispim</h3>
     <hr />
     <section>
-      <p>Informações Gerais</p>
-      <table class="table table-striped table-borderless table-sm">
-        <tbody>
-          <tr>
-            <td>Código do Pedido: </td>
-            <td>
-              <strong class="order-code">{{ orderInfo.id }}</strong
-              >
-            </td>
-          </tr>
-          <tr>
-            <td>Nome do Cliente: </td>
-            <td>{{ orderInfo.customer.nome }}</td>
-          </tr>
-          <tr>
-            <td>CPF do Cliente: </td>
-            <td>{{ OutputHelper.cpf(orderInfo.customer.cpf) }}</td>
-          </tr>
-          <tr>
-            <td>Telefone Principal: </td>
-            <td>{{ OutputHelper.phone(orderInfo.customer.telefone_1) }}</td>
-          </tr>
-          <tr>
-            <td>Desconto: </td>
-            <td>{{ OutputHelper.money(orderInfo.desconto) }}</td>
-          </tr>
-          <tr>
-            <td>Valor Pago: </td>
-            <td>{{ OutputHelper.money(totalOrderValue) }}</td>
-          </tr>
-          <tr>
-            <td>Valor Pago: </td>
-            <td>{{ OutputHelper.money(orderInfo.valor_pago) }}</td>
-          </tr>
-          <tr>
-            <td>Valor Faltante: </td>
-            <td>{{ OutputHelper.money(missingValue) }}</td>
-          </tr>
-          <tr>
-        <td>
-          Data:
-        </td>
-        <td>
-          <span class="text-capitalize">{{ orderInfo.created_at }}</span>
-        </td>
-      </tr>
-          <tr>
-            <td>Status Pagamento: </td>
-            <td>{{ OutputHelper.status(orderInfo.status_pagamento, true) }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="order-code">
+        <p class="text-center">Número do Pedido</p>
+        <h1 class="text-center">
+          <strong>{{ orderInfo.id }}</strong>
+        </h1>
+      </div>
     </section>
-    <hr>
+    <hr />
+    <section>
+      <h4>Informações Gerais</h4>
+      <div class="order-info">
+        <p><i>Nome: </i>{{ orderInfo.customer.nome }}</p>
+        <p><i>CPF: </i>{{ OutputHelper.cpf(orderInfo.customer.cpf) }}</p>
+        <p><i>Tel.: </i>{{ OutputHelper.phone(orderInfo.customer.telefone_1) }}</p>
+        <p><i>Desconto: </i>{{ OutputHelper.money(orderInfo.desconto) }}</p>
+        <p><i>Total: </i>{{ OutputHelper.money(totalOrderValue) }}</p>
+        <p><i>Pago: </i>{{ OutputHelper.money(orderInfo.valor_pago) }}</p>
+        <p><i>A pagar: </i>{{ OutputHelper.money(missingValue) }}</p>
+        <p><i>Data: </i>{{ orderInfo.created_at }}</p>
+        <p><i>Status Pag.: </i>{{ OutputHelper.status(orderInfo.status_pagamento, true) }}</p>
+      </div>
+    </section>
+    <hr />
     <section v-if="orderInfo.product_items.length !== 0">
-      <p>Informações de Produtos</p>
+      <h4>Informações de Produtos</h4>
       <p>Quantidade de Itens: {{ orderInfo.product_items.length }}</p>
       <div v-for="(item, index) in orderInfo.product_items" :key="index">
         <ProductTableToPrint
           :item="item"
           :itemNumber="index + 1"
         ></ProductTableToPrint>
-        <hr />
       </div>
+      <hr />
     </section>
     <section v-if="orderInfo.service_items.length !== 0">
-      <p>Informações de Serviços</p>
-       <p>Quantidade de Itens: {{ orderInfo.service_items.length }}</p>
+      <h4>Informações de Serviços</h4>
+      <p>Quantidade de Itens: {{ orderInfo.service_items.length }}</p>
       <div v-for="(item, index) in orderInfo.service_items" :key="index">
         <ServiceTableToPrint
           :item="item"
           :itemNumber="index + 1"
         ></ServiceTableToPrint>
-        <hr />
       </div>
     </section>
   </div>
@@ -85,30 +53,28 @@
 
 <style lang="scss">
 .page {
-  & hr{
+  * {
+    color: #000;
+  }
+  font-size: 4.4mm;
+  & hr {
     border-top: 1px solid #000;
   }
   width: 70mm;
-  margin:6mm;
-  font-size: 1.1em !important;
+  margin: 5mm;
   font-family: Arial, Helvetica, sans-serif;
-  & .order-code{
-    font-size: 1.3em;
+  & .order-code {
+    margin: 2mm 0;
+    padding: 0;
   }
-  & p{
+  & p {
     padding: 0;
     margin: 0;
   }
-  & h1 {
-    font-size: 1.3em;
-  }
-  & h2 {
-    font-size: 1.2em;
-  }
-  & tr {
-    & td{
-      padding:0;
-    }
+  & .order-item,
+  .order-info {
+    padding-left: 0.2cm;
+    margin-top: 0.5cm;
   }
 }
 </style>
@@ -185,14 +151,13 @@ export default {
         .then((response) => {
           this.orderInfo = response.data;
           this.calculateTotalOrderValue();
-          setTimeout(function(){
+          setTimeout(function () {
             window.print();
-          }, 60)
-          
+          }, 60);
         })
         .catch((error) => {
           ModalHelper.modalError(error.data);
-        })
+        });
     },
   },
 };

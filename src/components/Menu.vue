@@ -8,9 +8,6 @@
       <router-link to="/">Home</router-link>
     </strong>
     <strong class="p-2 mx-2">
-      <router-link to="/pedidos/cadastrar">Novo Pedido</router-link>
-    </strong>
-    <strong class="p-2 mx-2">
       <router-link to="/pedidos/listar">Listar Pedidos</router-link>
     </strong>
     <strong class="p-2 mx-2">

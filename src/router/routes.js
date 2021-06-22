@@ -19,7 +19,7 @@ export default [
         meta: { requiresAuth: true }
     },
     {
-        path: "/pedidos/cadastrar",
+        path: "/pedidos/cadastrar/:cliente_id",
         component: () => import("../components/modules/order/FormOrder.vue"),
         meta: { requiresAuth: true }
     },

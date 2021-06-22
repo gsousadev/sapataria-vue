@@ -2,6 +2,17 @@
   <div class="row justify-content-center">
     <div class="col-12 col-lg-10">
       <Breadcrumb currentPageName="Lista de Produtos"></Breadcrumb>
+       <div class="row mb-3 justify-content-end">
+        <div class="col-12 col-md-3">
+                <button
+                  @click="newItem()"
+                  class="btn btn-primary d-block text-white w-100"
+                >
+                 <i class="material-icons">playlist_add</i>
+                  Novo
+                </button>
+              </div>
+      </div>
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
@@ -83,6 +94,10 @@ export default {
         .finally(() => {
           this.loaderVisibility(false);
         });
+    },
+
+    newItem(){
+       this.$router.push({ path: '/produtos/cadastrar' });
     },
 
     deleteItem(itemId, localIndex) {
